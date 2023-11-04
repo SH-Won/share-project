@@ -1,5 +1,7 @@
 'use client'
+import InputBox from '@/components/common/InputBox'
 import LoginPage from '@/components/Login'
+import { useModal } from '@/hooks'
 import { AppDispatch, RootState } from '@/store'
 import { resetUser, setUser } from '@/store/user/userSlice'
 import { useEffect } from 'react'
@@ -48,8 +50,22 @@ export default function Home() {
           console.log(error)
         })
     })()
-  })
+  }, [])
   console.log(user)
+  const { showModal } = useModal()
+  const onClick = () => {
+    showModal({
+      type: 'bottomModal',
+      component: () => <div>project</div>,
+      props: '',
+    })
+  }
 
-  return <div>{!user.accessToken ? <LoginPage /> : <div> login ok</div>}</div>
+  return (
+    <div>
+      <div onClick={onClick}>show modal</div>
+      <InputBox />
+      {!user.accessToken ? <LoginPage /> : <div> login ok</div>}
+    </div>
+  )
 }

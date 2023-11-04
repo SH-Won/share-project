@@ -30,8 +30,16 @@ const ButtonWrapper = styled.div`
   }
 `
 const LoginPage = () => {
-  const { searchText: email, onChangeText: onChangeEmail, emailValidator } = useSearch()
-  const { searchText: password, onChangeText: onChangePasswoard, passwordValidator } = useSearch()
+  const {
+    searchText: email,
+    onChangeText: onChangeEmail,
+    emailValidator,
+  } = useSearch()
+  const {
+    searchText: password,
+    onChangeText: onChangePasswoard,
+    passwordValidator,
+  } = useSearch()
   // const router = useRouter()
   const dispatch = useDispatch<AppDispatch>()
   const onSubmit = async () => {
@@ -76,7 +84,11 @@ const LoginPage = () => {
         validator={passwordValidator}
       />
       <ButtonWrapper>
-        <Button color={Colors.white} fontColor={Colors.grey_111} border={Colors.grey_bbb}>
+        <Button
+          color={Colors.white}
+          fontColor={Colors.grey_111}
+          border={Colors.grey_bbb}
+        >
           취소
         </Button>
         <Button color={Colors.main} click={onSubmit}>
