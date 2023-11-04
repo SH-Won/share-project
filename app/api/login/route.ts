@@ -27,9 +27,13 @@ export async function POST(req: Request) {
           expiresIn: '10s',
         }
       )
-      const newRefreshToken = jwt.sign({ email: user.email }, process.env.REFRESH_TOKEN_SECRET, {
-        expiresIn: '600s',
-      })
+      const newRefreshToken = jwt.sign(
+        { email: user.email },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+          expiresIn: '600s',
+        }
+      )
       if (cookies?.refreshtoken) {
         const refreshToken = cookies.refreshtoken
 

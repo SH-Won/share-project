@@ -1,4 +1,3 @@
-import modalConfig from '@/components/modal/modalConfig'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type ModalType = 'bottomSheet' | 'popup' | 'modal' | 'toast' | 'bottomModal'

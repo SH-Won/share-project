@@ -1,0 +1,8 @@
+@import 'my-react-component/src/styles/typeface.module.scss';
+@import 'my-react-component/src/styles/colors.module.scss';
+.project {
+  display:flex;
+  // flex-direction: column;
+  @include typeface('Heading_2');
+  color : color('red')
+}

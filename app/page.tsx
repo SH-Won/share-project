@@ -52,20 +52,6 @@ export default function Home() {
     })()
   }, [])
   console.log(user)
-  const { showModal } = useModal()
-  const onClick = () => {
-    showModal({
-      type: 'bottomModal',
-      component: () => <div>project</div>,
-      props: '',
-    })
-  }
 
-  return (
-    <div>
-      <div onClick={onClick}>show modal</div>
-      <InputBox />
-      {!user.accessToken ? <LoginPage /> : <div> login ok</div>}
-    </div>
-  )
+  return <div>{/* <InputBox /> */}</div>
 }

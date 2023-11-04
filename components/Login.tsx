@@ -67,6 +67,7 @@ const LoginPage = () => {
       console.log(e)
     }
   }
+  console.log('render login page')
   return (
     <Container>
       <InputBox
