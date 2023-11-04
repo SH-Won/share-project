@@ -1,10 +1,13 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import '../styles/output.css'
+
 import 'my-react-component/dist/style.css'
 
-import Providers from '@/store/provider'
+import ResponsiveWindow from '@/layout/ResponsiveWindow'
+import Navbar from '@/components/Navbar'
+import { StoreProviders, ThemeProviders } from '@/providers'
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Create Next App',
@@ -14,8 +17,13 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
+      <body>
+        <StoreProviders>
+          <ThemeProviders>
+            <Navbar />
+            <ResponsiveWindow>{children}</ResponsiveWindow>
+          </ThemeProviders>
+        </StoreProviders>
       </body>
     </html>
   )

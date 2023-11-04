@@ -51,7 +51,5 @@ export default function Home() {
   })
   console.log(user)
 
-  return (
-    <main className={styles.main}>{!user.accessToken ? <LoginPage /> : <div> login ok</div>}</main>
-  )
+  return <div>{!user.accessToken ? <LoginPage /> : <div> login ok</div>}</div>
 }

@@ -36,12 +36,15 @@
     "@types/styled-components": "^5.1.28",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
+    "autoprefixer": "^10.4.16",
     "babel-plugin-styled-components": "^2.1.4",
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "postcss": "^8.4.31",
     "prettier": "^3.0.3",
+    "tailwindcss": "^3.3.5",
     "typescript": "^5"
   }
 }
