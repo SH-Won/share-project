@@ -20,6 +20,8 @@ export async function POST(req: Request) {
           userInfo: {
             email: user.email,
             role: role,
+            _id: user._id,
+            name: user.name,
           },
         },
         process.env.ACCESS_TOKEN_SECRET,
@@ -28,7 +30,12 @@ export async function POST(req: Request) {
         }
       )
       const newRefreshToken = jwt.sign(
-        { email: user.email },
+        {
+          email: user.email,
+          role: role,
+          _id: user._id,
+          name: user.name,
+        },
         process.env.REFRESH_TOKEN_SECRET,
         {
           expiresIn: '600s',
@@ -40,12 +47,14 @@ export async function POST(req: Request) {
         NextResponse.next().cookies.delete('refreshtoken')
       }
       user.refreshToken = newRefreshToken
-      console.log('newRefreshToken', newRefreshToken)
       const result = await user.save()
-      console.log('user login result', result)
       const response = NextResponse.json(
         {
           accessToken,
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
         },
         { status: 200 }
       )

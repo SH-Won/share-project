@@ -1,51 +1,43 @@
-import React, { ChangeEvent } from 'react'
-import styled from 'styled-components'
-
-const BoxContainer = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-`
-const Input = styled.input`
-  border-radius: 8px;
-  border: 1px solid ${({ theme }) => theme.color.line_01};
-  padding: 8px;
-  &:focus {
-    outline: 1px solid ${({ theme }) => theme.color.line_02};
-  }
-`
-const Label = styled.label`
-  /* position: absolute;
-  top: 50%;
-  left: 8px;
-  transform: translateY(-50%);
-  &:focus {
-    color: red;
-  } */
-`
+'use client'
+import React, { ChangeEvent, useLayoutEffect, useRef, useState } from 'react'
+import '@/styles/components/input.scss'
 interface InputBoxProps {
+  type?: string
   name: string
   value: string
-  pattern: string
-  placeholder: string
-  onHandleChange: (e: ChangeEvent) => void
+  placeholder?: string
+  validator?: (text: string) => boolean
+  onHandleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 const InputBox = ({
+  type,
   name,
   value,
-  pattern,
   placeholder,
+  validator,
   onHandleChange,
 }: InputBoxProps) => {
+  const [focus, setFocus] = useState(false)
+  const valid = validator?.(value)
+  const computedClass = () => {
+    let className = 'input'
+    if (focus || value) className += ' focus'
+    if (typeof validator === 'function' && !valid) className += ' error'
+    return className
+  }
+
   return (
-    <div className="flex flex-col p-5 gap-1">
-      <label htmlFor="email">Email</label>
+    <div className="input-container">
+      <label htmlFor={name}>{name}</label>
       <input
-        name="email"
-        className="px-3 py-1 border rounded-[6px] border-gray-300 focus:border-blue-500 : focus:border max-w-[400px] w-[80%] invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
-        placeholder=""
-        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+        name={name}
+        className={computedClass()}
+        placeholder={placeholder}
+        onChange={onHandleChange}
+        value={value}
+        onFocus={() => setFocus(true)}
+        onBlur={() => setFocus(false)}
       />
     </div>
   )

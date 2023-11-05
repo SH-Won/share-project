@@ -1,6 +1,7 @@
 'use client'
 import { useModal } from '@/hooks'
 import React from 'react'
+import '@/styles/layout/modal.scss'
 import BottomModal from './BottomModal'
 
 const Modal = () => {

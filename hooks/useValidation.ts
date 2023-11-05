@@ -1,7 +1,7 @@
 const useValidation = () => {
   const validatorXSS = (text: string) => {
     if (!text) return true
-    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9| |]+$/
+    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|/|:|.]+$/
     if (!regex.test(text)) return false
     return true
   }

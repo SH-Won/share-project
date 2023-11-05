@@ -1,22 +1,23 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 const ProductSchema = new mongoose.Schema(
   {
-    productId: {
-      type: String,
-      maxlength: 50,
+    writer: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
     },
-    label: {
+    title: {
       type: String,
       maxlength: 50,
     },
     description: {
       type: String,
-    },
-    category: {
-      type: Number,
+      maxlength: 50,
     },
     imageUrl: {
       type: String,
+    },
+    category: {
+      type: Number,
     },
   },
   { timestamps: true }

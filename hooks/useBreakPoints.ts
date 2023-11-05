@@ -1,5 +1,11 @@
 'use client'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { setTimeout } from 'timers'
 
 type ClassType = 'mobile' | 'tablet' | 'desktop' | ''
@@ -36,7 +42,7 @@ const useBreakPoints = () => {
     setBreakPoints(window.innerWidth)
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const windowResize = throttle(resize, 200)
     window.addEventListener('resize', windowResize)
     resize()

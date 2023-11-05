@@ -1,11 +1,11 @@
 import './globals.css'
-import '../styles/output.css'
-import '@/styles/Landing.scss'
+import './index.scss'
+// import '../styles/output.css'
 import 'my-react-component/dist/style.css'
 
-import ResponsiveWindow from '@/layout/ResponsiveWindow'
+// import ResponsiveWindow from '@/layout/ResponsiveWindow'
 import Navbar from '@/components/Navbar'
-import { StoreProviders, ThemeProviders } from '@/providers'
+import { StoreProviders } from '@/providers'
 import Modal from '@/components/modal'
 import ModalContext from '@/context/ModalContext'
 
@@ -25,13 +25,13 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <StoreProviders>
-          <ThemeProviders>
-            <ModalContext>
-              <Navbar />
-              <ResponsiveWindow>{children}</ResponsiveWindow>
-              <Modal />
-            </ModalContext>
-          </ThemeProviders>
+          {/* <ThemeProviders> */}
+          <ModalContext>
+            <Navbar />
+            {children}
+            <Modal />
+          </ModalContext>
+          {/* </ThemeProviders> */}
         </StoreProviders>
       </body>
     </html>

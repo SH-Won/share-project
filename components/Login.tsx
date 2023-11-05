@@ -11,7 +11,7 @@ import { AppDispatch } from '@/store'
 const Container = styled.div`
   min-height: 100vh;
   display: flex;
-  background-color: #f5f5f5;
+  /* background-color: #f5f5f5; */
   flex-direction: column;
   gap: 10px;
   padding: 20px;

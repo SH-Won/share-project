@@ -36,57 +36,80 @@ export async function GET(req: Request) {
     )
     return NextResponse.json({ message: 'invalid' }, { status: 403 })
   }
-  const { accessToken, newRefreshToken } = (await new Promise((res, rej) => {
-    jwt.verify(
-      refreshToken,
-      process.env.REFRESH_TOKEN_SECRET,
-      async (err, decode: any) => {
-        if (err) {
-          foundedUser.refreshToken = ''
-          const result = await foundedUser.save()
-        }
-        if (err || foundedUser.email !== decode!.email) {
-          isError = true
+  const { accessToken, newRefreshToken, name, email, role, id } =
+    (await new Promise((res, rej) => {
+      jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET,
+        async (err, decode: any) => {
+          if (err) {
+            foundedUser.refreshToken = ''
+            const result = await foundedUser.save()
+          }
+          if (err || foundedUser.email !== decode!.email) {
+            isError = true
 
-          rej({
-            accessToken: '',
-            newRefreshToken: '',
-          })
-          isError = true
-          return
-        }
-        const role = foundedUser.role
-        const accessToken = jwt.sign(
-          {
-            userInfo: {
+            rej({
+              accessToken: '',
+              newRefreshToken: '',
+            })
+            isError = true
+            return
+          }
+          const role = foundedUser.role
+          const accessToken = jwt.sign(
+            {
+              userInfo: {
+                email: foundedUser.email,
+                role: role,
+                id: foundedUser._id,
+                name: foundedUser.name,
+              },
+            },
+            process.env.ACCESS_TOKEN_SECRET,
+            {
+              expiresIn: '10s',
+            }
+          ) as string
+          const newRefreshToken = jwt.sign(
+            {
               email: foundedUser.email,
               role: role,
+              id: foundedUser._id,
+              name: foundedUser.name,
             },
-          },
-          process.env.ACCESS_TOKEN_SECRET,
-          {
-            expiresIn: '10s',
-          }
-        ) as string
-        const newRefreshToken = jwt.sign(
-          { email: foundedUser.email },
-          process.env.REFRESH_TOKEN_SECRET,
-          { expiresIn: '600s' }
-        ) as string
+            process.env.REFRESH_TOKEN_SECRET,
+            { expiresIn: '600s' }
+          ) as string
 
-        foundedUser.refreshToken = newRefreshToken
-        const result = await foundedUser.save()
-        res({
-          accessToken,
-          newRefreshToken,
-        })
-      }
-    )
-  })) as { accessToken: string; newRefreshToken: string }
+          foundedUser.refreshToken = newRefreshToken
+          const result = await foundedUser.save()
+          res({
+            accessToken,
+            newRefreshToken,
+            email: foundedUser.email,
+            id: foundedUser._id,
+            name: foundedUser.name,
+            role: role,
+          })
+        }
+      )
+    })) as {
+      accessToken: string
+      newRefreshToken: string
+      email: string
+      id: string
+      name: string
+      role: number
+    }
   if (isError) return NextResponse.json({ message: 'invalid' }, { status: 403 })
   const response = NextResponse.json(
     {
       accessToken,
+      name,
+      email,
+      role,
+      id,
     },
     {
       status: 200,
