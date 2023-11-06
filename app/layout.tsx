@@ -8,6 +8,8 @@ import Navbar from '@/components/Navbar'
 import { StoreProviders } from '@/providers'
 import Modal from '@/components/modal'
 import ModalContext from '@/context/ModalContext'
+import NextAuthProvider from '@/providers/NextAuthProvider'
+import { getServerSession } from 'next-auth'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -16,23 +18,21 @@ export const metadata = {
   description: 'Share your project in this web',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <StoreProviders>
-          {/* <ThemeProviders> */}
-          <ModalContext>
-            <Navbar />
-            {children}
-            <Modal />
-          </ModalContext>
-          {/* </ThemeProviders> */}
-        </StoreProviders>
+        <NextAuthProvider>
+          <StoreProviders>
+            {/* <ThemeProviders> */}
+            <ModalContext>
+              <Navbar />
+              {children}
+              <Modal />
+            </ModalContext>
+            {/* </ThemeProviders> */}
+          </StoreProviders>
+        </NextAuthProvider>
       </body>
     </html>
   )

@@ -21,10 +21,11 @@
     position: absolute;
     width: 100%;
     bottom: 0;
-    overflow: auto;
-    max-height: calc(100vh - 64px);
+    // overflow: auto;
+    // max-height: calc(100vh - 64px);
+    height: 100vh;
     &.open {
-      animation: animate-bottom-sheet-up 0.3s ease-in-out;
+      animation: animate-bottom-sheet-up 0.3s cubic-bezier(0.46, 1.12, 1, 1);
     }
     &.close {
       animation: animate-bottom-sheet-down 0.3s ease-in-out;

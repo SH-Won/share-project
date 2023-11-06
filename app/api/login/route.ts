@@ -51,6 +51,8 @@ export async function POST(req: Request) {
       const response = NextResponse.json(
         {
           accessToken,
+          accessTokenExpiry: Date.now() + 10 * 1000,
+          refreshToken: newRefreshToken,
           id: user._id,
           name: user.name,
           email: user.email,
@@ -58,14 +60,14 @@ export async function POST(req: Request) {
         },
         { status: 200 }
       )
-      response.cookies.set({
-        name: 'refreshtoken',
-        value: newRefreshToken,
-        httpOnly: true,
-        secure: true,
-        // sameSite: 'None',
-        maxAge: 24 * 60 * 60 * 1000,
-      })
+      // response.cookies.set({
+      //   name: 'refreshtoken',
+      //   value: newRefreshToken,
+      //   httpOnly: true,
+      //   secure: true,
+      //   // sameSite: 'None',
+      //   maxAge: 24 * 60 * 60 * 1000,
+      // })
       return response
     } else {
       return NextResponse.json({ message: 'invalid' }, { status: 401 })

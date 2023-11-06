@@ -6,11 +6,13 @@ export interface UserState {
   name?: string
   role?: number
   accessToken?: string
+  id: string
 }
 const initialState: UserState = {
   email: '',
   name: '',
   role: -1,
+  id: '',
   accessToken: '',
 }
 

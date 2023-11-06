@@ -6,15 +6,13 @@ interface MyJWTPayload {
   email: string
   role: number
 }
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   await dbConnect()
-  const cookie = req.headers.get('cookie')
-  const refreshToken = cookie?.split('=')[1]
+  // const cookie = req.headers.get('cookie')
+  // const refreshToken = cookie?.split('=')[1]
+  const { refreshToken } = await req.json()
   if (!refreshToken)
-    return NextResponse.json(
-      { message: 'not exist refreshToken' },
-      { status: 401 }
-    )
+    return NextResponse.json({ message: 'not exist refreshToken' }, { status: 401 })
   // const refreshToken = cookies.refreshtoken
   // res.clearCookie('refreshtoken', { httpOnly: true, sameSite: 'None', secure: true })
   // NextResponse.next().cookies.delete('refreshtoken')
@@ -24,7 +22,8 @@ export async function GET(req: Request) {
     jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
-      async (err, decode: any) => {
+
+      async (err: any, decode: any) => {
         if (err) {
           isError = true
         }
@@ -36,76 +35,73 @@ export async function GET(req: Request) {
     )
     return NextResponse.json({ message: 'invalid' }, { status: 403 })
   }
-  const { accessToken, newRefreshToken, name, email, role, id } =
-    (await new Promise((res, rej) => {
-      jwt.verify(
-        refreshToken,
-        process.env.REFRESH_TOKEN_SECRET,
-        async (err, decode: any) => {
-          if (err) {
-            foundedUser.refreshToken = ''
-            const result = await foundedUser.save()
-          }
-          if (err || foundedUser.email !== decode!.email) {
-            isError = true
+  const { accessToken, newRefreshToken, name, email, role, id } = (await new Promise((res, rej) => {
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err: any, decode: any) => {
+      if (err) {
+        foundedUser.refreshToken = ''
+        const result = await foundedUser.save()
+      }
+      if (err || foundedUser.email !== decode!.email) {
+        isError = true
 
-            rej({
-              accessToken: '',
-              newRefreshToken: '',
-            })
-            isError = true
-            return
-          }
-          const role = foundedUser.role
-          const accessToken = jwt.sign(
-            {
-              userInfo: {
-                email: foundedUser.email,
-                role: role,
-                id: foundedUser._id,
-                name: foundedUser.name,
-              },
-            },
-            process.env.ACCESS_TOKEN_SECRET,
-            {
-              expiresIn: '10s',
-            }
-          ) as string
-          const newRefreshToken = jwt.sign(
-            {
-              email: foundedUser.email,
-              role: role,
-              id: foundedUser._id,
-              name: foundedUser.name,
-            },
-            process.env.REFRESH_TOKEN_SECRET,
-            { expiresIn: '600s' }
-          ) as string
-
-          foundedUser.refreshToken = newRefreshToken
-          const result = await foundedUser.save()
-          res({
-            accessToken,
-            newRefreshToken,
+        rej({
+          accessToken: '',
+          newRefreshToken: '',
+        })
+        isError = true
+        return
+      }
+      const role = foundedUser.role
+      const accessToken = jwt.sign(
+        {
+          userInfo: {
             email: foundedUser.email,
+            role: role,
             id: foundedUser._id,
             name: foundedUser.name,
-            role: role,
-          })
+          },
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+          expiresIn: '10s',
         }
-      )
-    })) as {
-      accessToken: string
-      newRefreshToken: string
-      email: string
-      id: string
-      name: string
-      role: number
-    }
+      ) as string
+      const newRefreshToken = jwt.sign(
+        {
+          email: foundedUser.email,
+          role: role,
+          id: foundedUser._id,
+          name: foundedUser.name,
+        },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: '600s' }
+      ) as string
+
+      foundedUser.refreshToken = newRefreshToken
+      const result = await foundedUser.save()
+      res({
+        accessToken,
+        newRefreshToken,
+        email: foundedUser.email,
+        id: foundedUser._id,
+        name: foundedUser.name,
+        role: role,
+      })
+    })
+  })) as {
+    accessToken: string
+    newRefreshToken: string
+    email: string
+    id: string
+    name: string
+    role: number
+  }
   if (isError) return NextResponse.json({ message: 'invalid' }, { status: 403 })
   const response = NextResponse.json(
     {
       accessToken,
+      accessTokenExpiry: Date.now() + 10 * 1000,
+      refreshToken: newRefreshToken,
       name,
       email,
       role,
@@ -115,12 +111,12 @@ export async function GET(req: Request) {
       status: 200,
     }
   )
-  response?.cookies.set({
-    name: 'refreshtoken',
-    value: newRefreshToken,
-    httpOnly: true,
-    secure: true,
-    maxAge: 24 * 60 * 60,
-  })
+  // response?.cookies.set({
+  //   name: 'refreshtoken',
+  //   value: newRefreshToken,
+  //   httpOnly: true,
+  //   secure: true,
+  //   maxAge: 24 * 60 * 60,
+  // })
   return response
 }

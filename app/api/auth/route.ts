@@ -20,5 +20,5 @@ export async function GET(req: Request) {
   })
   if (isError)
     return NextResponse.json({ message: 'forbidden' }, { status: 403 }) // 토큰 invalid
-  return NextResponse.json({ email, role, success: true }, { status: 200 })
+  return NextResponse.json({ email, role, id, name }, { status: 200 })
 }

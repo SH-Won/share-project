@@ -12,5 +12,8 @@ namespace NodeJS {
     NEXT_MONGO_API_SECRET: string
     ACCESS_TOKEN_SECRET: string
     REFRESH_TOKEN_SECRET: string
+    CLOUD_NAME: string
+    CLOUD_API_KEY: string
+    CLOUD_API_SECRET: string
   }
 }

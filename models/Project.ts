@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-const ProductSchema = new mongoose.Schema(
+const ProjectSchema = new mongoose.Schema(
   {
     writer: {
       type: Schema.Types.ObjectId,
@@ -19,8 +19,14 @@ const ProductSchema = new mongoose.Schema(
     category: {
       type: Number,
     },
+    imagePublicId: {
+      type: String,
+    },
+    link: {
+      type: String,
+    },
   },
   { timestamps: true }
 )
-export default mongoose.models.Products ||
-  mongoose.model('Products', ProductSchema)
+export default mongoose.models.Project ||
+  mongoose.model('Project', ProjectSchema)

@@ -1,16 +1,21 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import React, { cloneElement, useEffect, useState } from 'react'
 
 interface BottomModalProps {
-  children: React.ReactNode
+  children: React.ReactElement
   close: () => void
 }
 const BottomModal = ({ children, close }: BottomModalProps) => {
   const [open, setOpen] = useState<boolean>(true)
+  const router = useRouter()
   const closeModal = () => {
     setOpen(false)
     setTimeout(() => {
       close()
+      // router.back()
+      // router.refresh()
+      console.log('done')
     }, 300)
   }
   useEffect(() => {
@@ -22,7 +27,7 @@ const BottomModal = ({ children, close }: BottomModalProps) => {
         <div className="modal__close-button--bottom" onClick={closeModal}>
           X
         </div>
-        {children}
+        {cloneElement(children, { close: closeModal })}
       </div>
     </section>
   )

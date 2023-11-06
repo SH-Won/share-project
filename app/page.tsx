@@ -1,14 +1,36 @@
 // 'use client'
+
+import ProjectCard from '@/components/card/ProjectCard'
+import React from 'react'
+
 // import { useEffect, useState } from 'react'
 const getData = async () => {
-  const response = await fetch('http://localhost:3000/api')
+  const response = await fetch('http://localhost:3000/api', {})
   const products = (await response.json()).products
-  return products
+  return products as {
+    _id: string
+    title: string
+    description: string
+    imageUrl: string
+    writer: {
+      _id: string
+      image: string
+      name: string
+    }
+  }[]
 }
 
 //'https://res.cloudinary.com/dhjegsbqv/image/upload/v1681810010/post/IMG_6359_fojaxg.jpg'
 //'https://res.cloudinary.com/dhjegsbqv/image/upload/v1639887022/gallery/9B3BDAC4-F061-41F9-836D-5E68ECC4E511_amhqsc.jpg'
-export default async function Home() {
+// export const getServerSideProps = async () => {
+//   const response = await getData()
+//   return {
+//     props: {
+//       products: response,
+//     },
+//   }
+// }
+export default async function Home({ children }: { children: React.ReactNode }) {
   // const [products, setProducts] = useState([])
 
   // useEffect(() => {
@@ -17,9 +39,8 @@ export default async function Home() {
   //     setProducts(response)
   //   })()
   // }, [])
-  // const products = await getData()
+  const projects = await getData()
   return (
-    <></>
     // <>
     //   <div className="page-container">
     //     {Array(50)
@@ -33,16 +54,19 @@ export default async function Home() {
     //       })}
     //   </div>
     // </>
-    // <div className="page-container">
-    //   {products.map((product: any) => (
-    //     <div key={product._id}>
-    //       <div>
-    //         <img src={product.imageUrl} />
-    //       </div>
-    //       <span>{product.label}</span>
-    //     </div>
-    //   ))}
-    // </div>
+    <div className="page-container">
+      {projects.map((project) => (
+        <ProjectCard
+          key={project._id}
+          id={project._id}
+          title={project.title}
+          imageUrl={project.imageUrl}
+          description={project.description}
+          writer={project.writer?.name ?? ''}
+          writerImage={project.writer?.image ?? ''}
+        />
+      ))}
+    </div>
   )
 }
 // useEffect(() => {

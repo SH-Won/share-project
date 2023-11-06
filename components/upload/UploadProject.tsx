@@ -1,10 +1,12 @@
 'use client'
 import '@/styles/layout/upload-project.scss'
 import InputBox from '../common/InputBox'
-import { Button, Colors, InputBox as Input } from 'my-react-component'
-import { useForm, useValidation } from '@/hooks'
-import { ChangeEvent } from 'react'
+import { Button, Colors } from 'my-react-component'
+import { useAuth, useForm, useModal, useValidation } from '@/hooks'
 import InputFileBox from '../common/InputFileBox'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 
 const initailState = {
   title: '',
@@ -12,7 +14,15 @@ const initailState = {
   image: '',
   link: '',
 }
-const UploadProject = () => {
+interface UploadProjectProps {
+  close?: () => void
+}
+const UploadProject = ({ close }: UploadProjectProps) => {
+  const session = useSession()
+  console.log(session)
+  const { user, checkLogin } = useAuth()
+  const { deleteModal } = useModal()
+  const router = useRouter()
   const { inputValue, onHandleChange, onHandleChangeImage } =
     useForm<typeof initailState>(initailState)
   const { validatorXSS } = useValidation()
@@ -20,17 +30,53 @@ const UploadProject = () => {
     onHandleChange,
     validator: validatorXSS,
   }
-  const onSubmit = () => {
-    console.log(inputValue)
+  useEffect(() => {
+    const go = async () => {
+      close?.()
+    }
+    // document.body.style.overflow = 'hidden'
+    // window.addEventListener('popstate', go)
+    // return () => {
+    //   document.body.style.removeProperty('overflow')
+    //   window.removeEventListener('popstate', go)
+    // }
+  }, [])
+  const onSubmit = async (e: MouseEvent) => {
+    e.preventDefault()
+    const body = {
+      ...inputValue,
+      userId: user.id,
+      category: 0,
+      link: 'https://github.com/SH-Won',
+    }
+    try {
+      await checkLogin()
+        .then((response) => {
+          if (!response) return { ok: false }
+          else {
+            body.userId = response.id
+            return fetch('http://localhost:3000/api/upload', {
+              method: 'POST',
+              body: JSON.stringify(body),
+            })
+          }
+        })
+        .then((response) => {
+          if (response.ok) close?.()
+          else {
+            deleteModal()
+            router.replace('/login')
+          }
+        })
+    } catch (e) {
+      console.log(e)
+      //
+    }
   }
   return (
     <div className="project-container">
-      <form onSubmit={onSubmit}>
-        <InputFileBox
-          name="image"
-          onHandleChange={onHandleChangeImage}
-          value={inputValue.image}
-        />
+      <form>
+        <InputFileBox name="image" onHandleChange={onHandleChangeImage} value={inputValue.image} />
         <InputBox
           name="title"
           value={inputValue.title}
@@ -54,6 +100,7 @@ const UploadProject = () => {
             color={Colors.white}
             fontColor={Colors.grey_111}
             border={Colors.grey_bbb}
+            click={() => close?.()}
           >
             취소
           </Button>

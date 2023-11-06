@@ -2,12 +2,12 @@
 import { useSearch } from '@/hooks'
 import { setUser } from '@/store/user/userSlice'
 import { InputBox, Colors, Button } from 'my-react-component'
-// import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/store'
-
+import { signIn } from 'next-auth/react'
 const Container = styled.div`
   min-height: 100vh;
   display: flex;
@@ -30,42 +30,32 @@ const ButtonWrapper = styled.div`
   }
 `
 const LoginPage = () => {
-  const {
-    searchText: email,
-    onChangeText: onChangeEmail,
-    emailValidator,
-  } = useSearch()
-  const {
-    searchText: password,
-    onChangeText: onChangePasswoard,
-    passwordValidator,
-  } = useSearch()
-  // const router = useRouter()
+  const { searchText: email, onChangeText: onChangeEmail, emailValidator } = useSearch()
+  const { searchText: password, onChangeText: onChangePasswoard, passwordValidator } = useSearch()
+  const router = useRouter()
   const dispatch = useDispatch<AppDispatch>()
   const onSubmit = async () => {
     const user = {
       email,
       password,
+      redirect: '/',
     }
-    try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-        credentials: 'include',
-      })
-      const result = await response.json()
-      console.log(result)
-      dispatch(
-        setUser({
-          accessToken: result.accessToken,
-        })
-      )
-    } catch (e) {
-      console.log(e)
-    }
+    const response = await signIn('email-password-credential', user)
+    // try {
+    //   const response = await fetch('/api/login', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(user),
+    //     credentials: 'include',
+    //   })
+    //   const result = await response.json()
+    //   dispatch(setUser(result))
+    //   router.replace('/')
+    // } catch (e) {
+    //   console.log(e)
+    // }
   }
   console.log('render login page')
   return (
@@ -85,11 +75,7 @@ const LoginPage = () => {
         validator={passwordValidator}
       />
       <ButtonWrapper>
-        <Button
-          color={Colors.white}
-          fontColor={Colors.grey_111}
-          border={Colors.grey_bbb}
-        >
+        <Button color={Colors.white} fontColor={Colors.grey_111} border={Colors.grey_bbb}>
           취소
         </Button>
         <Button color={Colors.main} click={onSubmit}>
