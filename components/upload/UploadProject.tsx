@@ -20,8 +20,7 @@ interface UploadProjectProps {
 const UploadProject = ({ close }: UploadProjectProps) => {
   const session = useSession()
   console.log(session)
-  const { user, checkLogin } = useAuth()
-  const { deleteModal } = useModal()
+  // const { user, checkLogin } = useAuth()
   const router = useRouter()
   const { inputValue, onHandleChange, onHandleChangeImage } =
     useForm<typeof initailState>(initailState)
@@ -41,37 +40,49 @@ const UploadProject = ({ close }: UploadProjectProps) => {
     //   window.removeEventListener('popstate', go)
     // }
   }, [])
-  const onSubmit = async (e: MouseEvent) => {
+  const onSubmit = async (e: React.MouseEvent) => {
     e.preventDefault()
     const body = {
       ...inputValue,
-      userId: user.id,
+      userId: session.data?.id,
       category: 0,
       link: 'https://github.com/SH-Won',
     }
     try {
-      await checkLogin()
-        .then((response) => {
-          if (!response) return { ok: false }
-          else {
-            body.userId = response.id
-            return fetch('http://localhost:3000/api/upload', {
-              method: 'POST',
-              body: JSON.stringify(body),
-            })
-          }
-        })
-        .then((response) => {
-          if (response.ok) close?.()
-          else {
-            deleteModal()
-            router.replace('/login')
-          }
-        })
+      const response = await fetch('http://localhost:3000/api/upload', {
+        method: 'POST',
+        body: JSON.stringify(body),
+      })
+      if (response.ok) {
+        close?.()
+      }
     } catch (e) {
       console.log(e)
-      //
     }
+
+    // try {
+    //   await checkLogin()
+    //     .then((response) => {
+    //       if (!response) return { ok: false }
+    //       else {
+    //         body.userId = response.id
+    //         return fetch('http://localhost:3000/api/upload', {
+    //           method: 'POST',
+    //           body: JSON.stringify(body),
+    //         })
+    //       }
+    //     })
+    //     .then((response) => {
+    //       if (response.ok) close?.()
+    //       else {
+    //         deleteModal()
+    //         router.replace('/login')
+    //       }
+    //     })
+    // } catch (e) {
+    //   console.log(e)
+    //   //
+    // }
   }
   return (
     <div className="project-container">
@@ -104,9 +115,11 @@ const UploadProject = ({ close }: UploadProjectProps) => {
           >
             취소
           </Button>
-          <Button color={Colors.main} fontColor={Colors.white} click={onSubmit}>
-            올리기
-          </Button>
+          <div onClick={(e) => onSubmit(e)}>
+            <Button color={Colors.main} fontColor={Colors.white}>
+              올리기
+            </Button>
+          </div>
         </div>
       </form>
     </div>

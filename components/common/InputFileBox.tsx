@@ -20,22 +20,12 @@ const InputFileBox = ({ name, onHandleChange, value }: InputFileBoxProps) => {
             </div>
           ) : (
             <div className="file__image">
-              <Image
-                src={value}
-                alt={'uploaded image'}
-                width={400}
-                height={400}
-              />
+              <Image src={value} alt={'uploaded image'} width={400} height={400} />
             </div>
           )}
         </div>
       </label>
-      <input
-        id="input-file"
-        type="file"
-        name={name}
-        onChange={onHandleChange}
-      />
+      <input id="input-file" type="file" name={name} onChange={onHandleChange} />
     </div>
   )
 }

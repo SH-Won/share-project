@@ -1,9 +1,9 @@
 import NextAuth, { AuthOptions } from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials'
-import { json } from 'stream/consumers'
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
   secret: '12345',
+
   providers: [
     CredentialProvider({
       id: 'email-password-credential',
@@ -19,13 +19,14 @@ export const authOptions: AuthOptions = {
           throw new Error('user not exist')
         }
         const user = await response.json()
-        console.log(user)
+        // console.log(user)
         return user
       },
     }),
   ],
   // pages: {
   //   signIn: '/login',
+
   // },
 
   session: {
@@ -34,7 +35,6 @@ export const authOptions: AuthOptions = {
   },
   callbacks: {
     async jwt({ token, user }) {
-      console.log('re')
       if (user) {
         token.id = user.id
         token.accessToken = user.accessToken
@@ -43,31 +43,31 @@ export const authOptions: AuthOptions = {
         token.role = user.role
         return token
       }
-      const refreshTime = Math.round((token.accessTokenExpiry as number) - Date.now())
-      console.log(refreshTime)
-      if (refreshTime > 0) {
-        console.log('not need refresh ')
-        return token
-      }
-      const response = await fetch('http://localhost:3000/api/auth/refresh', {
-        method: 'POST',
-        body: JSON.stringify({
-          refreshToken: token.refreshToken,
-        }),
-      })
-      if (!response.ok) {
-        token.error = 'invalid'
-        return token
-      }
-      const json = await response.json()
-      token.accessToken = json.accessToken
-      token.refreshToken = json.refreshToken
-      token.accessTokenExpiry = json.accessTokenExpiry
-      token.role = json.role
-      token.email = json.email
-      token.name = json.name
-      token.id = json.id
-      console.log('jwt', token)
+      // const refreshTime = Math.round((token.accessTokenExpiry as number) - Date.now())
+      // // console.log(refreshTime)
+      // if (refreshTime > 0) {
+      //   // console.log('not need refresh ')
+      //   return token
+      // }
+      // const response = await fetch('http://localhost:3000/api/auth/refresh', {
+      //   method: 'POST',
+      //   body: JSON.stringify({
+      //     refreshToken: token.refreshToken,
+      //   }),
+      // })
+      // if (!response.ok) {
+      //   token.error = 'invalid'
+      //   return token
+      // }
+      // const json = await response.json()
+      // token.accessToken = json.accessToken
+      // token.refreshToken = json.refreshToken
+      // token.accessTokenExpiry = json.accessTokenExpiry
+      // token.role = json.role
+      // token.email = json.email
+      // token.name = json.name
+      // token.id = json.id
+      // console.log('jwt', token)
       return token
     },
     async session({ session, token }) {
@@ -79,8 +79,8 @@ export const authOptions: AuthOptions = {
       session.name = token.name
       session.role = token.role
       // session.error = token.error
-      console.log('session', token)
-      console.log('session', session)
+      // console.log('session', token)
+      // console.log('session', session)
       // session.refreshToken = token.refreshToken
       return session
     },

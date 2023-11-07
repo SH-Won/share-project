@@ -1,3 +1,4 @@
+'use client'
 import { ChangeEvent, useState } from 'react'
 
 const useForm = <T>(initialState: T) => {

@@ -1,16 +1,19 @@
 'use client'
 import { useModal } from '@/hooks'
 import React, { useCallback } from 'react'
-import '@/styles/layout/modal.scss'
 import BottomModal from './BottomModal'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import UploadProject from '../upload/UploadProject'
 
 const Modal = () => {
-  const { modalStack, deleteModal } = useModal()
+  // const { modalStack, deleteModal } = useModal()
+  console.log('modal')
   const searchParams = useSearchParams()
   const router = useRouter()
+  const pathname = usePathname()
+
   console.log(searchParams.get('modal'), 'modal searchParams')
+  const isModalOpen = searchParams.get('modal')
   // const RenderModal = () => {
   //   return modalStack.map((modalState, index) => {
   //     switch (modalState.type) {
@@ -25,16 +28,14 @@ const Modal = () => {
   //     }
   //   })
   // }
-  if (!searchParams.get('modal')) {
-    return null
-  }
-  const Component = (props) => <UploadProject {...props} />
+  const ModalLayout = useCallback(() => {}, [])
 
+  console.log('modal')
   return (
     <React.Fragment>
       {/* {RenderModal()} */}
       <BottomModal close={() => router.back()}>
-        <Component />
+        <UploadProject />
       </BottomModal>
     </React.Fragment>
   )

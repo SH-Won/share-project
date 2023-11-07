@@ -14,8 +14,8 @@ const useModal = () => {
   if (!setModalState) {
     throw new Error('MyConsumer must be used within a MyProvider')
   }
-  const showModal = (modalState: ModalStack) =>
-    setModalState((prev) => [...prev, modalState])
+
+  const showModal = (modalState: ModalStack) => setModalState((prev) => [...prev, modalState])
   const deleteModal = () => setModalState((prev) => [...prev.slice(1)])
   return {
     modalStack,

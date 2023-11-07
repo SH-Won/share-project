@@ -1,7 +1,9 @@
-@import "@/styles/common/mixins.scss";
-@import "@/styles/layout/basic.scss";
+// @import "../styles/common/_mixins.scss";
+@import "../styles/layout/basic.scss";
+@import "../styles/layout/modal.scss";
 
 .page-container {
+  margin: 0 auto;
   display: grid;
   gap: 36px;
   padding: 0 20px;

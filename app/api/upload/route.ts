@@ -13,19 +13,15 @@ export async function POST(req: Request) {
     await dbConnect()
     const body = await req.json()
     const { image } = body
-    const { imageUrl, imagePublicId } = await new Promise((res, rej) => {
-      cloudinary.uploader.upload(
-        image,
-        { folder: 'share-project' },
-        (err, result) => {
-          if (err) rej(err)
-          res({
-            imagePublicId: result!.public_id as string,
-            imageUrl: result!.secure_url as string,
-          })
-        }
-      )
-    })
+    const { imageUrl, imagePublicId } = (await new Promise((res, rej) => {
+      cloudinary.uploader.upload(image, { folder: 'share-project' }, (err, result) => {
+        if (err) rej(err)
+        res({
+          imagePublicId: result!.public_id as string,
+          imageUrl: result!.secure_url as string,
+        })
+      })
+    })) as { imageUrl: string; imagePublicId: string }
     const newProject = new Project({
       writer: body.userId,
       title: body.title,

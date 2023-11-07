@@ -10,14 +10,7 @@ interface InputBoxProps {
   onHandleChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const InputBox = ({
-  type,
-  name,
-  value,
-  placeholder,
-  validator,
-  onHandleChange,
-}: InputBoxProps) => {
+const InputBox = ({ type, name, value, placeholder, validator, onHandleChange }: InputBoxProps) => {
   const [focus, setFocus] = useState(false)
   const valid = validator?.(value)
   const computedClass = () => {
@@ -31,6 +24,7 @@ const InputBox = ({
     <div className="input-container">
       <label htmlFor={name}>{name}</label>
       <input
+        type={type || 'text'}
         name={name}
         className={computedClass()}
         placeholder={placeholder}
