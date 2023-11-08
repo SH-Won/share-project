@@ -1,12 +1,15 @@
 import { IProject } from '@/app/page'
 import Image from 'next/image'
 import React from 'react'
+import ImageWithSkeleton from '../image/ImageWithSkeleton'
+import Close from '../modal/Close'
 interface Props {
   project: IProject
 }
 const DetailPage = ({ project }: Props) => {
   return (
     <div className="detail-container">
+      <Close />
       <h1 className="detail-header__title">{project.title}</h1>
       <div className="detail-header sticky">
         <div className="detail-header__user-content">
@@ -24,10 +27,7 @@ const DetailPage = ({ project }: Props) => {
           </div>
         </div>
       </div>
-
-      <div className="image-container detail">
-        <Image src={project.imageUrl} width={300} height={300} alt={project.title} />
-      </div>
+      <ImageWithSkeleton type="detail" imageUrl={project.imageUrl} alt={project.title} />
       <p className="detail-content__overview"></p>
     </div>
   )

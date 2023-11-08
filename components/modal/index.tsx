@@ -7,7 +7,6 @@ import UploadProject from '../upload/UploadProject'
 
 const Modal = () => {
   // const { modalStack, deleteModal } = useModal()
-  console.log('modal')
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()

@@ -1,45 +1,19 @@
 'use client'
 
-import { IProject } from '@/app/page'
-import Skeleton from '@/components/common/Skeleton'
-import DetailPage from '@/components/detail/DetailPage'
-import SkeletonDetail from '@/components/detail/SkeletonDetail'
-import { useEffect, useState } from 'react'
+// import { IProject } from '@/app/page'
+// import Intro from '@/components/detail/Intro'
+// import SkeletonDetail from '@/components/detail/SkeletonDetail'
+// import Close from '@/components/modal/Close'
+import DetailPage from '@/pages/DetailPage'
+// import { useEffect, useState } from 'react'
 
 interface Props {
   params: {
     id: string
   }
 }
-const Page = ({ params }: Props) => {
-  const { id } = params
-  const [loading, setLoading] = useState(true)
-  const [project, setProject] = useState<IProject>()
-
-  useEffect(() => {
-    ;(async () => {
-      const response = await fetch(`http://localhost:3000/api/detail/${id}`, {
-        method: 'GET',
-      })
-      if (response.ok) {
-        const json = await response.json()
-        console.log(json)
-        setProject(json.project)
-        setLoading(false)
-      } else {
-      }
-    })()
-  }, [id])
-  console.log(project)
-
-  if (loading) return <SkeletonDetail />
-
-  return (
-    <div>
-      <DetailPage project={project!} />
-      <div style={{ height: '150vh' }}></div>
-    </div>
-  )
+const page = ({ params }: Props) => {
+  return <DetailPage params={params} />
 }
 
-export default Page
+export default page

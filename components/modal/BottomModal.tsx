@@ -1,6 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import React, { cloneElement, useEffect, useState } from 'react'
+import Close from './Close'
 
 interface BottomModalProps {
   children: React.ReactElement
@@ -13,9 +14,6 @@ const BottomModal = ({ children, close }: BottomModalProps) => {
     setOpen(false)
     setTimeout(() => {
       close()
-      // router.back()
-      // router.refresh()
-      console.log('done')
     }, 300)
   }
   useEffect(() => {
@@ -23,10 +21,8 @@ const BottomModal = ({ children, close }: BottomModalProps) => {
   }, [])
   return (
     <section className="modal">
+      <Close />
       <div className={`modal__content--bottom ${!open ? 'close' : 'open'}`}>
-        <div className="modal__close-button--bottom" onClick={closeModal}>
-          X
-        </div>
         {cloneElement(children, { close: closeModal })}
       </div>
     </section>

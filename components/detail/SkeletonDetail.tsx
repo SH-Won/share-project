@@ -1,9 +1,11 @@
 import React from 'react'
 import '@/styles/components/skeleton.scss'
+import Close from '../modal/Close'
 
 const SkeletonDetail = () => {
   return (
     <div className="skeleton-loading-container">
+      <Close />
       <div className="loading-template loading-animation description"></div>
       <div className="loading-user-container">
         <div className="loading-template loading-animation user-image"></div>

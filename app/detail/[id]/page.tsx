@@ -1,7 +1,10 @@
+import DetailPage from '@/pages/DetailPage'
+import { NextPage } from 'next'
 import React from 'react'
 
-const page = () => {
-  return <div className="modal__content--bottom open">detail</div>
+const page = ({ params }) => {
+  console.log(params)
+  return <DetailPage params={params} />
 }
 
 export default page
