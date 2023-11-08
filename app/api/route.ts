@@ -10,8 +10,15 @@ export async function GET(request: NextRequest) {
   try {
     const db = await dbConnect()
     console.log('db connected')
-    const products = await Project.find().populate('writer').exec()
+    const products = await Project.find()
+      .populate({
+        path: 'writer',
+        model: User,
+      })
+      .exec()
+
     console.log('api call')
+    db?.disconnect()
     return NextResponse.json({ products })
   } catch (e) {
     console.log('error')

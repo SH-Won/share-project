@@ -20,7 +20,7 @@ const ProjectCard = ({
 }: ProjectCardProps) => {
   return (
     <div className="project-card">
-      <Link href={'/detail/2'} shallow={true}>
+      <Link href={`/detail/${id}`} shallow={true}>
         <div className="project-card__image-wrapper">
           <Image src={imageUrl} width={400} height={400} alt={description} />
         </div>

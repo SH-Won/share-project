@@ -18,10 +18,10 @@
     background-color: color("white");
     // border-top-left-radius: 12px;
     // border-top-right-radius: 12px;
-    position: absolute;
+    position: fixed;
     width: 100%;
     bottom: 0;
-    // overflow: auto;
+    overflow: auto;
     // max-height: calc(100vh - 64px);
     height: 100vh;
     &.open {

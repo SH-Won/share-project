@@ -23,6 +23,9 @@ const Navbar = () => {
       <Link href="/modal" shallow={true}>
         <div onClick={onClick}>Create</div>
       </Link>
+      <Link href="/login">
+        <div>Login</div>
+      </Link>
     </nav>
   )
 }

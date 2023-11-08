@@ -41,7 +41,8 @@ export default async function RootLayout({ children, detail, modal }: Props) {
           </StoreProviders>
           {modal}
         </NextAuthProvider>
-        <DetailLayout>{detail}</DetailLayout>
+        {/* <DetailLayout></DetailLayout> */}
+        {detail}
       </body>
     </html>
   )
