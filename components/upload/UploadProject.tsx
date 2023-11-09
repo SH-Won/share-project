@@ -7,6 +7,7 @@ import InputFileBox from '../common/InputFileBox'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
+import { revalidatePath } from 'next/cache'
 
 const initailState = {
   title: '',
@@ -55,6 +56,7 @@ const UploadProject = ({ close }: UploadProjectProps) => {
       })
       if (response.ok) {
         close?.()
+        revalidatePath('/')
       }
     } catch (e) {
       console.log(e)

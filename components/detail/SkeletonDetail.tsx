@@ -1,5 +1,5 @@
 import React from 'react'
-import '@/styles/components/skeleton.scss'
+// import '@/styles/components/skeleton.scss'
 import Close from '../modal/Close'
 
 const SkeletonDetail = () => {

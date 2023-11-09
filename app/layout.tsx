@@ -11,7 +11,6 @@ import Modal from '@/components/modal'
 import ModalContext from '@/context/ModalContext'
 import NextAuthProvider from '@/providers/NextAuthProvider'
 import { getServerSession } from 'next-auth'
-import DetailLayout from '@/layout/DetailLayout'
 export const metadata = {
   title: 'Share Project',
   description: 'Share your project in this web',
@@ -29,7 +28,6 @@ export default async function RootLayout({ children, detail, modal }: Props) {
       <body>
         <NextAuthProvider>
           <StoreProviders>
-            {/* <ThemeProviders> */}
             {/* <ModalContext> */}
             <Navbar />
 
@@ -37,11 +35,9 @@ export default async function RootLayout({ children, detail, modal }: Props) {
 
             {/* <Modal /> */}
             {/* </ModalContext> */}
-            {/* </ThemeProviders> */}
           </StoreProviders>
           {modal}
         </NextAuthProvider>
-        {/* <DetailLayout></DetailLayout> */}
         {detail}
       </body>
     </html>

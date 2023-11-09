@@ -2,6 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import '@/styles/components/project-card.scss'
 import Link from 'next/link'
+import ImageWithSkeleton from '../image/ImageWithSkeleton'
 interface ProjectCardProps {
   id: string
   writer: string
@@ -20,10 +21,17 @@ const ProjectCard = ({
 }: ProjectCardProps) => {
   return (
     <div className="project-card">
-      <Link href={`/detail/${id}`} shallow={true}>
-        <div className="project-card__image-wrapper">
+      <Link href={`/detail/${id}`} shallow={true} prefetch={false}>
+        {/* <div className="project-card__image-wrapper">
           <Image src={imageUrl} width={400} height={400} alt={description} />
-        </div>
+        </div> */}
+        <ImageWithSkeleton
+          type="main"
+          width={400}
+          height={400}
+          imageUrl={imageUrl ?? ''}
+          alt={title ?? 'loading'}
+        />
       </Link>
       <div className="project-card__explain">
         <div className="writer">

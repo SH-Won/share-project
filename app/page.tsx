@@ -1,5 +1,7 @@
-// 'use client'
+'use client'
 import ProjectCard from '@/components/card/ProjectCard'
+import ProjectCardSkeleton from '@/components/card/ProjectCardSkeleton'
+import { useEffect, useState } from 'react'
 export interface IProject {
   _id: string
   title: string
@@ -19,18 +21,27 @@ const getData = async () => {
   const products = (await response.json()).products
   return (products as IProject[]) || []
 }
-// 'https://res.cloudinary.com/dhjegsbqv/image/upload/v1681810010/post/IMG_6359_fojaxg.jpg'
-// 'https://res.cloudinary.com/dhjegsbqv/image/upload/v1639887022/gallery/9B3BDAC4-F061-41F9-836D-5E68ECC4E511_amhqsc.jpg'
-// export const getServerSideProps = async () => {
-//   const response = await getData()
-//   return {
-//     props: {
-//       products: response,
-//     },
-//   }
-// }
-export default async function Home() {
-  const projects = await getData()
+
+export default function Home() {
+  const [projects, setProjects] = useState<IProject[]>([])
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    getData().then(async (response) => {
+      setProjects(response)
+      setLoading(false)
+    })
+  }, [])
+  if (loading)
+    return (
+      <div className="page-container">
+        {Array(10)
+          .fill(0)
+          .map((_, i) => (
+            <ProjectCardSkeleton key={i} />
+          ))}
+      </div>
+    )
+
   return (
     <div className="page-container">
       {projects.map((project) => (

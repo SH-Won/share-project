@@ -11,7 +11,7 @@ interface Props {
   }
 }
 const DetailPage = ({ params }: Props) => {
-  const { id } = params
+  const id = params!.id
   const [loading, setLoading] = useState(true)
   const [project, setProject] = useState<IProject>()
 
@@ -33,7 +33,7 @@ const DetailPage = ({ params }: Props) => {
   if (loading) return <SkeletonDetail />
 
   return (
-    <div>
+    <div className="detail-page">
       <Intro project={project!} />
       <div style={{ height: '150vh' }}></div>
     </div>

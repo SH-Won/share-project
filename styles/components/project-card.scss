@@ -31,5 +31,23 @@
         @include typeface("Paragraph_2_b");
       }
     }
+
+    &.skeleton {
+      height: 24px;
+      .writer {
+        width: 100%;
+      }
+      .user-image {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        border-radius: 50%;
+      }
+      .text {
+        border-radius: 4px;
+        width: 100%;
+        height: 18px;
+      }
+    }
   }
 }

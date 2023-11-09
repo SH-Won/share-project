@@ -1,15 +1,14 @@
 import dbConnect from '@/lib/dbConnect'
 import Project from '@/models/Project'
 import User from '@/models/User'
-import { NextApiRequest } from 'next'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 interface Params {
   params: {
     id: string
   }
 }
-export async function GET(req: NextApiRequest, { params }: Params) {
+export async function GET(req: NextRequest, { params }: Params) {
   const id = params.id
   try {
     const db = await dbConnect()

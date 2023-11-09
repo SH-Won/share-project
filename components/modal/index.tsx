@@ -11,25 +11,10 @@ const Modal = () => {
   const router = useRouter()
   const pathname = usePathname()
 
-  console.log(searchParams.get('modal'), 'modal searchParams')
-  const isModalOpen = searchParams.get('modal')
-  // const RenderModal = () => {
-  //   return modalStack.map((modalState, index) => {
-  //     switch (modalState.type) {
-  //       case 'bottomModal':
-  //         return (
-  //           <BottomModal close={deleteModal} key={index}>
-  //             <modalState.component {...modalState.props} />
-  //           </BottomModal>
-  //         )
-  //       default:
-  //         return <></>
-  //     }
-  //   })
-  // }
+  console.log(searchParams!.get('modal'), 'modal searchParams')
+  const isModalOpen = searchParams!.get('modal')
   const ModalLayout = useCallback(() => {}, [])
 
-  console.log('modal')
   return (
     <React.Fragment>
       {/* {RenderModal()} */}
