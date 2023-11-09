@@ -1,7 +1,9 @@
-'use client'
-import ProjectCard from '@/components/card/ProjectCard'
-import ProjectCardSkeleton from '@/components/card/ProjectCardSkeleton'
-import { useEffect, useState } from 'react'
+// 'use client'
+import { getData } from '@/lib/api'
+import MainPage from '@/page/MainPage'
+import { Suspense } from 'react'
+import Loading from './loading'
+import '@/styles/components/project-card.scss'
 export interface IProject {
   _id: string
   title: string
@@ -13,48 +15,30 @@ export interface IProject {
     name: string
   }
 }
-const getData = async () => {
-  const response = await fetch('http://localhost:3000/api/', {})
-  if (!response.ok) {
-    return []
-  }
-  const products = (await response.json()).products
-  return (products as IProject[]) || []
-}
-
-export default function Home() {
-  const [projects, setProjects] = useState<IProject[]>([])
-  const [loading, setLoading] = useState(true)
-  useEffect(() => {
-    getData().then(async (response) => {
-      setProjects(response)
-      setLoading(false)
-    })
-  }, [])
-  if (loading)
-    return (
-      <div className="page-container">
-        {Array(10)
-          .fill(0)
-          .map((_, i) => (
-            <ProjectCardSkeleton key={i} />
-          ))}
-      </div>
-    )
-
+export default async function Home() {
+  // const [projects, setProjects] = useState<IProject[]>([])
+  // const [loading, setLoading] = useState(true)
+  // useEffect(() => {
+  //   getData().then(async (response) => {
+  //     setProjects(response)
+  //     setLoading(false)
+  //   })
+  // }, [])
+  // if (loading)
+  //   return (
+  //     <div className="page-container">
+  //       {Array(10)
+  //         .fill(0)
+  //         .map((_, i) => (
+  //           <ProjectCardSkeleton key={i} />
+  //         ))}
+  //     </div>
+  //   )
+  // const projects = await getData()
+  const projects = await getData()
   return (
-    <div className="page-container">
-      {projects.map((project) => (
-        <ProjectCard
-          key={project._id}
-          id={project._id}
-          title={project.title}
-          imageUrl={project.imageUrl}
-          description={project.description}
-          writer={project.writer?.name ?? ''}
-          writerImage={project.writer?.image ?? ''}
-        />
-      ))}
-    </div>
+    // <Suspense fallback={<Loading />}>
+    <MainPage projects={projects} />
+    // </Suspense>
   )
 }

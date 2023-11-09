@@ -53,12 +53,13 @@
         -webkit-transition: 0.3s ease-in-out;
         transition: 0.3s ease-in-out;
         background: #fff;
-        border-bottom: 1px solid #f3f3f4;
+        border-bottom: 1px solid #d7d7da;
+        //#f3f3f4
       }
     }
   }
   &__user-content {
-    padding: 14px 0;
+    padding: 14px 0 18px;
     position: relative;
     display: flex;
     align-items: center;
@@ -85,6 +86,11 @@
         color: color("green");
       }
     }
+  }
+}
+.detail-content {
+  &__overview {
+    margin-top: 2rem;
   }
 }
 // .max-wrapper {

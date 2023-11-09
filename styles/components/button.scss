@@ -1,0 +1,33 @@
+.button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 50px;
+
+  &.basic {
+    background-color: color("white");
+    color: color("grey_111");
+    border: 1.5px solid #e7e7e9;
+  }
+  &.black {
+    background-color: color("grey_111");
+    color: color("white");
+  }
+  &.large {
+    height: 56px;
+    padding: 0 24px;
+    @include typeface("Paragraph_2b");
+  }
+  &.medium {
+    height: 44px;
+    padding: 0 20px;
+    @include typeface("Paragraph_3_b");
+  }
+  &.small {
+    height: 32px;
+    padding: 0 16px;
+    @include typeface("Paragraph_3_b");
+  }
+}

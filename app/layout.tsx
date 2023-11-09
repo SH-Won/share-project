@@ -11,6 +11,8 @@ import Modal from '@/components/modal'
 import ModalContext from '@/context/ModalContext'
 import NextAuthProvider from '@/providers/NextAuthProvider'
 import { getServerSession } from 'next-auth'
+import Loading from './loading'
+import { Suspense } from 'react'
 export const metadata = {
   title: 'Share Project',
   description: 'Share your project in this web',
@@ -30,13 +32,12 @@ export default async function RootLayout({ children, detail, modal }: Props) {
           <StoreProviders>
             {/* <ModalContext> */}
             <Navbar />
-
-            {children}
+            <Suspense fallback={<Loading />}>{children}</Suspense>
 
             {/* <Modal /> */}
             {/* </ModalContext> */}
+            {modal}
           </StoreProviders>
-          {modal}
         </NextAuthProvider>
         {detail}
       </body>

@@ -17,7 +17,7 @@ const useInterSection = <T extends HTMLElement>({ callback }: Props) => {
   const targetRef = useCallback((node: T) => {
     if (observer.current) observer.current.disconnect()
     observer.current = new IntersectionObserver(handleInterSecting, {
-      threshold: 1,
+      threshold: 0,
     })
     if (node) observer.current?.observe(node)
   }, [])

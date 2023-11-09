@@ -1,5 +1,7 @@
+import { IProject } from '@/app/page'
 import dbConnect from '@/lib/dbConnect'
 import Project from '@/models/Project'
+import User from '@/models/User'
 import { v2 as cloudinary } from 'cloudinary'
 import { NextResponse } from 'next/server'
 
@@ -30,7 +32,13 @@ export async function POST(req: Request) {
       imagePublicId,
     })
     const result = await newProject.save()
-    return NextResponse.json({ success: true }, { status: 200 })
+    const uploadProject = await Project.findOne({ _id: result._id })
+      .populate({
+        path: 'writer',
+        model: User,
+      })
+      .exec()
+    return NextResponse.json({ success: true, uploadProject }, { status: 200 })
   } catch (e) {
     return NextResponse.json({ success: false }, { status: 400 })
   }

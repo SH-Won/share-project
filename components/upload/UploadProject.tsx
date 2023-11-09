@@ -8,6 +8,9 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { revalidatePath } from 'next/cache'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/store'
+import { setProjects } from '@/store/project/projectSlice'
 
 const initailState = {
   title: '',
@@ -21,6 +24,7 @@ interface UploadProjectProps {
 const UploadProject = ({ close }: UploadProjectProps) => {
   const session = useSession()
   console.log(session)
+  const dispatch = useDispatch<AppDispatch>()
   // const { user, checkLogin } = useAuth()
   const router = useRouter()
   const { inputValue, onHandleChange, onHandleChangeImage } =
@@ -55,8 +59,9 @@ const UploadProject = ({ close }: UploadProjectProps) => {
         body: JSON.stringify(body),
       })
       if (response.ok) {
+        const uploadProject = (await response.json()).uploadProject
+        dispatch(setProjects([uploadProject]))
         close?.()
-        revalidatePath('/')
       }
     } catch (e) {
       console.log(e)
