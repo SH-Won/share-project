@@ -1,3 +1,4 @@
+// 'use client'
 import ProjectCardSkeleton from '@/components/card/ProjectCardSkeleton'
 
 const Loading = () => {

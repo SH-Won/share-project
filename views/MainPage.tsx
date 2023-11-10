@@ -1,20 +1,21 @@
 'use client'
-import Loading from '@/app/loading'
 import { IProject } from '@/app/page'
 import ProjectCard from '@/components/card/ProjectCard'
-// import { useFetch } from '@/hooks'
+// import { getData } from '@/lib/api'
+import { useFetch } from '@/hooks'
+import Loading from '@/components/loading'
 
 interface Props {
-  projects: IProject[]
+  projects?: IProject[]
 }
 
 const MainPage = ({ projects: serverProjects }: Props) => {
-  // const { loading, projects } = useFetch()
-  console.log('main page')
-  // if (loading) return <Loading />
+  const { loading, projects } = useFetch()
+  if (loading) return <Loading />
+  // const projects = await getData()
   return (
-    <main className="page-container">
-      {serverProjects.map((project) => (
+    <section className="page-container">
+      {projects.map((project) => (
         <ProjectCard
           key={project._id}
           id={project._id}
@@ -25,7 +26,7 @@ const MainPage = ({ projects: serverProjects }: Props) => {
           writerImage={project.writer?.image ?? ''}
         />
       ))}
-    </main>
+    </section>
   )
 }
 

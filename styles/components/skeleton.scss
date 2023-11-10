@@ -42,6 +42,10 @@
   width: 100%;
   height: 100%;
   position: relative;
+  @include Desktop() {
+    max-width: 800px;
+    margin: 0 auto;
+  }
   .description {
     width: 50%;
     height: 28px;
@@ -78,6 +82,10 @@
   & > .image-container {
     width: 100vw;
     margin: 2rem -1rem;
+    @include Desktop() {
+      width: 100%;
+      margin: 2rem 0;
+    }
     &::before {
       content: "";
       display: block;

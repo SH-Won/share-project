@@ -10,7 +10,8 @@ import { useSession } from 'next-auth/react'
 import { revalidatePath } from 'next/cache'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/store'
-import { setProjects } from '@/store/project/projectSlice'
+import { addProject, setProjects } from '@/store/project/projectSlice'
+import { IProject } from '@/app/page'
 
 const initailState = {
   title: '',
@@ -54,14 +55,15 @@ const UploadProject = ({ close }: UploadProjectProps) => {
       link: 'https://github.com/SH-Won',
     }
     try {
-      const response = await fetch('http://localhost:3000/api/upload', {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/upload', {
         method: 'POST',
         body: JSON.stringify(body),
       })
       if (response.ok) {
-        const uploadProject = (await response.json()).uploadProject
-        dispatch(setProjects([uploadProject]))
+        const uploadProject = (await response.json()).uploadProject as IProject
+        dispatch(addProject(uploadProject))
         close?.()
+        // router.refresh()
       }
     } catch (e) {
       console.log(e)

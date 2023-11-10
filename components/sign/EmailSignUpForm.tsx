@@ -36,7 +36,7 @@ const EmailSignUpForm = () => {
       password: inputValue.password,
     }
     setDisabled(true)
-    await fetch('http://localhost:3000/api/signup', {
+    await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/signup', {
       method: 'POST',
       body: JSON.stringify(body),
     }).then(async (response) => {

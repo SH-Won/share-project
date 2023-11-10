@@ -6,6 +6,7 @@ import 'my-react-component/dist/style.css'
 import { StoreProviders } from '@/providers'
 import NextAuthProvider from '@/providers/NextAuthProvider'
 import BaseLayout from '@/layout/BaseLayout'
+import { useSelectedLayoutSegment } from 'next/navigation'
 export const metadata = {
   title: 'Share Project',
   description: 'Share your project in this web',
@@ -14,8 +15,11 @@ interface Props {
   children: React.ReactNode
   detail: React.ReactNode
   modal: React.ReactNode
+  project: React.ReactNode
+  // params? :string
 }
-export default async function RootLayout({ children, detail, modal }: Props) {
+export default async function RootLayout({ children, detail, modal, project }: Props) {
+  // console.log(params)
   // const projects = await getData()
 
   return (
@@ -23,15 +27,15 @@ export default async function RootLayout({ children, detail, modal }: Props) {
       <body>
         <NextAuthProvider>
           <StoreProviders>
-            {/* <ModalContext> */}
-            <BaseLayout>{children}</BaseLayout>
-
-            {/* <Modal /> */}
-            {/* </ModalContext> */}
-            {modal}
+            <BaseLayout>
+              {modal}
+              {detail}
+              {children}
+            </BaseLayout>
+            {/* {modal} */}
           </StoreProviders>
         </NextAuthProvider>
-        {detail}
+        {/* {detail} */}
       </body>
     </html>
   )

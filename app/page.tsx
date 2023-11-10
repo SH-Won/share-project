@@ -1,9 +1,11 @@
 // 'use client'
+
+import Loading from '@/components/loading'
 import { getData } from '@/lib/api'
-import MainPage from '@/page/MainPage'
+import MainPage from '@/views/MainPage'
 import { Suspense } from 'react'
-import Loading from './loading'
-import '@/styles/components/project-card.scss'
+// import Loading from './@project/loading'
+// import '@/styles/components/project-card.scss'
 export interface IProject {
   _id: string
   title: string
@@ -34,11 +36,9 @@ export default async function Home() {
   //         ))}
   //     </div>
   //   )
-  // const projects = await getData()
-  const projects = await getData()
   return (
-    <Suspense fallback={<Loading />}>
-      <MainPage projects={projects} />
-    </Suspense>
+    // <Suspense fallback={<Loading />}>
+    // </Suspense>
+    <MainPage />
   )
 }

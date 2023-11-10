@@ -3,10 +3,12 @@ import React from 'react'
 import ImageWithSkeleton from '../image/ImageWithSkeleton'
 import Close from '../modal/Close'
 import DetailHeader from './DetailHeader'
+import RelativeProjects from './RelativeProjects'
 interface Props {
   project: IProject
+  writerProjets: Omit<IProject, 'writer'>[]
 }
-const DetailPage = ({ project }: Props) => {
+const DetailPage = ({ project, writerProjets }: Props) => {
   return (
     <div className="detail-container">
       <Close />
@@ -17,6 +19,7 @@ const DetailPage = ({ project }: Props) => {
         non reiciendis hic deleniti sit maiores necessitatibus modi ex reprehenderit illo saepe
         aliquid nisi quas, repellendus facere sapiente.
       </p>
+      <RelativeProjects relativeProjects={writerProjets} writer={project.writer} />
     </div>
   )
 }

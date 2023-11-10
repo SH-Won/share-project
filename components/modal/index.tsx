@@ -16,12 +16,9 @@ const Modal = () => {
   const ModalLayout = useCallback(() => {}, [])
 
   return (
-    <React.Fragment>
-      {/* {RenderModal()} */}
-      <BottomModal close={() => router.back()}>
-        <UploadProject />
-      </BottomModal>
-    </React.Fragment>
+    <BottomModal close={() => router.back()}>
+      <UploadProject />
+    </BottomModal>
   )
 }
 

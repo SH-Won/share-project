@@ -1,6 +1,4 @@
-import DetailPage from '@/page/DetailPage'
-import { NextPage } from 'next'
-import React from 'react'
+import DetailPage from '@/views/DetailPage'
 
 interface Props {
   params: {

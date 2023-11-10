@@ -7,18 +7,19 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const useFetch = () => {
   const dispatch = useDispatch()
-  const { projects } = useSelector((state: RootState) => state.project)
+  const { projects, isInitialFetching } = useSelector((state: RootState) => state.project)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (isInitialFetching) return
     getData()
       .then((response) => {
-        dispatch(setProjects(response))
+        dispatch(setProjects(response.reverse()))
       })
       .finally(() => setLoading(false))
   }, [])
   return {
-    loading,
+    loading: !isInitialFetching,
     projects,
   }
 }

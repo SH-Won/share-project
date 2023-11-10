@@ -17,15 +17,19 @@ const BottomModal = ({ children, close }: BottomModalProps) => {
     }, 300)
   }
   useEffect(() => {
+    document.body.style.overflow = 'hidden'
     setOpen(true)
+    return () => {
+      document.body.style.removeProperty('overflow')
+    }
   }, [])
   return (
-    <section className="modal">
-      <Close />
+    <React.Fragment>
       <div className={`modal__content--bottom ${!open ? 'close' : 'open'}`}>
+        <Close />
         {cloneElement(children, { close: closeModal })}
       </div>
-    </section>
+    </React.Fragment>
   )
 }
 export default BottomModal

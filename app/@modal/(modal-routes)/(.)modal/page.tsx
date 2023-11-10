@@ -1,4 +1,3 @@
-'use client'
 import Modal from '@/components/modal'
 
 const page = () => {
