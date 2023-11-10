@@ -9,7 +9,7 @@ interface BaseLayoutProps {
 
 const BaseLayout = ({ children }: BaseLayoutProps) => {
   const pathname = usePathname()
-  const isHeader = pathname.split('/')[1] !== 'signup'
+  const isHeader = !['signup', 'signin'].includes(pathname.split('/')[1])
   return (
     <>
       {isHeader && <Navbar />}

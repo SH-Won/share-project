@@ -1,28 +1,38 @@
 'use client'
-import React, { createContext, useState } from 'react'
+import React, { createContext, Dispatch, SetStateAction, useState } from 'react'
 interface SignUpContextProps {
   children: React.ReactNode
 }
 
-interface InitialState {
-  page: 'selectSignup' | 'emailSignup'
-  push: (() => void) | null
-  back: (() => void) | null
+interface SignUpStateContextProps {
+  page: 'selectSignup' | 'emailSignup' | 'signupSuccess'
+  goPage: (pageName: SignUpStateContextProps['page']) => void
+  setState: Dispatch<SetStateAction<Omit<SignUpStateContextProps, 'goPage' | 'setState'>>>
+  result: {
+    type: 'error' | 'success' | ''
+    message: string
+  }
 }
-const initalState: InitialState = {
+
+const initialState: Omit<SignUpStateContextProps, 'goPage' | 'setState'> = {
   page: 'selectSignup',
-  push: null,
-  back: null,
+  result: {
+    type: '',
+    message: '',
+  },
 }
-export const SignUpStateContext = createContext<InitialState>(initalState)
+export const SignUpStateContext = createContext<SignUpStateContextProps>(
+  {} as SignUpStateContextProps
+)
 
 const SignUpContext = ({ children }: SignUpContextProps) => {
-  const [page, setPage] = useState<InitialState['page']>('selectSignup')
-  const push = () => setPage('emailSignup')
-  const back = () => setPage('selectSignup')
+  const [state, setState] = useState(initialState)
+  // const [result, setResult] = useState<InitialState['result']>(initialState['result'])
+  const goPage = (pageName: SignUpStateContextProps['page']) =>
+    setState((prev) => ({ ...prev, page: pageName }))
   return (
-    <SignUpStateContext.Provider value={{ page, push, back }}>
-      <section className="signup-container">{children}</section>
+    <SignUpStateContext.Provider value={{ ...state, setState, goPage }}>
+      <section className="sign-container">{children}</section>
     </SignUpStateContext.Provider>
   )
 }

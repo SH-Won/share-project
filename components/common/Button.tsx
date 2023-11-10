@@ -7,7 +7,7 @@ interface ButtonProps {
   text: string
   disabled?: boolean
   children?: React.ReactNode
-  onClick?: () => void
+  onClick?: (() => void) | ((e: React.MouseEvent) => void)
 }
 
 const Button = ({ size, type, text, disabled, children, onClick }: ButtonProps) => {

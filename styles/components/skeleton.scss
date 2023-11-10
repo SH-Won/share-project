@@ -35,6 +35,7 @@
 }
 
 .skeleton-loading-container {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   padding: 2rem 1rem;

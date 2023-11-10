@@ -1,15 +1,16 @@
-import '@/styles/components/signup.scss'
-import LoginPage from '@/components/Login'
 import SelectSignup from '@/components/sign/SelectSignup'
 import SignUpContext from '@/context/SignUpContext'
-import EmailSignup from '@/components/sign/EmailSignup'
+import SignUp from '@/components/sign/SignUp'
+import { AuthLink } from '@/components/sign/Sign'
+import SignUpSuccess from '@/components/sign/SignUpSuccess'
 
 const page = () => {
   return (
-    <div className="signup-page">
+    <div className="sign-page">
       <SignUpContext>
         <SelectSignup />
-        <EmailSignup />
+        <SignUp />
+        <SignUpSuccess />
       </SignUpContext>
     </div>
   )

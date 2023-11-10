@@ -1,5 +1,6 @@
 'use client'
 import { useModal } from '@/hooks'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import Button from './common/Button'
@@ -7,6 +8,8 @@ import Button from './common/Button'
 const Navbar = () => {
   // const { showModal } = useModal()
   const router = useRouter()
+  const { data } = useSession()
+  console.log(data)
 
   const onClick = () => {
     // router.push('#create')

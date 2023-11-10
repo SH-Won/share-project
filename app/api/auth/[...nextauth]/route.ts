@@ -11,7 +11,7 @@ const authOptions: AuthOptions = {
 
       credentials: {},
       async authorize(credentials) {
-        const response = await fetch('http://localhost:3000/api/login', {
+        const response = await fetch('http://localhost:3000/api/signin', {
           method: 'POST',
           body: JSON.stringify(credentials),
         })

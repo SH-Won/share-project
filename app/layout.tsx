@@ -1,18 +1,10 @@
 import './globals.css'
 import './index.scss'
+import '@/styles/components/signup.scss'
 // import '../styles/output.css'
-
 import 'my-react-component/dist/style.css'
-
-// import ResponsiveWindow from '@/layout/ResponsiveWindow'
-import Navbar from '@/components/Navbar'
 import { StoreProviders } from '@/providers'
-import Modal from '@/components/modal'
-import ModalContext from '@/context/ModalContext'
 import NextAuthProvider from '@/providers/NextAuthProvider'
-import { getServerSession } from 'next-auth'
-import Loading from './loading'
-import { Suspense } from 'react'
 import BaseLayout from '@/layout/BaseLayout'
 export const metadata = {
   title: 'Share Project',

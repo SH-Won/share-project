@@ -16,6 +16,7 @@ const DetailPage = ({ params }: Props) => {
   const [project, setProject] = useState<IProject>()
 
   useEffect(() => {
+    document.body.style.overflow = 'hidden'
     ;(async () => {
       const response = await fetch(`http://localhost:3000/api/detail/${id}`, {
         method: 'GET',
@@ -28,6 +29,9 @@ const DetailPage = ({ params }: Props) => {
       } else {
       }
     })()
+    return () => {
+      document.body.style.removeProperty('overflow')
+    }
   }, [id])
 
   if (loading) return <SkeletonDetail />

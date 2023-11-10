@@ -5,16 +5,22 @@ import { useContext } from 'react'
 import { SignUpStateContext } from '@/context/SignUpContext'
 
 const SelectSignup = () => {
-  const { push, page } = useContext(SignUpStateContext)
+  const { goPage, page } = useContext(SignUpStateContext)
   if (page !== 'selectSignup') return null
   return (
     <Sign>
-      <Sign.SignHeader text="Sign up" />
+      <Sign.SignHeader text="회원가입" />
       <Sign.Button size="large" type="black" text="Google 로그인" disabled>
         <Image src="/google.svg" width={20} height={20} alt="google" />
       </Sign.Button>
       <Sign.Bar />
-      <Sign.Button size="large" type="basic" text="이메일로 로그인" onClick={() => push?.()} />
+      <Sign.Button
+        size="large"
+        type="basic"
+        text="이메일로 가입하기"
+        onClick={() => goPage?.('emailSignup')}
+      />
+      <Sign.AuthLink type="signin" />
     </Sign>
   )
 }
