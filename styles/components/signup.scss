@@ -1,10 +1,32 @@
-.login-page {
+.signup-page {
   display: flex;
-  height: 100%;
+  min-height: 90%;
+  max-height: 100%;
   justify-content: center;
   align-items: center;
 }
-.login-container {
+.signup-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  & > :last-child {
+    margin-top: 32px;
+  }
+}
+.signup-back {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #e7e7e9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-start;
+}
+.signup-container {
   width: 100%;
   max-width: 400px;
   min-width: 250px;
@@ -13,11 +35,11 @@
   gap: 10px;
   padding: 16px;
   box-sizing: border-box;
-  justify-content: center;
   align-items: center;
-  & > .login {
+  & > .signup {
     &__title {
       @include typeface("Heading_1");
+      font-weight: 800;
       margin-bottom: 32px;
       align-self: flex-start;
     }

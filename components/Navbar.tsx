@@ -2,6 +2,7 @@
 import { useModal } from '@/hooks'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import Button from './common/Button'
 // import UploadProject from './upload/UploadProject'
 const Navbar = () => {
   // const { showModal } = useModal()
@@ -18,13 +19,13 @@ const Navbar = () => {
     // })
   }
   return (
-    <nav className="flex justify-between items-center h-[64px] px-[20px]">
+    <nav className="navbar">
       <div>logo</div>
       <Link href="/modal" shallow={true}>
         <div onClick={onClick}>Create</div>
       </Link>
-      <Link href="/login">
-        <div>Login</div>
+      <Link href="/signup">
+        <Button size="medium" type="black" text="Sign up" />
       </Link>
     </nav>
   )

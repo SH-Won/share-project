@@ -7,17 +7,25 @@
   margin: 0 auto;
   display: grid;
   gap: 36px;
-  padding: 0 20px;
+  padding: 20px;
   max-width: 1048px;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  // @include Tablet {
-  //   & {
-  //     grid-template-columns: repeat(2, 1fr);
-  //   }
-  // }
-  // @include Desktop {
-  //   & {
-  //     grid-template-columns: repeat(3, 1fr);
-  //   }
-  // }
+}
+.navbar {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 0 20px;
+  box-shadow: 0 0 0 1px #f3f3f4;
+}
+a {
+  text-decoration: none;
+  outline: none;
+  color: #111;
+}
+main {
+  height: 100%;
 }

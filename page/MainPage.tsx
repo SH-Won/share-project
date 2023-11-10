@@ -13,7 +13,7 @@ const MainPage = ({ projects: serverProjects }: Props) => {
   console.log('main page')
   // if (loading) return <Loading />
   return (
-    <div className="page-container">
+    <main className="page-container">
       {serverProjects.map((project) => (
         <ProjectCard
           key={project._id}
@@ -25,7 +25,7 @@ const MainPage = ({ projects: serverProjects }: Props) => {
           writerImage={project.writer?.image ?? ''}
         />
       ))}
-    </div>
+    </main>
   )
 }
 

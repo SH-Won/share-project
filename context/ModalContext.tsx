@@ -12,18 +12,14 @@ interface ModalState {
 }
 const initialState: ModalStack[] = []
 export const ModalStateContext = createContext<ModalStack[]>(initialState)
-export const ModalSetterContext = createContext<Dispatch<
-  SetStateAction<ModalStack[]>
-> | null>(null)
+export const ModalSetterContext = createContext<Dispatch<SetStateAction<ModalStack[]>> | null>(null)
 
 const ModalContext = ({ children }: { children: React.ReactNode }) => {
   const [modalState, setModalState] = useState(initialState)
 
   return (
     <ModalStateContext.Provider value={modalState}>
-      <ModalSetterContext.Provider value={setModalState}>
-        {children}
-      </ModalSetterContext.Provider>
+      <ModalSetterContext.Provider value={setModalState}>{children}</ModalSetterContext.Provider>
     </ModalStateContext.Provider>
   )
 }

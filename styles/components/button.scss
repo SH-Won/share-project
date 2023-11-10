@@ -5,6 +5,12 @@
   justify-content: center;
   position: relative;
   border-radius: 50px;
+  gap: 10px;
+  border: transparent;
+  cursor: pointer;
+  &:disabled {
+    opacity: 0.5;
+  }
 
   &.basic {
     background-color: color("white");
@@ -23,7 +29,7 @@
   &.medium {
     height: 44px;
     padding: 0 20px;
-    @include typeface("Paragraph_3_b");
+    @include typeface("Paragraph_2b");
   }
   &.small {
     height: 32px;

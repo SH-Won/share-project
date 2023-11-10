@@ -37,8 +37,8 @@ export default async function Home() {
   // const projects = await getData()
   const projects = await getData()
   return (
-    // <Suspense fallback={<Loading />}>
-    <MainPage projects={projects} />
-    // </Suspense>
+    <Suspense fallback={<Loading />}>
+      <MainPage projects={projects} />
+    </Suspense>
   )
 }

@@ -1,5 +1,4 @@
 'use client'
-import '@/styles/components/login.scss'
 import { useForm, useSearch, useValidation } from '@/hooks'
 import { Colors, Button } from 'my-react-component'
 import { useRouter } from 'next/navigation'

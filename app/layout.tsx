@@ -13,6 +13,7 @@ import NextAuthProvider from '@/providers/NextAuthProvider'
 import { getServerSession } from 'next-auth'
 import Loading from './loading'
 import { Suspense } from 'react'
+import BaseLayout from '@/layout/BaseLayout'
 export const metadata = {
   title: 'Share Project',
   description: 'Share your project in this web',
@@ -31,8 +32,7 @@ export default async function RootLayout({ children, detail, modal }: Props) {
         <NextAuthProvider>
           <StoreProviders>
             {/* <ModalContext> */}
-            <Navbar />
-            <Suspense fallback={<Loading />}>{children}</Suspense>
+            <BaseLayout>{children}</BaseLayout>
 
             {/* <Modal /> */}
             {/* </ModalContext> */}
