@@ -20,6 +20,8 @@ export async function POST(req: Request) {
           userInfo: {
             email: user.email,
             role: role,
+            _id: user._id,
+            name: user.name,
           },
         },
         process.env.ACCESS_TOKEN_SECRET,
@@ -27,32 +29,45 @@ export async function POST(req: Request) {
           expiresIn: '10s',
         }
       )
-      const newRefreshToken = jwt.sign({ email: user.email }, process.env.REFRESH_TOKEN_SECRET, {
-        expiresIn: '600s',
-      })
+      const newRefreshToken = jwt.sign(
+        {
+          email: user.email,
+          role: role,
+          _id: user._id,
+          name: user.name,
+        },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+          expiresIn: '600s',
+        }
+      )
       if (cookies?.refreshtoken) {
         const refreshToken = cookies.refreshtoken
 
         NextResponse.next().cookies.delete('refreshtoken')
       }
       user.refreshToken = newRefreshToken
-      console.log('newRefreshToken', newRefreshToken)
       const result = await user.save()
-      console.log('user login result', result)
       const response = NextResponse.json(
         {
           accessToken,
+          accessTokenExpiry: Date.now() + 10 * 1000,
+          refreshToken: newRefreshToken,
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
         },
         { status: 200 }
       )
-      response.cookies.set({
-        name: 'refreshtoken',
-        value: newRefreshToken,
-        httpOnly: true,
-        secure: true,
-        // sameSite: 'None',
-        maxAge: 24 * 60 * 60 * 1000,
-      })
+      // response.cookies.set({
+      //   name: 'refreshtoken',
+      //   value: newRefreshToken,
+      //   httpOnly: true,
+      //   secure: true,
+      //   // sameSite: 'None',
+      //   maxAge: 24 * 60 * 60 * 1000,
+      // })
       return response
     } else {
       return NextResponse.json({ message: 'invalid' }, { status: 401 })

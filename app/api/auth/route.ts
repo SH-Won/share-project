@@ -6,15 +6,17 @@ export async function GET(req: Request) {
   if (!authHeader?.startsWith('Bearer'))
     return NextResponse.json({ message: 'not exist token' }, { status: 401 })
   const token = authHeader.split(' ')[1]
-  let email, role, isError
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+  let email, role, isError, name, id
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded: any) => {
     if (err) {
       isError = true
       return
     }
     email = decoded!.userInfo.email
     role = decoded!.userInfo.role
+    name = decoded!.userInfo.name
+    id = decoded!.userInfo.id
   })
   if (isError) return NextResponse.json({ message: 'forbidden' }, { status: 403 }) // 토큰 invalid
-  return NextResponse.json({ email, role, success: true }, { status: 200 })
+  return NextResponse.json({ email, role, id, name }, { status: 200 })
 }

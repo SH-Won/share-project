@@ -1,0 +1,108 @@
+.detail-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.detail-container {
+  min-width: 260px;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem;
+  height: 100%;
+}
+.relative-project-container {
+  display: grid;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 36px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+.detail-header {
+  &__title {
+    @include typeface("Heading_2");
+    margin-top: 0;
+    // margin-bottom: 10px;
+  }
+  &.sticky {
+    position: sticky;
+    width: 100%;
+    z-index: 1000;
+    top: -4px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 100vw;
+      height: 100%;
+      -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      transform: translateX(-50%);
+      -webkit-transition: 0.3s ease-in-out;
+      transition: 0.3s ease-in-out;
+      border-bottom: 1px solid transparent;
+      background: #fff;
+    }
+    &.sticky-start {
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 100vw;
+        height: 100%;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+        -webkit-transition: 0.3s ease-in-out;
+        transition: 0.3s ease-in-out;
+        background: #fff;
+        border-bottom: 1px solid #f3f3f4;
+        //#d7d7da
+      }
+    }
+  }
+  &__user-content {
+    padding: 14px 0 18px;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .user-image {
+      flex-shrink: 0;
+      overflow: hidden;
+      & > img {
+        border-radius: 50%;
+      }
+    }
+    .user-content-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      margin-left: 1rem;
+      justify-content: space-between;
+      .user-name {
+        @include typeface("Paragraph_2_b");
+      }
+      .user-status {
+        @include typeface("Paragraph_3_b");
+        color: color("green");
+      }
+    }
+  }
+}
+.detail-content {
+  &__overview {
+    margin-top: 2rem;
+  }
+}
+// .max-wrapper {
+//   max-width: 800px;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// }

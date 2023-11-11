@@ -1,13 +1,25 @@
 import dbConnect from '@/lib/dbConnect'
 import Product from '@/models/Product'
-import { NextResponse } from 'next/server'
+import Project from '@/models/Project'
+import User from '@/models/User'
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
+  // const path = request.nextUrl.searchParams
+
   try {
-    await dbConnect()
-    const products = await Product.find({}).exec()
+    const db = await dbConnect()
+    const products = await Project.find()
+      .populate({
+        path: 'writer',
+        model: User,
+      })
+      .exec()
+    db?.disconnect()
+    console.log('product call')
     return NextResponse.json({ products })
   } catch (e) {
+    console.log('error')
     return NextResponse.json({ message: e, success: false })
   }
 }

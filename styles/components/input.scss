@@ -1,0 +1,66 @@
+// @import "@/styles/common/_mixins.scss";
+.input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  & > span {
+    @include typeface("Paragraph_1_m");
+  }
+  & > label {
+    @include typeface("Paragraph_1_m");
+  }
+}
+.input {
+  padding: 16px 14px;
+  border: 1px solid color("line_02");
+  border-radius: 4px;
+  outline: none;
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+  &.focus {
+    border: 1px solid color("minus");
+  }
+  &.error {
+    border: 1px solid color("plus");
+  }
+}
+#input-file {
+  display: none;
+}
+.file__wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: color("white");
+  background-color: color("line_02");
+  & > .file__image {
+    cursor: pointer;
+    position: relative;
+    padding-bottom: 70%;
+    &.none {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      & > div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    & > img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+}

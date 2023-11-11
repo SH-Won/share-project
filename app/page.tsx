@@ -1,57 +1,44 @@
-'use client'
-import LoginPage from '@/components/Login'
-import { AppDispatch, RootState } from '@/store'
-import { resetUser, setUser } from '@/store/user/userSlice'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import styles from './page.module.css'
+// 'use client'
 
-export default function Home() {
-  const user = useSelector((state: RootState) => state.user)
-  const dispatch = useDispatch<AppDispatch>()
-  useEffect(() => {
-    ;(async () => {
-      await fetch('/api/auth', {
-        method: 'GET',
-        headers: {
-          authorization: `Bearer ${user.accessToken}`,
-        },
-        credentials: 'include',
-      })
-        .then(async (response) => {
-          console.log(response)
-          const json = await response.json()
-          console.log(json)
-          if (response.status !== 200) {
-            await fetch('api/auth/refresh', {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              credentials: 'include',
-            }).then(async (response) => {
-              if (response.status === 200) {
-                const json = await response.json()
-                console.log(json)
-                dispatch(
-                  setUser({
-                    accessToken: json.accessToken,
-                  })
-                )
-              } else {
-                dispatch(resetUser())
-              }
-            })
-          }
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    })()
-  })
-  console.log(user)
-
+import Loading from '@/components/loading'
+import { getData } from '@/lib/api'
+import MainPage from '@/views/MainPage'
+import { Suspense } from 'react'
+// import Loading from './@project/loading'
+// import '@/styles/components/project-card.scss'
+export interface IProject {
+  _id: string
+  title: string
+  description: string
+  imageUrl: string
+  writer: {
+    _id: string
+    image: string
+    name: string
+  }
+}
+export default async function Home() {
+  // const [projects, setProjects] = useState<IProject[]>([])
+  // const [loading, setLoading] = useState(true)
+  // useEffect(() => {
+  //   getData().then(async (response) => {
+  //     setProjects(response)
+  //     setLoading(false)
+  //   })
+  // }, [])
+  // if (loading)
+  //   return (
+  //     <div className="page-container">
+  //       {Array(10)
+  //         .fill(0)
+  //         .map((_, i) => (
+  //           <ProjectCardSkeleton key={i} />
+  //         ))}
+  //     </div>
+  //   )
   return (
-    <main className={styles.main}>{!user.accessToken ? <LoginPage /> : <div> login ok</div>}</main>
+    // <Suspense fallback={<Loading />}>
+    // </Suspense>
+    <MainPage />
   )
 }
