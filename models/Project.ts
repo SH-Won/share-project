@@ -25,7 +25,11 @@ const ProjectSchema = new mongoose.Schema(
     link: {
       type: String,
     },
+    // favoriteCount: {
+    //   type: Number,
+    //   default: 0,
+    // },
   },
   { timestamps: true }
 )
-export default mongoose.models.Projects || mongoose.model('Projects', ProjectSchema)
+export default mongoose.models.Project || mongoose.model('Project', ProjectSchema)

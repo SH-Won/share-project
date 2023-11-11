@@ -18,12 +18,12 @@
     flex-direction: column;
     z-index: 101;
     background-color: color("white");
-    position: fixed;
+    position: absolute;
     width: 100%;
     bottom: 0;
     overflow: auto;
     // max-height: calc(100vh - 64px);
-    height: 100vh;
+    height: 100%;
     &.open {
       animation: animate-bottom-sheet-up 0.3s cubic-bezier(0.46, 1.12, 1, 1);
       -webkit-animation: animate-bottom-sheet-up 0.3s cubic-bezier(0.46, 1.12, 1, 1);
@@ -59,7 +59,7 @@
 .close-button {
   z-index: 5;
   position: absolute;
-  right: 8px;
+  right: 16px;
   top: 8px;
   display: flex;
   align-items: center;

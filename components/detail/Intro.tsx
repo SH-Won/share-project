@@ -6,9 +6,8 @@ import DetailHeader from './DetailHeader'
 import RelativeProjects from './RelativeProjects'
 interface Props {
   project: IProject
-  writerProjets: Omit<IProject, 'writer'>[]
 }
-const DetailPage = ({ project, writerProjets }: Props) => {
+const DetailPage = ({ project }: Props) => {
   return (
     <div className="detail-container">
       <Close />
@@ -19,7 +18,6 @@ const DetailPage = ({ project, writerProjets }: Props) => {
         non reiciendis hic deleniti sit maiores necessitatibus modi ex reprehenderit illo saepe
         aliquid nisi quas, repellendus facere sapiente.
       </p>
-      <RelativeProjects relativeProjects={writerProjets} writer={project.writer} />
     </div>
   )
 }

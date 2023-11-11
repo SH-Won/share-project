@@ -28,6 +28,7 @@ export default async function RootLayout({ children, detail, modal, project }: P
         <NextAuthProvider>
           <StoreProviders>
             <BaseLayout>
+              {project}
               {modal}
               {detail}
               {children}

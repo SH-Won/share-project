@@ -4,6 +4,7 @@ import { IProject } from '@/app/page'
 import Intro from '@/components/detail/Intro'
 import SkeletonDetail from '@/components/detail/SkeletonDetail'
 import { useEffect, useState } from 'react'
+import RelativeProjects from '@/components/detail/RelativeProjects'
 
 interface Props {
   params: {
@@ -20,7 +21,8 @@ const DetailPage = ({ params }: Props) => {
   const [data, setData] = useState<IProjectData>()
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden'
+    const isModal = document.querySelector('.modal')
+    if (isModal) document.body.style.overflow = 'hidden'
     ;(async () => {
       console.log(process.env.NEXT_PUBLIC_BASE_URL + `/api/detail/${id}`)
       const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/api/detail/${id}`, {
@@ -42,8 +44,8 @@ const DetailPage = ({ params }: Props) => {
   if (loading) return <SkeletonDetail />
   return (
     <section className="detail-page">
-      <Intro project={data!.project} writerProjets={data!.writerProjects} />
-      <div style={{ height: '150vh' }}></div>
+      <Intro project={data!.project} />
+      <RelativeProjects relativeProjects={data!.writerProjects} writer={data!.project.writer} />
     </section>
   )
 }

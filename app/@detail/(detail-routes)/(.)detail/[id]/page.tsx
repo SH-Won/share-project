@@ -14,9 +14,9 @@ interface Props {
 }
 const page = ({ params }: Props) => {
   return (
-    <div className="modal__content--bottom open">
-      <DetailPage params={params} />
-    </div>
+    // <div className="modal__content--bottom open">
+    // </div>
+    <DetailPage params={params} />
   )
 }
 

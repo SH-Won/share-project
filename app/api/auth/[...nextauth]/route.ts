@@ -41,6 +41,7 @@ const authOptions: AuthOptions = {
         token.refreshToken = user.refreshToken
         token.accessTokenExpiry = user.accessTokenExpiry
         token.role = user.role
+        token.favorites = user.favorites
         return token
       }
       // const refreshTime = Math.round((token.accessTokenExpiry as number) - Date.now())
@@ -78,6 +79,7 @@ const authOptions: AuthOptions = {
       session.id = token.id
       session.name = token.name
       session.role = token.role
+      session.favorites = token.favorites
       // session.error = token.error
       // console.log('session', token)
       // console.log('session', session)
