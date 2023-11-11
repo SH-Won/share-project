@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
       userName,
       email,
       password: hashPassword,
+      favorites: {},
     })
     db?.disconnect()
     return NextResponse.json({ success: true, message: '회원 가입 성공' }, { status: 200 })

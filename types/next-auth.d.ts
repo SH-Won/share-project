@@ -12,6 +12,7 @@ declare module 'next-auth' {
     accessToken: string
     refreshToken: string
     accessTokenExpiry: number
+    favorites: object
   }
   interface Session {
     id: string
@@ -21,6 +22,7 @@ declare module 'next-auth' {
     accessToken: string
     refreshToken: string
     accessTokenExpiry: number
+    favorites: object
     user: {
       /** The user's postal address. */
       name: string
@@ -29,6 +31,7 @@ declare module 'next-auth' {
       accessToken: string
       refreshToken: string
       accessTokenExpiry: number
+      favorites: object
     } & DefaultSession['user']
   }
 }
@@ -42,6 +45,7 @@ declare module 'next-auth/jwt' {
     accessToken: string
     refreshToken: string
     accessTokenExpiry: number
+    favorites: object
     role: number
   }
 }

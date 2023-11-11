@@ -8,8 +8,8 @@ import Button from './common/Button'
 const Navbar = () => {
   // const { showModal } = useModal()
   const router = useRouter()
-  // const { data } = useSession()
-  // console.log(data)
+  const { data } = useSession()
+  console.log(data)
 
   const onClick = () => {
     // router.push('#create')

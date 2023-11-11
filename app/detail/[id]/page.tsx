@@ -1,3 +1,4 @@
+'client'
 import DetailPage from '@/views/DetailPage'
 
 interface Props {
@@ -6,7 +7,6 @@ interface Props {
   }
 }
 const page = ({ params }: Props) => {
-  console.log(params)
   return <DetailPage params={params} />
 }
 

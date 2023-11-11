@@ -3,6 +3,7 @@ import User from '@/models/User'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { NextResponse } from 'next/server'
+import Project from '@/models/Project'
 
 export async function POST(req: Request) {
   try {
@@ -10,7 +11,16 @@ export async function POST(req: Request) {
     const result = await req.json()
     const cookies = result.cookies
     const { email, password } = result as { email: string; password: string }
-    const user = await User.findOne({ email }).exec()
+    const user = await User.findOne({ email })
+      .populate({
+        path: 'favorites.$*.project',
+        populate: {
+          path: 'writer',
+          model: User,
+        },
+        model: Project,
+      })
+      .exec()
     if (!user) return NextResponse.json({ message: 'invalid' }, { status: 401 })
     const isMatchPassword = await bcrypt.compare(password, user.password)
     if (isMatchPassword) {
@@ -57,6 +67,7 @@ export async function POST(req: Request) {
           name: user.name,
           email: user.email,
           role: user.role,
+          favorites: user.favorites,
         },
         { status: 200 }
       )
@@ -73,6 +84,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'invalid' }, { status: 401 })
     }
   } catch (e) {
-    return NextResponse.json({ message: e, success: false })
+    return NextResponse.json({ message: e, success: false }, { status: 500 })
   }
 }
