@@ -5,6 +5,7 @@ import Intro from '@/components/detail/Intro'
 import SkeletonDetail from '@/components/detail/SkeletonDetail'
 import { useEffect, useState } from 'react'
 import RelativeProjects from '@/components/detail/RelativeProjects'
+import DetailHeader from '@/components/detail/DetailHeader'
 
 interface Props {
   params: {
@@ -44,6 +45,7 @@ const DetailPage = ({ params }: Props) => {
   if (loading) return <SkeletonDetail />
   return (
     <section className="detail-page">
+      <DetailHeader project={data!.project} />
       <Intro project={data!.project} />
       <RelativeProjects relativeProjects={data!.writerProjects} writer={data!.project.writer} />
     </section>

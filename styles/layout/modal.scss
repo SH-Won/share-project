@@ -33,7 +33,7 @@
       -webkit-animation: animate-bottom-sheet-down 0.3s ease-in-out;
     }
     @include Desktop() {
-      height: calc(100vh - 80px);
+      height: calc(100vh - 60px);
       border-top-left-radius: 12px;
       border-top-right-radius: 12px;
     }

@@ -44,6 +44,7 @@ const authOptions: AuthOptions = {
         token.favorites = user.favorites
         return token
       }
+      console.log('jwt func called')
       // const refreshTime = Math.round((token.accessTokenExpiry as number) - Date.now())
       // // console.log(refreshTime)
       // if (refreshTime > 0) {
