@@ -3,6 +3,7 @@ import React from 'react'
 import '@/styles/components/project-card.scss'
 import Link from 'next/link'
 import ImageWithSkeleton from '../image/ImageWithSkeleton'
+import { FavoriteSVG } from '../user_action/Favorite'
 interface ProjectCardProps {
   id: string
   writer: string
@@ -37,6 +38,9 @@ const ProjectCard = ({
         <div className="writer">
           <Image src={writerImage || '/noImage.svg'} width={24} height={24} alt={writer} />
           <span>{writer || 'no writer'}</span>
+        </div>
+        <div className="user-actions">
+          <FavoriteSVG selected={true} />
         </div>
       </div>
     </div>

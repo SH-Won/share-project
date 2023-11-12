@@ -3,6 +3,7 @@ import { IProject } from '@/app/page'
 import { useInterSection } from '@/hooks'
 import Image from 'next/image'
 import { useState } from 'react'
+import Favorite from '../user_action/Favorite'
 
 interface DetailHeaderProps {
   project: IProject
@@ -31,6 +32,9 @@ const DetailHeader = ({ project }: DetailHeaderProps) => {
             <span className="user-name">{project.writer?.name}</span>
             <span className="user-status">Good</span>
           </div>
+        </div>
+        <div className="detail-header__user-actions">
+          <Favorite />
         </div>
       </div>
     </>

@@ -25,10 +25,10 @@ const ProjectSchema = new mongoose.Schema(
     link: {
       type: String,
     },
-    // favoriteCount: {
-    //   type: Number,
-    //   default: 0,
-    // },
+    favoriteCount: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 )

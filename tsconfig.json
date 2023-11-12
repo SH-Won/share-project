@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "postcss.config.js", "next.config.js", "tailwind.config.js", "app/api/auth/refresh/route.js","app/middleware.ts", "types/next-auth.d.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "postcss.config.js", "next.config.js", "tailwind.config.js", "app/api/auth/refresh/route.js","middleware.tss", "types/next-auth.d.ts"],
   "exclude": ["node_modules",".next"]
 }

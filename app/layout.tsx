@@ -6,7 +6,6 @@ import 'my-react-component/dist/style.css'
 import { StoreProviders } from '@/providers'
 import NextAuthProvider from '@/providers/NextAuthProvider'
 import BaseLayout from '@/layout/BaseLayout'
-import { useSelectedLayoutSegment } from 'next/navigation'
 export const metadata = {
   title: 'Share Project',
   description: 'Share your project in this web',
@@ -32,10 +31,8 @@ export default async function RootLayout({ children, detail, modal, project }: P
               {detail}
               {children}
             </BaseLayout>
-            {/* {modal} */}
           </StoreProviders>
         </NextAuthProvider>
-        {/* {detail} */}
       </body>
     </html>
   )

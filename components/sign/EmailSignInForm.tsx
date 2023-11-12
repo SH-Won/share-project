@@ -25,7 +25,7 @@ const EmailSignInForm = () => {
     }
     setDisabled(true)
     await signIn('email-password-credential', user).then((response) => {
-      if (response?.ok) router.replace('/')
+      if (response?.ok) router.push('/')
       else setDisabled(false)
     })
   }

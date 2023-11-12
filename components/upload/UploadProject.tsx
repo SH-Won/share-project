@@ -24,7 +24,6 @@ interface UploadProjectProps {
 }
 const UploadProject = ({ close }: UploadProjectProps) => {
   const session = useSession()
-  console.log(session)
   const dispatch = useDispatch<AppDispatch>()
   // const { user, checkLogin } = useAuth()
   const router = useRouter()
@@ -61,9 +60,12 @@ const UploadProject = ({ close }: UploadProjectProps) => {
       })
       if (response.ok) {
         const uploadProject = (await response.json()).uploadProject as IProject
+        console.log(uploadProject)
         dispatch(addProject(uploadProject))
         close?.()
         // router.refresh()
+      } else {
+        alert('권한이 없습니다, 로그인 하시겠어요?')
       }
     } catch (e) {
       console.log(e)

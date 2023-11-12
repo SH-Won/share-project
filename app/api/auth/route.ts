@@ -3,9 +3,11 @@ import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
   const authHeader = req.headers.get('authorization') || req.headers.get('Authorization')
+
   if (!authHeader?.startsWith('Bearer'))
     return NextResponse.json({ message: 'not exist token' }, { status: 401 })
   const token = authHeader.split(' ')[1]
+  console.log('auth header', token)
   let email, role, isError, name, id
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded: any) => {
     if (err) {

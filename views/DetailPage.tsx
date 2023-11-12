@@ -6,6 +6,8 @@ import SkeletonDetail from '@/components/detail/SkeletonDetail'
 import { useEffect, useState } from 'react'
 import RelativeProjects from '@/components/detail/RelativeProjects'
 import DetailHeader from '@/components/detail/DetailHeader'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   params: {
@@ -18,6 +20,9 @@ interface IProjectData {
 }
 const DetailPage = ({ params }: Props) => {
   const id = params!.id
+  const { data: session, update } = useSession()
+  const router = useRouter()
+  console.log(session)
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<IProjectData>()
 
@@ -29,6 +34,9 @@ const DetailPage = ({ params }: Props) => {
       const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/api/detail/${id}`, {
         method: 'GET',
       })
+      if (response.status !== 200) {
+        return router.back()
+      }
       if (response.ok) {
         const json = await response.json()
         console.log(json)

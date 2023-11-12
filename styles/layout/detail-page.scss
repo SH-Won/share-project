@@ -34,6 +34,8 @@
   // min-width: 260px;
   // max-width: 800px;
   padding: 14px 0;
+  display: flex;
+  justify-content: space-between;
   &__title {
     display: inline-block;
 
@@ -109,6 +111,9 @@
         color: color("green");
       }
     }
+  }
+  &__user-actions {
+    position: relative;
   }
 }
 .detail-content {

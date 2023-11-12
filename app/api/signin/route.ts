@@ -36,7 +36,7 @@ export async function POST(req: Request) {
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
-          expiresIn: '10s',
+          expiresIn: '1h',
         }
       )
       const newRefreshToken = jwt.sign(
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
         },
         process.env.REFRESH_TOKEN_SECRET,
         {
-          expiresIn: '600s',
+          expiresIn: '14d',
         }
       )
       if (cookies?.refreshtoken) {
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
       const response = NextResponse.json(
         {
           accessToken,
-          accessTokenExpiry: Date.now() + 10 * 1000,
+          accessTokenExpiry: Date.now() + 60 * 60 * 1000,
           refreshToken: newRefreshToken,
           id: user._id,
           name: user.name,

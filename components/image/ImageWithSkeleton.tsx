@@ -20,7 +20,7 @@ const ImageWithSkeleton = ({ imageUrl, alt, type, width, height }: Props) => {
         width={width ?? 300}
         height={height ?? 300}
         alt={alt}
-        onLoadingComplete={() => setLoad(true)}
+        onLoad={() => setLoad(true)}
       />
     </div>
   )

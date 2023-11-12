@@ -10,7 +10,7 @@ export const dbConnect = async () => {
     (connection.connection.readyState !== ConnectionStates.connected &&
       connection.connection.readyState !== ConnectionStates.connecting)
   ) {
-    console.log('[MONGOOSE] Creating New Connection')
+    // console.log('[MONGOOSE] Creating New Connection')
 
     mongoose.connection.on('open', () => {
       // console.log(`[MONGOOSE] Connected with poolSize ${poolsize}`)
@@ -27,7 +27,7 @@ export const dbConnect = async () => {
     connection = mongoose
     return connection
   } else {
-    return
+    return connection
   }
 }
 
