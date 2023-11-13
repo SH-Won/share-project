@@ -34,7 +34,7 @@ const DetailHeader = ({ project }: DetailHeaderProps) => {
           </div>
         </div>
         <div className="detail-header__user-actions">
-          <Favorite />
+          <Favorite project={project} />
         </div>
       </div>
     </>

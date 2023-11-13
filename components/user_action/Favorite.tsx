@@ -1,6 +1,11 @@
 'use client'
+import { IProject } from '@/app/page'
+import { useFavorite } from '@/hooks'
+import { AppDispatch } from '@/store'
+import { addFavorite } from '@/store/user/userSlice'
 import { Colors } from 'my-react-component'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 interface FavoriteSVG {
   selected?: boolean
@@ -26,10 +31,17 @@ export const FavoriteSVG = ({ selected }: FavoriteSVG) => {
     </svg>
   )
 }
-const FavoriteButton = () => {
-  const [selected, setSelected] = useState(false)
+interface FavoriteButtonProps {
+  project: IProject
+}
+const FavoriteButton = ({ project }: FavoriteButtonProps) => {
+  // const dispatch = useDispatch<AppDispatch>()
+  const { selected, disabled, updateFavorite } = useFavorite(project)
+
+  // const [selected, setSelected] = useState(false)
+  // const [disabled, setDisabled] = useState(false)
   return (
-    <button className="favorite-button" onClick={() => setSelected((prev) => !prev)}>
+    <button className="favorite-button" disabled={disabled} onClick={updateFavorite}>
       <FavoriteSVG selected={selected} />
     </button>
   )

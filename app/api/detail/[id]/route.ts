@@ -20,7 +20,6 @@ export async function GET(req: NextRequest, { params }: Params) {
       .exec()
     const result = await Project.find({ writer: project[0].writer }).exec()
     const writerProjects = result.filter((project) => project._id.toString() !== id)
-    db?.disconnect()
     return NextResponse.json({ project: project[0], writerProjects }, { status: 200 })
   } catch (e) {
     return NextResponse.json({ error: e }, { status: 501 })

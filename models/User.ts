@@ -35,6 +35,9 @@ const userSchema = new mongoose.Schema(
         },
       }),
     },
+    favoriteId: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
     // clippings: [
     //   {
     //     type: mongoose.Schema.Types.ObjectId,

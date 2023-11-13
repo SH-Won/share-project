@@ -41,7 +41,8 @@ export const authOptions: AuthOptions = {
         token.refreshToken = user.refreshToken
         token.accessTokenExpiry = user.accessTokenExpiry
         token.role = user.role
-        token.favorites = user.favorites
+        // token.favorites = user.favorites
+        token.favoriteId = user.favoriteId
         return token
       }
       console.log('jwt func called')
@@ -51,7 +52,7 @@ export const authOptions: AuthOptions = {
         // console.log('not need refresh ')
         return token
       }
-      await dbConnect()
+      // await dbConnect()
       const response = await fetch('http://localhost:3000/api/auth/refresh', {
         method: 'POST',
         body: JSON.stringify({
@@ -82,7 +83,8 @@ export const authOptions: AuthOptions = {
       session.id = token.id
       session.name = token.name
       session.role = token.role
-      session.favorites = token.favorites
+      // session.favorites = token.favorites
+      session.favoriteId = token.favoriteId
       // session.error = token.error
       // console.log('session', token)
       // console.log('session', session)

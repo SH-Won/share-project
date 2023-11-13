@@ -23,8 +23,12 @@ const projectSlice = createSlice({
     addProject: (state, action: PayloadAction<IProject>) => {
       state.projects = [action.payload, ...state.projects]
     },
+    updateProject: (state, action: PayloadAction<IProject>) => {
+      const findIndex = state.projects.findIndex((project) => project._id === action.payload._id)
+      state.projects.splice(findIndex, 1, action.payload)
+    },
   },
 })
 
-export const { setProjects, addProject } = projectSlice.actions
+export const { setProjects, addProject, updateProject } = projectSlice.actions
 export default projectSlice.reducer

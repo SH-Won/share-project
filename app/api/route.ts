@@ -17,6 +17,7 @@ export async function GET(request: NextRequest) {
       .exec()
     // await db?.()
     console.log('product call')
+    // await db.disconnect()
     return NextResponse.json({ products })
   } catch (e) {
     console.log('error')

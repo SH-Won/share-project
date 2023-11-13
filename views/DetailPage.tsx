@@ -8,6 +8,8 @@ import RelativeProjects from '@/components/detail/RelativeProjects'
 import DetailHeader from '@/components/detail/DetailHeader'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
 
 interface Props {
   params: {
@@ -21,8 +23,9 @@ interface IProjectData {
 const DetailPage = ({ params }: Props) => {
   const id = params!.id
   const { data: session, update } = useSession()
+  // const { favorites } = useSelector((state: RootState) => state.user)
+  // console.log(favorites)
   const router = useRouter()
-  console.log(session)
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<IProjectData>()
 
