@@ -16,6 +16,7 @@ export interface IProject {
     image: string
     name: string
   }
+  favoriteUsers: string[]
 }
 export default async function Home() {
   // const [projects, setProjects] = useState<IProject[]>([])

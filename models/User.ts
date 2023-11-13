@@ -26,24 +26,6 @@ const userSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
     },
-    favorites: {
-      type: mongoose.Schema.Types.Map,
-      of: new mongoose.Schema({
-        project: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Project',
-        },
-      }),
-    },
-    favoriteId: {
-      type: mongoose.Schema.Types.ObjectId,
-    },
-    // clippings: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Project',
-    //   },
-    // ],
   },
   { collection: 'users' }
 )

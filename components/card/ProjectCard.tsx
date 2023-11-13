@@ -11,6 +11,7 @@ interface ProjectCardProps {
   title?: string
   description: string
   imageUrl: string
+  favoriteCount: number
 }
 const ProjectCard = ({
   id,
@@ -19,6 +20,7 @@ const ProjectCard = ({
   description,
   imageUrl,
   writerImage,
+  favoriteCount,
 }: ProjectCardProps) => {
   return (
     <div className="project-card">
@@ -41,6 +43,7 @@ const ProjectCard = ({
         </div>
         <div className="user-actions">
           <FavoriteSVG selected={true} />
+          <span className="favorite-count">{favoriteCount}</span>
         </div>
       </div>
     </div>

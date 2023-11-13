@@ -5,7 +5,7 @@ import Close from './Close'
 
 interface BottomModalProps {
   children: React.ReactElement
-  close: () => void
+  close?: () => void
 }
 const BottomModal = ({ children, close }: BottomModalProps) => {
   const [open, setOpen] = useState<boolean>(true)
@@ -13,7 +13,7 @@ const BottomModal = ({ children, close }: BottomModalProps) => {
   const closeModal = () => {
     setOpen(false)
     setTimeout(() => {
-      close()
+      router.back()
     }, 300)
   }
   useEffect(() => {

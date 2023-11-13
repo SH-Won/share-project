@@ -38,7 +38,7 @@ export async function POST(req: Request) {
         model: User,
       })
       .exec()
-    db.disconnect()
+    await db.disconnect()
     return NextResponse.json({ success: true, uploadProject }, { status: 200 })
   } catch (e) {
     return NextResponse.json({ success: false }, { status: 400 })

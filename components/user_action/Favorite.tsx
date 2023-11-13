@@ -35,11 +35,7 @@ interface FavoriteButtonProps {
   project: IProject
 }
 const FavoriteButton = ({ project }: FavoriteButtonProps) => {
-  // const dispatch = useDispatch<AppDispatch>()
   const { selected, disabled, updateFavorite } = useFavorite(project)
-
-  // const [selected, setSelected] = useState(false)
-  // const [disabled, setDisabled] = useState(false)
   return (
     <button className="favorite-button" disabled={disabled} onClick={updateFavorite}>
       <FavoriteSVG selected={selected} />

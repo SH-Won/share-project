@@ -5,14 +5,11 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function PUT(req: NextRequest) {
   const body = await req.json()
-  const { projectId, isAdd } = body
+  const { projectId, userId, isAdd } = body
   try {
     const db = await dbConnect()
-    const query = {
-      $inc: {
-        favoriteCount: isAdd ? 1 : -1,
-      },
-    }
+    const field = { favoriteUsers: userId }
+    const query = isAdd ? { $push: field } : { $pull: field }
     const project = await Project.findOneAndUpdate({ _id: projectId }, query, {
       new: true,
     })

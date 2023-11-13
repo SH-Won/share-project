@@ -11,9 +11,9 @@ const useFavorite = (project: IProject) => {
   const dispatch = useDispatch<AppDispatch>()
   const { data: session } = useSession()
   const { favorites } = useSelector((state: RootState) => state.user)
-  console.log(favorites, project._id)
   const [selected, setSelected] = useState(favorites[project._id] ? true : false)
   const [disabled, setDisabled] = useState(false)
+  const [error, setError] = useState(false)
   const isAdd = favorites[project._id] ? false : true
   const updateFavorite = async () => {
     setSelected((prev) => !prev)
@@ -22,12 +22,13 @@ const useFavorite = (project: IProject) => {
       () =>
         updateUserFavorite({
           projectId: project._id,
-          favoriteId: session!.favoriteId,
+          userId: session!.id,
           isAdd,
         }),
       () =>
         updateProjectFavorite({
           projectId: project._id,
+          userId: session!.id,
           isAdd,
         }),
     ]
@@ -38,14 +39,7 @@ const useFavorite = (project: IProject) => {
         }
         const projectJson = (await response[1].json()) as { project: IProject }
         if (isAdd) {
-          const updatedFavorite = {
-            key: project._id,
-            value: {
-              project,
-              _id: '',
-            },
-          }
-          dispatch(addFavorite(updatedFavorite))
+          dispatch(addFavorite(project))
         } else {
           dispatch(deleteFavorite({ key: project._id }))
         }
@@ -56,35 +50,6 @@ const useFavorite = (project: IProject) => {
         setSelected((prev) => !prev)
       })
       .finally(() => setDisabled(false))
-
-    // updateUserFavorite({
-    //   projectId: project._id,
-    //   favoriteId: session!.favoriteId,
-    //   isAdd,
-    // })
-    //   .then(async (response) => {
-    //     if (response.status === 200) {
-    //       if (isAdd) {
-    //         const updatedFavorite = {
-    //           key: project._id,
-    //           value: {
-    //             project,
-    //             _id: '',
-    //           },
-    //         }
-    //         dispatch(addFavorite(updatedFavorite))
-    //       } else {
-    //         dispatch(deleteFavorite({ key: project._id }))
-    //       }
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     console.log(e)
-    //     setSelected((prev) => !prev)
-    //   })
-    //   .finally(() => {
-    //     setDisabled(false)
-    //   })
   }
   return {
     selected,

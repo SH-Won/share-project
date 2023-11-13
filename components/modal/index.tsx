@@ -16,7 +16,7 @@ const Modal = () => {
   const ModalLayout = useCallback(() => {}, [])
 
   return (
-    <BottomModal close={() => router.back()}>
+    <BottomModal>
       <UploadProject />
     </BottomModal>
   )

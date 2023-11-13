@@ -11,19 +11,20 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch<AppDispatch>()
   useEffect(() => {
     console.log('useEffect userProvider')
-    if (!session?.favoriteId) {
+    if (!session?.id) {
       console.log('return ')
       return
     }
     console.log('fetch start')
     ;(async () => {
-      await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/api/user?favoriteId=${session.favoriteId}`, {
+      await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/api/user?userId=${session.id}`, {
         method: 'GET',
       })
         .then(async (response) => {
           if (response.ok) {
             const json = await response.json()
-            dispatch(setUserInfo(json.userInfo))
+            console.log('user inventory', json)
+            dispatch(setUserInfo(json.userInventory))
           }
         })
         .catch((e) => {

@@ -1,7 +1,7 @@
 'use client'
 import '@/styles/layout/upload-project.scss'
 import InputBox from '../common/InputBox'
-import { Button, Colors } from 'my-react-component'
+import { Colors } from 'my-react-component'
 import { useAuth, useForm, useModal, useValidation } from '@/hooks'
 import InputFileBox from '../common/InputFileBox'
 import { useRouter } from 'next/navigation'
@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/store'
 import { addProject, setProjects } from '@/store/project/projectSlice'
 import { IProject } from '@/app/page'
-
+import Button from '../common/Button'
 const initailState = {
   title: '',
   description: '',
@@ -25,8 +25,6 @@ interface UploadProjectProps {
 const UploadProject = ({ close }: UploadProjectProps) => {
   const session = useSession()
   const dispatch = useDispatch<AppDispatch>()
-  // const { user, checkLogin } = useAuth()
-  const router = useRouter()
   const { inputValue, onHandleChange, onHandleChangeImage } =
     useForm<typeof initailState>(initailState)
   const { validatorXSS } = useValidation()
@@ -34,17 +32,6 @@ const UploadProject = ({ close }: UploadProjectProps) => {
     onHandleChange,
     validator: validatorXSS,
   }
-  useEffect(() => {
-    const go = async () => {
-      close?.()
-    }
-    // document.body.style.overflow = 'hidden'
-    // window.addEventListener('popstate', go)
-    // return () => {
-    //   document.body.style.removeProperty('overflow')
-    //   window.removeEventListener('popstate', go)
-    // }
-  }, [])
   const onSubmit = async (e: React.MouseEvent) => {
     e.preventDefault()
     const body = {
@@ -70,30 +57,6 @@ const UploadProject = ({ close }: UploadProjectProps) => {
     } catch (e) {
       console.log(e)
     }
-
-    // try {
-    //   await checkLogin()
-    //     .then((response) => {
-    //       if (!response) return { ok: false }
-    //       else {
-    //         body.userId = response.id
-    //         return fetch('http://localhost:3000/api/upload', {
-    //           method: 'POST',
-    //           body: JSON.stringify(body),
-    //         })
-    //       }
-    //     })
-    //     .then((response) => {
-    //       if (response.ok) close?.()
-    //       else {
-    //         deleteModal()
-    //         router.replace('/login')
-    //       }
-    //     })
-    // } catch (e) {
-    //   console.log(e)
-    //   //
-    // }
   }
   return (
     <div className="project-container">
@@ -119,18 +82,15 @@ const UploadProject = ({ close }: UploadProjectProps) => {
         />
         <div className="button-container">
           <Button
-            color={Colors.white}
-            fontColor={Colors.grey_111}
-            border={Colors.grey_bbb}
-            click={() => close?.()}
-          >
-            취소
-          </Button>
-          <div onClick={(e) => onSubmit(e)}>
-            <Button color={Colors.main} fontColor={Colors.white}>
-              올리기
-            </Button>
-          </div>
+            type="basic"
+            size="large"
+            text="취소"
+            onClick={(e) => {
+              e.preventDefault()
+              close?.()
+            }}
+          />
+          <Button type="black" size="large" text="올리기" onClick={(e) => onSubmit(e)} />
         </div>
       </form>
     </div>

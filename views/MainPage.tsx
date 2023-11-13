@@ -24,6 +24,7 @@ const MainPage = ({ projects: serverProjects }: Props) => {
           description={project.description}
           writer={project.writer?.name ?? ''}
           writerImage={project.writer?.image ?? ''}
+          favoriteCount={project.favoriteUsers.length}
         />
       ))}
     </section>
