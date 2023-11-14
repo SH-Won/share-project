@@ -1,6 +1,5 @@
 import { IProject } from '@/app/page'
 import { IUserInventory } from '@/store/user/userSlice'
-
 type UserFavoriteParams = {
   projectId: string
   userId: string
@@ -34,7 +33,7 @@ const responseHandler = <T>(response: Response) => {
 export const getData = async (): Promise<IProject[]> => {
   // await new Promise((res) => setTimeout(res, 1000000))
   const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api', {
-    // cache: 'no-store',
+    next: { revalidate: 0 },
   })
   if (!response.ok) {
     return []

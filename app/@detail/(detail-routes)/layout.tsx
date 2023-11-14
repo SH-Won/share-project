@@ -1,4 +1,5 @@
 'use client'
+import Close from '@/components/modal/Close'
 import { usePathname } from 'next/navigation'
 
 const DetailLayout = ({ children }: { children: React.ReactNode }) => {
@@ -7,7 +8,10 @@ const DetailLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className={`detail-layout ${isMatch ? 'modal' : ''}`}>
-      <div className={`${isMatch ? 'modal__content--bottom open' : ''}`}>{children}</div>
+      <div className={`${isMatch ? 'modal__content--bottom open' : ''}`}>
+        {isMatch && <Close />}
+        {children}
+      </div>
     </div>
   )
 }

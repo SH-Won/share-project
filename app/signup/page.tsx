@@ -1,7 +1,6 @@
 import SelectSignup from '@/components/sign/SelectSignup'
 import SignUpContext from '@/context/SignUpContext'
 import SignUp from '@/components/sign/SignUp'
-import { AuthLink } from '@/components/sign/Sign'
 import SignUpSuccess from '@/components/sign/SignUpSuccess'
 
 const page = () => {

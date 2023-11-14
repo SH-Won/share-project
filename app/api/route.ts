@@ -2,10 +2,9 @@ import dbConnect from '@/lib/dbConnect'
 import Project from '@/models/Project'
 import User from '@/models/User'
 import { NextRequest, NextResponse } from 'next/server'
-
+export const dynamic = 'force-dynamic'
 export async function GET(request: NextRequest) {
   // const path = request.nextUrl.searchParams
-
   try {
     const db = await dbConnect()
     const projects = await Project.find()
@@ -14,12 +13,9 @@ export async function GET(request: NextRequest) {
         model: User,
       })
       .exec()
-    // await db?.()
-    console.log('product call')
     // await db.disconnect()
-    return NextResponse.json({ projects })
+    return NextResponse.json({ projects: projects.reverse() })
   } catch (e) {
-    console.log('error')
     return NextResponse.json({ message: e, success: false })
   }
 }

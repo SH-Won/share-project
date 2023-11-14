@@ -1,9 +1,9 @@
 // 'use client'
 
-import Loading from '@/components/loading'
+import Loading from '@/components//loading'
 import { getData } from '@/lib/api'
 import MainPage from '@/views/MainPage'
-import { Suspense } from 'react'
+import { lazy, Suspense, use } from 'react'
 // import Loading from './@project/loading'
 // import '@/styles/components/project-card.scss'
 export interface IProject {
@@ -18,7 +18,8 @@ export interface IProject {
   }
   favoriteUsers: string[]
 }
-export default async function Home() {
+
+export default function Home() {
   // const [projects, setProjects] = useState<IProject[]>([])
   // const [loading, setLoading] = useState(true)
   // useEffect(() => {
@@ -37,9 +38,13 @@ export default async function Home() {
   //         ))}
   //     </div>
   //   )
+  // const projects = use(getData())
   return (
     // <Suspense fallback={<Loading />}>
-    // </Suspense>
     <MainPage />
+    // </Suspense>
   )
+}
+{
+  // /* @ts-expect-error Async Server Component */
 }

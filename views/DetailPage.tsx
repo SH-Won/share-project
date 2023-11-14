@@ -3,13 +3,8 @@ import '@/styles/layout/detail-page.scss'
 import { IProject } from '@/app/page'
 import Intro from '@/components/detail/Intro'
 import SkeletonDetail from '@/components/detail/SkeletonDetail'
-import { useEffect, useState } from 'react'
-import RelativeProjects from '@/components/detail/RelativeProjects'
+import MoreByWriterProjects from '@/components/detail/MoreByWriterProjects'
 import DetailHeader from '@/components/detail/DetailHeader'
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store'
 import { useDetailFetch } from '@/hooks'
 
 interface Props {
@@ -29,7 +24,10 @@ const DetailPage = ({ params }: Props) => {
     <section className="detail-page">
       <DetailHeader project={data!.project} />
       <Intro project={data!.project} />
-      <RelativeProjects relativeProjects={data!.writerProjects} writer={data!.project.writer} />
+      <MoreByWriterProjects
+        projects={data!.writerProjects}
+        writerName={data!.project.writer.name}
+      />
     </section>
   )
 }

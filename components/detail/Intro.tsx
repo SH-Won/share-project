@@ -10,8 +10,7 @@ interface Props {
 const DetailPage = ({ project }: Props) => {
   return (
     <div className="detail-container">
-      <Close />
-      {/* <DetailHeader project={project} /> */}
+      {/* <Close /> */}
       <ImageWithSkeleton type="detail" imageUrl={project.imageUrl} alt={project.title} />
       <p className="detail-content__overview">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium illum cumque, eligendi

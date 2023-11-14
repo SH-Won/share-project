@@ -15,7 +15,7 @@ const useFetch = () => {
     if (isInitialFetching) return
     getData()
       .then((response) => {
-        dispatch(setProjects(response.reverse()))
+        dispatch(setProjects(response))
       })
       .finally(() => setLoading(false))
   }, [])

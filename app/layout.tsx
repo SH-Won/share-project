@@ -26,9 +26,9 @@ export default async function RootLayout({ children, detail, modal, project }: P
           <StoreProviders>
             <UserProvider>
               <BaseLayout>
+                {children}
                 {modal}
                 {detail}
-                {children}
               </BaseLayout>
             </UserProvider>
           </StoreProviders>
