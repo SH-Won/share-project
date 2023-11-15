@@ -21,13 +21,14 @@ const useFavorite = (project: IProject) => {
   const [error, setError] = useState(false)
   const isAdd = favorites[project._id] ? false : true
   const updateFavorite = async () => {
-    showModal({
-      type: 'basic',
-      Component: SignupPage,
-      props: {},
-    })
-    return
-    if (!session?.id) return
+    if (!session?.id) {
+      showModal({
+        type: 'basic',
+        Component: SignupPage,
+        props: {},
+      })
+      return
+    }
     setSelected((prev) => !prev)
     setDisabled(true)
     const promises = [
@@ -47,6 +48,8 @@ const useFavorite = (project: IProject) => {
     // promise.all 은 에러처리가 힘듬 어디서 에러가 났는지 모름
     // middleware 는 promise all 전체에 대해 return 을 해주지 않음
     // 즉 어디서 에러가 났는지 알 수가 없음 func().then(() => func2()) 하거나 Promise.settled 를 사용 해야 할듯 함
+
+    // middleware auth 에서 forbidden 이면 로그인으로 안내 ? 팝업?
     Promise.all(promises.map((el) => el()))
       .then(async (response) => {
         if (response.some((res) => res.status !== 200)) {

@@ -4,6 +4,8 @@ import BottomSheetModal from './BottomSheetModal'
 import React, { useCallback } from 'react'
 import BasicModal from './BasicModal'
 import Close from './Close'
+import ModalHeader from './ModalHeader'
+// import { Popup } from 'my-react-component'
 
 const Modal = () => {
   const { isModalOpen, modalState: ModalState, closeModal } = useModal()
@@ -18,7 +20,7 @@ const Modal = () => {
       case 'basic':
         return (
           <BasicModal>
-            <Close closeFunc={closeModal} />
+            <ModalHeader closeModal={closeModal} />
             <ModalState.Component {...ModalState.props} />
           </BasicModal>
         )

@@ -25,7 +25,7 @@ const BottomSheetModal = ({ children, close }: BottomModalProps) => {
   }, [])
   return (
     <React.Fragment>
-      <div className={`modal__content--bottom ${!open ? 'close' : 'open'}`}>
+      <div className={`modal__container--bottom ${!open ? 'close' : 'open'}`}>
         <Close />
         {cloneElement(children, { close: closeModal })}
       </div>
