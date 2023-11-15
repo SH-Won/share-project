@@ -1,10 +1,9 @@
 'use client'
-import { usePathname } from 'next/navigation'
+import { useModal } from '@/hooks'
 
 const ModalLayout = ({ children }: { children: React.ReactNode }) => {
-  const pathname = usePathname()
-  const isMatch = pathname!.split('/')[1] === 'modal'
-
-  return <section className={`modal-layout ${isMatch ? 'modal' : ''}`}>{children}</section>
+  const { isModalOpen } = useModal()
+  console.log('isModalOpen', isModalOpen)
+  return <>{children}</>
 }
 export default ModalLayout

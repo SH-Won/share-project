@@ -7,6 +7,8 @@ import { StoreProviders } from '@/providers'
 import NextAuthProvider from '@/providers/NextAuthProvider'
 import BaseLayout from '@/layout/BaseLayout'
 import UserProvider from '@/providers/UserProvider'
+import ModalContext from '@/context/ModalContext'
+import Modal from '@/components/modal'
 export const metadata = {
   title: 'Share Project',
   description: 'Share your project in this web',
@@ -16,7 +18,6 @@ interface Props {
   detail: React.ReactNode
   modal: React.ReactNode
   project: React.ReactNode
-  // params? :string
 }
 export default async function RootLayout({ children, detail, modal, project }: Props) {
   return (
@@ -25,11 +26,14 @@ export default async function RootLayout({ children, detail, modal, project }: P
         <NextAuthProvider>
           <StoreProviders>
             <UserProvider>
-              <BaseLayout>
-                {children}
-                {modal}
-                {detail}
-              </BaseLayout>
+              <ModalContext>
+                <BaseLayout>
+                  {children}
+                  {detail}
+                  {modal}
+                </BaseLayout>
+                <Modal />
+              </ModalContext>
             </UserProvider>
           </StoreProviders>
         </NextAuthProvider>

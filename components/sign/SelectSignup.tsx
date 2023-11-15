@@ -3,10 +3,8 @@ import Image from 'next/image'
 import Sign from './Sign'
 import { useContext } from 'react'
 import { SignUpStateContext } from '@/context/SignUpContext'
-import { useSession } from 'next-auth/react'
 
 const SelectSignup = () => {
-  const { data } = useSession()
   const { goPage, page } = useContext(SignUpStateContext)
   if (page !== 'selectSignup') return null
   return (

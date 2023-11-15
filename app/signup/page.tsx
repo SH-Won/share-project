@@ -1,16 +1,9 @@
-import SelectSignup from '@/components/sign/SelectSignup'
-import SignUpContext from '@/context/SignUpContext'
-import SignUp from '@/components/sign/SignUp'
-import SignUpSuccess from '@/components/sign/SignUpSuccess'
+import SignupPage from '@/views/SignupPage'
 
 const page = () => {
   return (
     <div className="sign-page">
-      <SignUpContext>
-        <SelectSignup />
-        <SignUp />
-        <SignUpSuccess />
-      </SignUpContext>
+      <SignupPage />
     </div>
   )
 }

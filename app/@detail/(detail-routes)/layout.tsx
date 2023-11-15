@@ -7,7 +7,7 @@ const DetailLayout = ({ children }: { children: React.ReactNode }) => {
   const isMatch = pathname!.split('/')[1] === 'detail'
 
   return (
-    <div className={`detail-layout ${isMatch ? 'modal' : ''}`}>
+    <div className={`detail-layout ${isMatch ? 'modal detail' : ''}`}>
       <div className={`${isMatch ? 'modal__content--bottom open' : ''}`}>
         {isMatch && <Close />}
         {children}

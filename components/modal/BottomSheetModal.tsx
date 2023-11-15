@@ -7,7 +7,7 @@ interface BottomModalProps {
   children: React.ReactElement
   close?: () => void
 }
-const BottomModal = ({ children, close }: BottomModalProps) => {
+const BottomSheetModal = ({ children, close }: BottomModalProps) => {
   const [open, setOpen] = useState<boolean>(true)
   const router = useRouter()
   const closeModal = () => {
@@ -32,4 +32,4 @@ const BottomModal = ({ children, close }: BottomModalProps) => {
     </React.Fragment>
   )
 }
-export default BottomModal
+export default BottomSheetModal
