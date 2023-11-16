@@ -20,6 +20,13 @@ const userInventorySchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
   },
+  imageUrl: {
+    type: String,
+  },
+  imagePublicId: {
+    type: String,
+  },
+
   favorites: {
     type: [mongoose.Schema.Types.ObjectId],
     default: [],
