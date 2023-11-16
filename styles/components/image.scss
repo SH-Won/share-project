@@ -28,3 +28,40 @@
     }
   }
 }
+.user-image {
+  @include flexCenter();
+  border-radius: 50%;
+  border: 1px solid #f7f7f7;
+  color: #fff;
+  // background-color: #fff;
+  overflow: hidden;
+  & > img {
+    text-align: center;
+    -o-object-fit: cover;
+    object-fit: cover;
+    color: transparent;
+  }
+  &.small {
+    width: 80px;
+    height: 80px;
+  }
+  &.medium {
+    width: 80px;
+    height: 80px;
+  }
+  &.large {
+    width: 80px;
+    height: 80px;
+  }
+}
+.edit-user-image {
+  cursor: pointer;
+  position: relative;
+  & > img {
+    position: absolute;
+    border-radius: 50%;
+    bottom: -4px;
+    right: -4px;
+    background-color: #f5f5f5;
+  }
+}

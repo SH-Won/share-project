@@ -10,4 +10,4 @@ const NextAuthProvider = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default NextAuthProvider
+export { NextAuthProvider }

@@ -3,12 +3,11 @@ import './index.scss'
 import '@/styles/components/signup.scss'
 // import '../styles/output.css'
 import 'my-react-component/dist/style.css'
-import { StoreProviders } from '@/providers'
-import NextAuthProvider from '@/providers/NextAuthProvider'
+import { StoreProviders, NextAuthProvider, UserProvider } from '@/providers'
 import BaseLayout from '@/layout/BaseLayout'
-import UserProvider from '@/providers/UserProvider'
 import ModalContext from '@/context/ModalContext'
 import Modal from '@/components/modal'
+import Navbar from '@/components/navbar/Navbar'
 export const metadata = {
   title: 'Share Project',
   description: 'Share your project in this web',

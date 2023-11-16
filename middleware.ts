@@ -7,11 +7,9 @@ import { authOptions } from './app/api/auth/[...nextauth]/route'
 export async function middleware(request: NextRequest) {
   // const session = await getServerSession(authOptions)
   const token = await getToken({ req: request, secret: '12345' })
-  // console.log('session', session)
-  // console.log(token)
   const absoluteURL = new URL('/signin', request.nextUrl.origin)
-  console.log(request.url)
-  console.log(request.nextUrl.pathname)
+  // console.log(request.url)
+  // console.log(request.nextUrl.pathname)
 
   // if (!token && request.nextUrl.pathname.toString().startsWith('/detail')) {
   //   console.log('token', token)
@@ -23,7 +21,6 @@ export async function middleware(request: NextRequest) {
   // return NextResponse.next()
   // return NextResponse.rewrite(url)
   // return NextResponse.rewrite(request.url)
-  console.log(token?.accessToken)
   if (!token?.accessToken) {
     return NextResponse.json({ message: '권한이 없습니다 로그인 해주세요' }, { status: 401 })
   }
@@ -32,7 +29,6 @@ export async function middleware(request: NextRequest) {
       Authorization: `Bearer ${token.accessToken}`,
     },
   })
-  console.log(await response.json())
   if (!response.ok)
     return NextResponse.json({ message: '권한이 없습니다 로그인 해주세요' }, { status: 401 })
   return NextResponse.next()

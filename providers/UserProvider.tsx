@@ -45,4 +45,4 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>
 }
 
-export default UserProvider
+export { UserProvider }

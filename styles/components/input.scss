@@ -64,3 +64,18 @@
     }
   }
 }
+.file__user-image {
+  position: relative;
+  @include flexCenter();
+
+  // &::after {
+  //   position: absolute;
+  //   right: 10px;
+  //   bottom: 5px;
+  //   content: url("/edit.svg");
+  //   width: 14px;
+  //   height: 14px;
+  //   background-color: color("white");
+  //   border-radius: 50%;
+  // }
+}

@@ -25,6 +25,7 @@ declare module 'next-auth' {
     accessTokenExpiry: number
     favorites: object
     favoriteId: string
+    error: 'invalid' | undefined
     user: {
       /** The user's postal address. */
       name: string
@@ -51,5 +52,6 @@ declare module 'next-auth/jwt' {
     favorites: object
     favoriteId: string
     role: number
+    error: 'invalid' | undefined
   }
 }

@@ -6,4 +6,4 @@ const RefreshTokenHandler = () => {
   return <div>RefreshTokenHandler</div>
 }
 
-export default RefreshTokenHandler
+export { RefreshTokenHandler }

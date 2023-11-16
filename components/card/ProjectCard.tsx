@@ -5,6 +5,7 @@ import Link from 'next/link'
 import ImageWithSkeleton from '../image/ImageWithSkeleton'
 import { FavoriteSVG } from '../user_action/Favorite'
 import { IProject } from '@/app/page'
+import { Card } from '../ui'
 interface ProjectCardProps {
   project: IProject | Omit<IProject, 'writer'>
   children: React.ReactNode
@@ -54,7 +55,7 @@ const CardContent = () => {
 const ProjectCard = ({ project, children }: ProjectCardProps) => {
   return (
     <ProjectCardContext.Provider value={project}>
-      <div className="project-card">{children}</div>
+      <Card.Project>{children}</Card.Project>
     </ProjectCardContext.Provider>
   )
 }

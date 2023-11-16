@@ -7,7 +7,7 @@ type CloseProps = {
   closeFunc?: () => void
 }
 const isInterCeptingRoute = () => {
-  return document.querySelector('main')?.querySelector('.modal') ? true : false
+  return document.querySelector('main')?.querySelector('.detail-layout') ? true : false
 }
 const Close = ({ closeFunc }: CloseProps) => {
   const router = useRouter()
