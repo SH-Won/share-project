@@ -1,0 +1,154 @@
+.user-page {
+  // max-width: 900px;
+  display: flex;
+  flex-direction: column;
+
+  @include Desktop() {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+}
+.user-navigation {
+  padding: 30px 20px;
+  .navi-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    @include flexCenter();
+    flex-direction: row;
+    justify-content: flex-start;
+    @include Desktop() {
+      flex-direction: column;
+    }
+
+    &__item {
+      position: relative;
+      cursor: pointer;
+      padding: 10px 14px;
+      color: color("grey_bbb");
+      @include typeface("Heading_2");
+      // @include Mobile() {
+      //   @include typeface("Paragraph_1_b");
+      // }
+      &.selected {
+        color: color("grey_111");
+      }
+      &:hover {
+        &::after {
+          position: absolute;
+          content: "";
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          opacity: 0.3;
+          background-color: color("grey_ccc");
+          border-radius: 8px;
+        }
+      }
+
+      // &.medium {
+      //   @include typeface()
+
+      // }
+      // &.large {
+      //   @include typeface()
+
+      // }
+      // &.big {
+      //   @include typeface('Heading_2')
+
+      // }
+    }
+  }
+}
+
+.profile-container {
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+  @include flexCenter();
+  flex-direction: column;
+  gap: 50px;
+  @include Desktop() {
+    padding: 60px 0;
+  }
+
+  & > .profile__heading {
+    @include flexCenter();
+    flex-direction: column;
+    gap: 20px;
+    @include Desktop() {
+      flex-direction: row;
+    }
+    & > .profile-info {
+      @include flexCenter();
+      flex-direction: column;
+      @include Desktop() {
+        align-items: flex-start;
+      }
+      .user-name {
+        @include typeface("Heading_2");
+      }
+      .user-job {
+        @include typeface("Paragraph_2_b");
+        color: color("grey_bbb");
+      }
+    }
+  }
+
+  & > .profile__overview {
+    // align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    & > .user-asset {
+      display: flex;
+      gap: 10px;
+      & > .title {
+        @include typeface("Paragraph_1_sb");
+      }
+      & > .description {
+        margin-left: 10px;
+        @include typeface("Paragraph_1_sb");
+      }
+    }
+  }
+}
+.profile-container {
+  &.skeleton {
+    .profile__image {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .profile-info {
+      width: 100%;
+      gap: 4px;
+      & > .user-name {
+        width: 100px;
+        height: 24px;
+        border-radius: 4px;
+      }
+      & > .user-job {
+        width: 80%;
+        height: 20px;
+        border-radius: 4px;
+      }
+    }
+    .user-asset {
+      & .title {
+        border-radius: 4px;
+        width: 60px;
+        height: 24px;
+      }
+      & .description {
+        border-radius: 4px;
+        width: 130px;
+        height: 24px;
+      }
+    }
+  }
+}

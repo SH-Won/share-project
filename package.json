@@ -20,7 +20,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0",
     "my-react-component": "https://github.com/SH-Won/react-component.git#a0cbc399a051fb9326cab1a37e8137ea96045036",
-    "next": "13.5.4",
+    "next": "13.5.6",
     "next-auth": "^4.24.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",

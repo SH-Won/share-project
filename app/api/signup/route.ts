@@ -1,5 +1,6 @@
 import dbConnect from '@/lib/dbConnect'
 import User from '@/models/User'
+import UserInventory from '@/models/UserInventory'
 import bcrypt from 'bcrypt'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -13,12 +14,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: '동일한 이메일로 가입된 내역이 있습니다' }, { status: 400 })
   try {
     const hashPassword = await bcrypt.hash(password, 10)
+
     const result = await User.create({
       name,
       userName,
       email,
       password: hashPassword,
-      favorites: {},
+    })
+    const userInfo = await UserInventory.create({
+      _id: result._id,
     })
     db?.disconnect()
     return NextResponse.json({ success: true, message: '회원 가입 성공' }, { status: 200 })

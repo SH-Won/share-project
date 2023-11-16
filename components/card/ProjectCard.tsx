@@ -1,46 +1,65 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { createContext, useContext } from 'react'
 import '@/styles/components/project-card.scss'
 import Link from 'next/link'
 import ImageWithSkeleton from '../image/ImageWithSkeleton'
+import { FavoriteSVG } from '../user_action/Favorite'
+import { IProject } from '@/app/page'
+import { Card } from '../ui'
 interface ProjectCardProps {
-  id: string
-  writer: string
-  writerImage: string
-  title?: string
-  description: string
-  imageUrl: string
+  project: IProject | Omit<IProject, 'writer'>
+  children: React.ReactNode
 }
-const ProjectCard = ({
-  id,
-  writer,
-  title,
-  description,
-  imageUrl,
-  writerImage,
-}: ProjectCardProps) => {
+
+const ProjectCardContext = createContext<IProject | Omit<IProject, 'writer'>>({} as IProject)
+const CardImage = () => {
+  const project = useContext(ProjectCardContext)
   return (
-    <div className="project-card">
-      <Link href={`/detail/${id}`}>
-        {/* <div className="image-container main">
-          <Image src={imageUrl} width={400} height={400} alt={description} />
-        </div> */}
-        <ImageWithSkeleton
-          type="main"
-          width={400}
-          height={400}
-          imageUrl={imageUrl ?? ''}
-          alt={title ?? 'loading'}
+    <Link href={`/detail/${project._id}`}>
+      {/* <div className="image-container main">
+    <Image src={imageUrl} width={400} height={400} alt={description} />
+  </div> */}
+      <ImageWithSkeleton
+        type="main"
+        width={400}
+        height={400}
+        imageUrl={project.imageUrl ?? ''}
+        alt={project.title ?? 'loading'}
+      />
+    </Link>
+  )
+}
+const CardContent = () => {
+  const project = useContext(ProjectCardContext)
+  if (!('writer' in project)) {
+    throw new Error('Card content always need writer property')
+  }
+  return (
+    <div className="project-card__explain">
+      <div className="writer">
+        <Image
+          src={project.writer.image || '/noImage.svg'}
+          width={24}
+          height={24}
+          alt={project.writer.name}
         />
-      </Link>
-      <div className="project-card__explain">
-        <div className="writer">
-          <Image src={writerImage || '/noImage.svg'} width={24} height={24} alt={writer} />
-          <span>{writer || 'no writer'}</span>
-        </div>
+        <span>{project.writer.name || 'no writer'}</span>
+      </div>
+      <div className="user-actions">
+        <FavoriteSVG selected={true} />
+        <span className="favorite-count">{project.favoriteUsers.length}</span>
       </div>
     </div>
   )
 }
+const ProjectCard = ({ project, children }: ProjectCardProps) => {
+  return (
+    <ProjectCardContext.Provider value={project}>
+      <Card.Project>{children}</Card.Project>
+    </ProjectCardContext.Provider>
+  )
+}
+ProjectCard.Image = CardImage
+ProjectCard.Content = CardContent
 
 export default ProjectCard

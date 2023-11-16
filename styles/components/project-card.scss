@@ -31,6 +31,15 @@
         @include typeface("Paragraph_2_b");
       }
     }
+    .user-actions {
+      @include flexCenter();
+      gap: 4px;
+      padding-right: 4px;
+      & > .favorite-count {
+        @include typeface("Paragraph_2");
+        color: color("grey_999");
+      }
+    }
 
     &.skeleton {
       height: 24px;

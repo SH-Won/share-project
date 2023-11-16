@@ -5,15 +5,15 @@ import Close from './Close'
 
 interface BottomModalProps {
   children: React.ReactElement
-  close: () => void
+  close?: () => void
 }
-const BottomModal = ({ children, close }: BottomModalProps) => {
+const BottomSheetModal = ({ children, close }: BottomModalProps) => {
   const [open, setOpen] = useState<boolean>(true)
   const router = useRouter()
   const closeModal = () => {
     setOpen(false)
     setTimeout(() => {
-      close()
+      router.back()
     }, 300)
   }
   useEffect(() => {
@@ -25,11 +25,11 @@ const BottomModal = ({ children, close }: BottomModalProps) => {
   }, [])
   return (
     <React.Fragment>
-      <div className={`modal__content--bottom ${!open ? 'close' : 'open'}`}>
+      <div className={`modal__container--bottom ${!open ? 'close' : 'open'}`}>
         <Close />
         {cloneElement(children, { close: closeModal })}
       </div>
     </React.Fragment>
   )
 }
-export default BottomModal
+export default BottomSheetModal

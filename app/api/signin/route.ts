@@ -12,14 +12,14 @@ export async function POST(req: Request) {
     const cookies = result.cookies
     const { email, password } = result as { email: string; password: string }
     const user = await User.findOne({ email })
-      .populate({
-        path: 'favorites.$*.project',
-        populate: {
-          path: 'writer',
-          model: User,
-        },
-        model: Project,
-      })
+      // .populate({
+      //   path: 'favorites.$*.project',
+      //   populate: {
+      //     path: 'writer',
+      //     model: User,
+      //   },
+      //   model: Project,
+      // })
       .exec()
     if (!user) return NextResponse.json({ message: 'invalid' }, { status: 401 })
     const isMatchPassword = await bcrypt.compare(password, user.password)
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
-          expiresIn: '10s',
+          expiresIn: '1h',
         }
       )
       const newRefreshToken = jwt.sign(
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
         },
         process.env.REFRESH_TOKEN_SECRET,
         {
-          expiresIn: '600s',
+          expiresIn: '14d',
         }
       )
       if (cookies?.refreshtoken) {
@@ -61,13 +61,14 @@ export async function POST(req: Request) {
       const response = NextResponse.json(
         {
           accessToken,
-          accessTokenExpiry: Date.now() + 10 * 1000,
+          accessTokenExpiry: Date.now() + 60 * 60 * 1000,
           refreshToken: newRefreshToken,
           id: user._id,
           name: user.name,
           email: user.email,
           role: user.role,
-          favorites: user.favorites,
+          favoriteId: user.favoriteId,
+          // favorites: user.favorites,
         },
         { status: 200 }
       )

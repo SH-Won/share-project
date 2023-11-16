@@ -7,7 +7,7 @@ interface MyJWTPayload {
   role: number
 }
 export async function POST(req: Request) {
-  await dbConnect()
+  const db = await dbConnect()
   // const cookie = req.headers.get('cookie')
   // const refreshToken = cookie?.split('=')[1]
   const { refreshToken } = await req.json()
@@ -19,6 +19,7 @@ export async function POST(req: Request) {
   const foundedUser = await User.findOne({ refreshToken }).exec()
   let isError, nextRefreshToken, hackedUser, nextAccessToken
   if (!foundedUser) {
+    console.log('not founded User')
     jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
@@ -63,7 +64,7 @@ export async function POST(req: Request) {
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
-          expiresIn: '10s',
+          expiresIn: '1h',
         }
       ) as string
       const newRefreshToken = jwt.sign(
@@ -74,7 +75,7 @@ export async function POST(req: Request) {
           name: foundedUser.name,
         },
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: '600s' }
+        { expiresIn: '14d' }
       ) as string
 
       foundedUser.refreshToken = newRefreshToken
@@ -100,7 +101,7 @@ export async function POST(req: Request) {
   const response = NextResponse.json(
     {
       accessToken,
-      accessTokenExpiry: Date.now() + 10 * 1000,
+      accessTokenExpiry: Date.now() + 60 * 60 * 1000,
       refreshToken: newRefreshToken,
       name,
       email,
@@ -111,6 +112,7 @@ export async function POST(req: Request) {
       status: 200,
     }
   )
+  console.log('response refreshToken')
   // response?.cookies.set({
   //   name: 'refreshtoken',
   //   value: newRefreshToken,
@@ -118,5 +120,6 @@ export async function POST(req: Request) {
   //   secure: true,
   //   maxAge: 24 * 60 * 60,
   // })
+  // await db?.disconnect()
   return response
 }

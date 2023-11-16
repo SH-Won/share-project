@@ -24,7 +24,7 @@
   &.large {
     height: 56px;
     padding: 0 24px;
-    @include typeface("Paragraph_2b");
+    @include typeface("Paragraph_1_b");
   }
   &.medium {
     height: 44px;
@@ -35,5 +35,18 @@
     height: 32px;
     padding: 0 16px;
     @include typeface("Paragraph_3_b");
+  }
+}
+.favorite-button {
+  cursor: pointer;
+  background: transparent;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid color("grey_ccc");
+  @include flexCenter();
+  @include Desktop() {
+    width: 40px;
+    height: 40px;
   }
 }

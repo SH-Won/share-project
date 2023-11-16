@@ -20,6 +20,16 @@
   height: 80px;
   padding: 0 20px;
   box-shadow: 0 0 0 1px #f3f3f4;
+  &__user-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    span {
+      @include typeface("Paragraph_3_b");
+      color: color("grey_333");
+    }
+  }
 }
 a {
   text-decoration: none;

@@ -12,7 +12,7 @@ cloudinary.config({
 })
 export async function POST(req: Request) {
   try {
-    await dbConnect()
+    const db = await dbConnect()
     const body = await req.json()
     const { image } = body
     const { imageUrl, imagePublicId } = (await new Promise((res, rej) => {
@@ -38,6 +38,7 @@ export async function POST(req: Request) {
         model: User,
       })
       .exec()
+    await db.disconnect()
     return NextResponse.json({ success: true, uploadProject }, { status: 200 })
   } catch (e) {
     return NextResponse.json({ success: false }, { status: 400 })

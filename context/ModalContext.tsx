@@ -1,21 +1,21 @@
 'use client'
 import { createContext, Dispatch, SetStateAction, useState } from 'react'
 
-type ModalType = 'bottomSheet' | 'popup' | 'modal' | 'toast' | 'bottomModal'
-export interface ModalStack {
+type ModalType = 'bottomSheet' | 'basic' | 'modal'
+export type TModalState = {
   type: ModalType
-  component: React.FC
+  Component: React.FC
   props: any
 }
-interface ModalState {
-  modalStack: ModalStack[]
-}
-const initialState: ModalStack[] = []
-export const ModalStateContext = createContext<ModalStack[]>(initialState)
-export const ModalSetterContext = createContext<Dispatch<SetStateAction<ModalStack[]>> | null>(null)
+// interface ModalState {
+//   modalStack: ModalState[]
+// }
+// const initialState: ModalStack[] = []
+export const ModalStateContext = createContext<TModalState>({} as TModalState)
+export const ModalSetterContext = createContext<Dispatch<SetStateAction<TModalState>> | null>(null)
 
 const ModalContext = ({ children }: { children: React.ReactNode }) => {
-  const [modalState, setModalState] = useState(initialState)
+  const [modalState, setModalState] = useState({} as TModalState)
 
   return (
     <ModalStateContext.Provider value={modalState}>

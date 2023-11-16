@@ -1,9 +1,9 @@
+import dbConnect from '@/lib/dbConnect'
 import NextAuth, { AuthOptions } from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials'
 
-const authOptions: AuthOptions = {
+export const authOptions: AuthOptions = {
   secret: '12345',
-
   providers: [
     CredentialProvider({
       id: 'email-password-credential',
@@ -41,34 +41,35 @@ const authOptions: AuthOptions = {
         token.refreshToken = user.refreshToken
         token.accessTokenExpiry = user.accessTokenExpiry
         token.role = user.role
-        token.favorites = user.favorites
+        // token.favorites = user.favorites
+        token.favoriteId = user.favoriteId
         return token
       }
-      // const refreshTime = Math.round((token.accessTokenExpiry as number) - Date.now())
-      // // console.log(refreshTime)
-      // if (refreshTime > 0) {
-      //   // console.log('not need refresh ')
-      //   return token
-      // }
-      // const response = await fetch('http://localhost:3000/api/auth/refresh', {
-      //   method: 'POST',
-      //   body: JSON.stringify({
-      //     refreshToken: token.refreshToken,
-      //   }),
-      // })
-      // if (!response.ok) {
-      //   token.error = 'invalid'
-      //   return token
-      // }
-      // const json = await response.json()
-      // token.accessToken = json.accessToken
-      // token.refreshToken = json.refreshToken
-      // token.accessTokenExpiry = json.accessTokenExpiry
-      // token.role = json.role
-      // token.email = json.email
-      // token.name = json.name
-      // token.id = json.id
-      // console.log('jwt', token)
+      console.log('jwt func called')
+      const refreshTime = Math.round((token.accessTokenExpiry as number) - Date.now())
+      if (refreshTime > 0) {
+        return token
+      }
+      // await dbConnect()
+      const response = await fetch('http://localhost:3000/api/auth/refresh', {
+        method: 'POST',
+        body: JSON.stringify({
+          refreshToken: token.refreshToken,
+        }),
+      })
+      if (!response.ok) {
+        token.error = 'invalid'
+        return token
+      }
+      const json = await response.json()
+      console.log('new refresh token exec')
+      token.accessToken = json.accessToken
+      token.refreshToken = json.refreshToken
+      token.accessTokenExpiry = json.accessTokenExpiry
+      token.role = json.role
+      token.email = json.email
+      token.name = json.name
+      token.id = json.id
       return token
     },
     async session({ session, token }) {
@@ -79,7 +80,9 @@ const authOptions: AuthOptions = {
       session.id = token.id
       session.name = token.name
       session.role = token.role
-      session.favorites = token.favorites
+      // session.favorites = token.favorites
+      session.favoriteId = token.favoriteId
+      session.error = token.error
       // session.error = token.error
       // console.log('session', token)
       // console.log('session', session)
