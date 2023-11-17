@@ -1,11 +1,7 @@
 'use client'
 import { IProject } from '@/app/page'
 import { useFavorite } from '@/hooks'
-import { AppDispatch } from '@/store'
-import { addFavorite } from '@/store/user/userSlice'
 import { Colors } from 'my-react-component'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
 
 interface FavoriteSVG {
   selected?: boolean

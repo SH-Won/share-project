@@ -3,7 +3,6 @@ import { useModal } from '@/hooks'
 import BottomSheetModal from './BottomSheetModal'
 import React, { useCallback } from 'react'
 import BasicModal from './BasicModal'
-import Close from './Close'
 import ModalHeader from './ModalHeader'
 // import { Popup } from 'my-react-component'
 

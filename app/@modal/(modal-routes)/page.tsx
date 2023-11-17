@@ -1,7 +1,4 @@
-'use client'
-import Modal from '@/components/modal'
-import React from 'react'
-
+// 'use client'
 const page = () => {
   return null
 }
