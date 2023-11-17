@@ -8,9 +8,15 @@ export default function UserLayout({ children, ...arg }: Props) {
   // const segment = useSelectedLayoutSegment()
   // console.log(segment, 'segment')
   return (
-    <section className="user-page">
-      <UserNavigation />
-      {children}
+    <section className="user-layout">
+      <div className="user-navigation-wrapper">
+        <UserNavigation />
+      </div>
+      <div className="user-page-wrapper">
+        <div className="page-space border"></div>
+        {children}
+      </div>
+      <div className="page-space"></div>
     </section>
   )
 }

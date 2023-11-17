@@ -7,7 +7,7 @@ import { useForm } from '@/hooks'
 import { AppDispatch, RootState } from '@/store'
 import { updateUserImage } from '@/store/user/userSlice'
 import { useSession } from 'next-auth/react'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const initialState = {

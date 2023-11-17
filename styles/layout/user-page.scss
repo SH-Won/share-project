@@ -1,5 +1,6 @@
-.user-page {
-  // max-width: 900px;
+.user-layout {
+  max-width: 1024px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
 
@@ -7,29 +8,49 @@
     display: grid;
     grid-template-columns: 1fr 2fr;
   }
+  .user-navigation-wrapper {
+    padding: 30px 60px 0;
+
+    @include Desktop() {
+      border-left: 1px solid #f3f3f4;
+      height: calc(100vh - 120px);
+    }
+  }
+  .user-page-wrapper {
+    display: grid;
+    grid-template-columns: 60px 1fr 60px;
+    padding: 20px 0;
+  }
+}
+.page-space {
+  width: 60px;
+  height: 100%;
+  &.border {
+    border-left: 1px solid #f3f3f4;
+  }
 }
 .user-navigation {
-  padding: 30px 20px;
+  // padding: 30px 20px;
+  position: sticky;
   .navi-list {
     list-style: none;
     margin: 0;
     padding: 0;
-    @include flexCenter();
+    display: flex;
     flex-direction: row;
     justify-content: flex-start;
     @include Desktop() {
       flex-direction: column;
+      gap: 24px;
     }
 
     &__item {
       position: relative;
       cursor: pointer;
-      padding: 10px 14px;
+      padding: 14px 18px;
       color: color("grey_bbb");
       @include typeface("Heading_2");
-      // @include Mobile() {
-      //   @include typeface("Paragraph_1_b");
-      // }
+
       &.selected {
         color: color("grey_111");
       }
@@ -46,28 +67,17 @@
           border-radius: 8px;
         }
       }
-
-      // &.medium {
-      //   @include typeface()
-
-      // }
-      // &.large {
-      //   @include typeface()
-
-      // }
-      // &.big {
-      //   @include typeface('Heading_2')
-
-      // }
     }
   }
 }
 
+// UserProfilePage
 .profile-container {
   width: 100%;
   padding: 30px 20px;
   box-sizing: border-box;
-  @include flexCenter();
+  display: flex;
+  align-items: center;
   flex-direction: column;
   gap: 50px;
   @include Desktop() {
@@ -152,3 +162,5 @@
     }
   }
 }
+
+// UserActivityPage

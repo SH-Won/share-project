@@ -1,5 +1,6 @@
 .image-container {
   position: relative;
+  overflow: hidden;
   &.skeleton {
     border-radius: 8px;
   }

@@ -11,7 +11,17 @@ interface DetailHeaderProps {
 const DetailHeader = ({ project }: DetailHeaderProps) => {
   const [isBottomBorder, setIsBottomBorder] = useState(false)
   const { targetRef } = useInterSection<HTMLHeadingElement>({
-    callback: (bool: boolean) => setIsBottomBorder(bool),
+    // callback: (bool: boolean) => setIsBottomBorder(bool),
+    handleInterSecting: ([entry], ob) => {
+      if (entry.isIntersecting) {
+        setIsBottomBorder(false)
+      } else {
+        setIsBottomBorder(true)
+      }
+    },
+    option: {
+      threshold: 0,
+    },
   })
   return (
     <>
