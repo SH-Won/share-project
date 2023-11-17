@@ -1,12 +1,14 @@
 .user-layout {
-  max-width: 1024px;
+  // max-width: 1024px;
+  // max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
 
   @include Desktop() {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 2.5fr;
   }
   .user-navigation-wrapper {
     padding: 30px 60px 0;

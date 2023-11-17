@@ -18,7 +18,7 @@ const MainPage = ({ projects: serverProjects }: Props) => {
     hasMore: true,
     callback: loadMore,
   })
-  if (loading) return <Loading />
+  // if (loading) return <Loading />
   return (
     <section className="page-container">
       {projects!.map((project) => (
@@ -29,8 +29,8 @@ const MainPage = ({ projects: serverProjects }: Props) => {
           </ProjectCard>
         </div>
       ))}
-
-      {/* {loading ? <Loading /> : <div ref={targetRef} style={{ height: '10px' }}></div>} */}
+      {loading && <Loading />}
+      <div ref={targetRef}></div>
     </section>
   )
 }

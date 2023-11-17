@@ -1,0 +1,35 @@
+.user-activity-page {
+  padding: 16px;
+  .activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 16px 0;
+    &__overview {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      .icon {
+        display: flex;
+        align-items: flex-end;
+      }
+      .title {
+        margin-left: 10px;
+        @include typeface("Heading_2");
+      }
+      .total-count {
+        @include typeface("Paragraph_1_sb");
+        color: color("grey_999");
+      }
+    }
+    &__more-button {
+      color: color("minus");
+      @include typeface("Paragraph_2_b");
+    }
+  }
+  .item-list {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  }
+}
