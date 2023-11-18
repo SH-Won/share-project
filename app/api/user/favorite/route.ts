@@ -9,41 +9,40 @@ export async function PUT(req: NextRequest) {
   const { projectId, userId, isAdd } = body
   try {
     const db = await dbConnect()
-    // const field = `favorites.${projectId}`
-    // const query: { [key: string]: { project: string } } = {}
-
-    // query[field] = isAdd
-    //   ? {
-    //       project: projectId,
-    //     }
-    //   : {
-    //       project: 1,
-    //     }
-    // const userInventory = await UserInventory.findOneAndUpdate(
-    //   { _id: favoriteId },
-    //   isAdd
-    //     ? {
-    //         $set: query,
-    //       }
-    //     : {
-    //         $unset: query,
-    //       },
-    //   {
-    //     new: true,
-    //   }
-    // )
-    const field = { favorites: projectId }
-    const query = isAdd ? { $push: field } : { $pull: field }
-    const userInventory = await UserInventory.findOneAndUpdate({ _id: userId }, query, {
-      new: true,
-    }).populate({
-      path: 'favorites',
-      populate: {
-        path: 'writer',
-        model: User,
-      },
-      model: Project,
-    })
+    const userInventoryField = { favorites: projectId }
+    const userQuery = isAdd ? { $push: userInventoryField } : { $pull: userInventoryField }
+    const projectField = { favoriteUsers: userId }
+    const projectQuery = isAdd ? { $push: projectField } : { $pull: projectField }
+    const [updatedUserInventory, updatedProject] = await Promise.all(
+      [
+        () =>
+          UserInventory.findOneAndUpdate({ _id: userId }, userQuery, {
+            new: true,
+          })
+            // .populate({
+            //   path: 'favorites',
+            //   populate: {
+            //     path: 'writer',
+            //     model: User,
+            //   },
+            //   model: Project,
+            // })
+            .exec(),
+        () =>
+          Project.findOneAndUpdate({ _id: projectId }, projectQuery, {
+            new: true,
+          })
+            // .populate({
+            //   path: 'writer',
+            //   model: User,
+            // })
+            .exec(),
+      ].map((func) => func())
+    )
+    if (!updatedUserInventory || !updatedProject) {
+      return NextResponse.json({ error: 'failed' }, { status: 400 })
+    }
+    // console.log(updatedUserInventory, updatedProject)
     return NextResponse.json({ success: true }, { status: 200 })
   } catch (e) {
     return NextResponse.json({ error: 'failed' }, { status: 400 })

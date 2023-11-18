@@ -1,5 +1,6 @@
 import { IProject } from '@/app/page'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { UserState } from '../user/userSlice'
 
 interface InitialState {
   loading: boolean
@@ -39,9 +40,13 @@ const projectSlice = createSlice({
     addProject: (state, action: PayloadAction<IProject>) => {
       state.projects = [action.payload, ...state.projects]
     },
-    updateProject: (state, action: PayloadAction<IProject>) => {
-      const findIndex = state.projects.findIndex((project) => project._id === action.payload._id)
-      state.projects.splice(findIndex, 1, action.payload)
+    updateProject: (state, action: PayloadAction<{ project: IProject; userId: string }>) => {
+      //PayloadAction<IProject>
+      const findIndex = state.projects.findIndex(
+        (project) => project._id === action.payload.project._id
+      )
+      // state.projects.splice(findIndex, 1, action.payload)
+      state.projects[findIndex].favoriteUsers.push(action.payload.userId)
     },
     setQuery: (state, action: PayloadAction<InitialState['query']>) => {
       state.query = action.payload

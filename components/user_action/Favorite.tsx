@@ -1,6 +1,6 @@
 'use client'
 import { IProject } from '@/app/page'
-import { useFavorite } from '@/hooks'
+import { useUserActions } from '@/hooks'
 import { Colors } from 'my-react-component'
 
 interface FavoriteSVG {
@@ -13,7 +13,7 @@ export const FavoriteSVG = ({ selected }: FavoriteSVG) => {
       width="13"
       height="13"
       viewBox="0 0 16 16"
-      fill={selected ? Colors.red : Colors.grey_111}
+      fill={selected ? Colors.red : Colors.white}
       role="img"
       className="icon"
     >
@@ -31,10 +31,10 @@ interface FavoriteButtonProps {
   project: IProject
 }
 const FavoriteButton = ({ project }: FavoriteButtonProps) => {
-  const { selected, disabled, updateFavorite } = useFavorite(project)
+  const { favoriteSelected, favoriteDisable, updateFavorite } = useUserActions(project)
   return (
-    <button className="favorite-button" disabled={disabled} onClick={updateFavorite}>
-      <FavoriteSVG selected={selected} />
+    <button className="user-action-button" disabled={favoriteDisable} onClick={updateFavorite}>
+      <FavoriteSVG selected={favoriteSelected} />
     </button>
   )
 }

@@ -9,14 +9,24 @@ export async function GET(req: NextRequest) {
   try {
     const db = await dbConnect()
     const userInventory = await UserInventory.findOne({ _id: userId })
-      .populate({
-        path: 'favorites',
-        populate: {
-          path: 'writer',
-          model: User,
+      .populate([
+        {
+          path: 'favorites',
+          populate: {
+            path: 'writer',
+            model: User,
+          },
+          model: Project,
         },
-        model: Project,
-      })
+        {
+          path: 'clippings',
+          populate: {
+            path: 'writer',
+            model: User,
+          },
+          model: Project,
+        },
+      ])
       .exec()
 
     // db.disconnect()

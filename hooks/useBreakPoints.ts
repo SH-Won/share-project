@@ -1,17 +1,11 @@
 'use client'
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useLayoutEffect, useMemo, useState } from 'react'
 import { setTimeout } from 'timers'
 
-type ClassType = 'mobile' | 'tablet' | 'desktop' | ''
+export type TScreenState = 'mobile' | 'tablet' | 'desktop' | ''
 const useBreakPoints = () => {
-  const [currentClass, setCurrentClass] = useState<ClassType>('')
-  const [breakPoints, setBreakPoints] = useState<number>(0)
+  const [currentClass, setCurrentClass] = useState<TScreenState>('')
+  const [breakPoints, setBreakPoints] = useState<number>(window.innerWidth)
   const defaultBreakPoinsts = {
     mobile: 600,
     tablet: 900,

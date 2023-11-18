@@ -3,6 +3,7 @@ import { IProject } from '@/app/page'
 import { useInterSection } from '@/hooks'
 import Image from 'next/image'
 import { useState } from 'react'
+import Clipping from '../user_action/Clipping'
 import Favorite from '../user_action/Favorite'
 
 interface DetailHeaderProps {
@@ -45,6 +46,7 @@ const DetailHeader = ({ project }: DetailHeaderProps) => {
         </div>
         <div className="detail-header__user-actions">
           <Favorite project={project} />
+          <Clipping project={project} />
         </div>
       </div>
     </>

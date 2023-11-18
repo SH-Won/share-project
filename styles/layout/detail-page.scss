@@ -123,6 +123,8 @@
   }
   &__user-actions {
     position: relative;
+    display: flex;
+    gap: 8px;
   }
 }
 .detail-content {

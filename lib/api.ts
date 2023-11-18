@@ -5,6 +5,7 @@ type UserFavoriteParams = {
   userId: string
   isAdd: boolean
 }
+type UserClipingParams = UserFavoriteParams
 type ProjectFavoriteParams = {
   projectId: string
   userId: string
@@ -59,6 +60,13 @@ export const uploadProject = async () => {}
 
 export const updateUserFavorite = async (params: UserFavoriteParams) => {
   const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/user/favorite', {
+    method: 'PUT',
+    body: JSON.stringify(params),
+  })
+  return responseHandler<IUserInventory>(response)
+}
+export const updateUserClipping = async (params: UserClipingParams) => {
+  const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/user/clipping', {
     method: 'PUT',
     body: JSON.stringify(params),
   })

@@ -18,7 +18,6 @@ const MainPage = ({ projects: serverProjects }: Props) => {
     hasMore: true,
     callback: loadMore,
   })
-  // if (loading) return <Loading />
   return (
     <section className="page-container">
       {projects!.map((project) => (

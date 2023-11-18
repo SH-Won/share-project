@@ -31,8 +31,8 @@ const userInventorySchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     default: [],
   },
-  clipping: {
-    type: Array,
+  clippings: {
+    type: [mongoose.Schema.Types.ObjectId],
     default: [],
   },
 })

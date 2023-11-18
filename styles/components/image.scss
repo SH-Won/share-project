@@ -22,9 +22,13 @@
     }
   }
   &.detail {
-    padding-bottom: 85%;
+    // padding-bottom: 85%;
+    padding-bottom: unset;
+    position: unset;
     margin: 0 -20px;
     & > img {
+      position: unset;
+      height: auto;
       background-color: #e7e7e9;
     }
   }
