@@ -2,6 +2,7 @@
 import UserItemList from '@/components/user/UserItemList'
 import Image from 'next/image'
 import { useUserInventory } from '@/hooks'
+import { useEffect } from 'react'
 const UserActivityPage = () => {
   const { userFavoriteProjects, userClippingProjects } = useUserInventory()
 

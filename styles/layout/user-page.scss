@@ -11,6 +11,10 @@
     grid-template-columns: 290px 3.5fr;
   }
   .user-navigation-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: white;
     @include Desktop() {
       padding: 30px 60px 0;
       border-left: 1px solid #f3f3f4;

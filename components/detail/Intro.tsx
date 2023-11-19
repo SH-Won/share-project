@@ -1,16 +1,12 @@
 import { IProject } from '@/app/page'
 import React from 'react'
 import ImageWithSkeleton from '../image/ImageWithSkeleton'
-import Close from '../modal/Close'
-// import DetailHeader from './DetailHeader'
-// import RelativeProjects from './RelativeProjects'
 interface Props {
   project: IProject
 }
-const DetailPage = ({ project }: Props) => {
+const Intro = ({ project }: Props) => {
   return (
     <div className="detail-container">
-      {/* <Close /> */}
       <ImageWithSkeleton type="detail" imageUrl={project.imageUrl} alt={project.title} />
       <p className="detail-content__overview">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium illum cumque, eligendi
@@ -21,4 +17,4 @@ const DetailPage = ({ project }: Props) => {
   )
 }
 
-export default DetailPage
+export default Intro

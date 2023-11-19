@@ -3,7 +3,14 @@ import Project from '@/models/Project'
 import User from '@/models/User'
 import UserInventory from '@/models/UserInventory'
 import { NextRequest, NextResponse } from 'next/server'
-
+export async function GET(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams
+  const skip = searchParams.get('skip') || '5'
+  const limit = searchParams.get('limit') || '5'
+  const userId = req.headers.get('Authorization')
+  console.log('clipping', userId)
+  // const userInventory = await UserInventory.findOne({_id : userId})
+}
 export async function PUT(req: NextRequest) {
   const body = await req.json()
   const { projectId, userId, isAdd } = body
