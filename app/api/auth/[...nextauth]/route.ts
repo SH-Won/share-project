@@ -50,7 +50,7 @@ export const authOptions: AuthOptions = {
         return token
       }
       // await dbConnect()
-      const response = await fetch('http://localhost:3000/api/auth/refresh', {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/auth/refresh', {
         method: 'POST',
         body: JSON.stringify({
           refreshToken: token.refreshToken,
