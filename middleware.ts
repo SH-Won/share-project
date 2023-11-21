@@ -31,10 +31,12 @@ export async function middleware(request: NextRequest) {
   })
   if (!response.ok)
     return NextResponse.json({ message: '권한이 없습니다 로그인 해주세요' }, { status: 401 })
-  return NextResponse.next()
+  const nextResponse = NextResponse.next()
+  nextResponse.headers.set('Authorization', token.id)
+  return nextResponse
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/api/upload', '/api/user/favorite'],
+  matcher: ['/api/upload', '/api/user/favorite', '/api/user/clipping'],
 }

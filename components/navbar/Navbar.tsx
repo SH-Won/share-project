@@ -4,7 +4,9 @@ import UserState from './UserState'
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <div>logo</div>
+      <Link href="/">
+        <div>logo</div>
+      </Link>
       <Link href="/modal" shallow={true}>
         <div>Create</div>
       </Link>

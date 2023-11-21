@@ -1,27 +1,55 @@
 'use client'
 import { getData, getDetailData, TDetailData } from '@/lib/api'
 import { RootState } from '@/store'
-import { setProjects } from '@/store/project/projectSlice'
+import { setLoading, setProjects, setQuery, setReadyToFetch } from '@/store/project/projectSlice'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
 const useFetch = () => {
   const dispatch = useDispatch()
-  const { projects, isInitialFetching } = useSelector((state: RootState) => state.project)
-  const [loading, setLoading] = useState(true)
+  const { loading, projects, hasMore, query, isReadyToFetch } = useSelector(
+    (state: RootState) => state.project
+  )
+  const loadMore = () => {
+    if (!hasMore) {
+      return
+    }
+    console.log(query)
+    dispatch(
+      setQuery({
+        ...query,
+        skip: query.skip + query.limit,
+      })
+    )
+    dispatch(setReadyToFetch(true))
+  }
 
   useEffect(() => {
-    if (isInitialFetching) return
-    getData()
-      .then((response) => {
-        dispatch(setProjects(response))
+    if (!isReadyToFetch) return
+    console.log(query)
+    dispatch(setLoading(true))
+    getData(query)
+      .then(async (response) => {
+        if (response.status !== 200) throw Error('load failed')
+        const json = await response.json()
+        console.log(json)
+        dispatch(setProjects(json))
       })
-      .finally(() => setLoading(false))
-  }, [])
+      .catch((e) => {
+        console.log(e)
+        // 다시 fetching
+      })
+      .finally(() => dispatch(setLoading(false)))
+    return () => {
+      console.log('clear use fetch func')
+      dispatch(setReadyToFetch(false))
+    }
+  }, [query])
   return {
-    loading: !isInitialFetching,
+    loading,
+    hasMore,
     projects,
+    loadMore,
   }
 }
 

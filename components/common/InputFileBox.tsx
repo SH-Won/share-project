@@ -9,6 +9,7 @@ interface InputFileBoxProps {
   value?: string
   onHandleChange: (e: ChangeEvent<HTMLInputElement>) => void
   children: React.ReactNode
+  id?: string
 }
 
 type TUserImageBox = { imageUrl: string }
@@ -34,37 +35,25 @@ const FileUploadBox = () => {
   )
 }
 const FileUserImageBox = ({ imageUrl }: TUserImageBox) => {
-  const { value } = useContext(FileBoxContext)
+  const { value, id } = useContext(FileBoxContext)
   return (
-    <label htmlFor="input-file">
+    <label htmlFor={id}>
       <div className="file__user-image">
-        <EditUserImage imageUrl={value ?? imageUrl} size={80} />
+        <EditUserImage imageUrl={value || imageUrl} size={80} />
       </div>
     </label>
   )
 }
 
-const FileBoxContext = createContext<{ value?: string }>({} as { value: string })
-const InputFileBox = ({ name, onHandleChange, value, children }: InputFileBoxProps) => {
+const FileBoxContext = createContext<{ value?: string; id?: string }>(
+  {} as { value: string; id: string }
+)
+const InputFileBox = ({ id, name, onHandleChange, value, children }: InputFileBoxProps) => {
   return (
-    <FileBoxContext.Provider value={{ value }}>
+    <FileBoxContext.Provider value={{ value, id }}>
       <div className="input-container">
-        {/* <span>사진추가</span>
-      <label htmlFor="input-file">
-        <div className="file__wrapper">
-          {!value ? (
-            <div className="file__image none">
-              <Element name="Plus" size="big" />
-            </div>
-          ) : (
-            <div className="file__image">
-              <Image src={value} alt={'uploaded image'} width={400} height={400} />
-            </div>
-          )}
-        </div>
-      </label> */}
         {children}
-        <input id="input-file" type="file" name={name} onChange={onHandleChange} />
+        <input id={id || 'input-file'} type="file" name={name} onChange={onHandleChange} />
       </div>
     </FileBoxContext.Provider>
   )

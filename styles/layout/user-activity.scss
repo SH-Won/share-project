@@ -1,0 +1,68 @@
+.user-activity-page {
+  padding: 16px;
+  .activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 16px 0;
+    &__overview {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      .icon {
+        display: flex;
+        align-items: flex-end;
+      }
+      .title {
+        margin-left: 10px;
+        @include typeface("Heading_2");
+        // @include Mobile() {
+        //   width: 130px;
+        //   padding: 0 4px;
+        //   overflow: hidden;
+        //   text-overflow: ellipsis;
+        //   white-space: nowrap;
+        // }
+        @media screen and (max-width: 400px) {
+          display: inline-block;
+          max-width: 80px;
+          width: 100%;
+          // padding: 0 4px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          -webkit-box-orient: vertical;
+        }
+      }
+      .total-count {
+        @include typeface("Paragraph_1_sb");
+        line-height: 30px;
+        color: color("grey_666");
+      }
+    }
+    &__more-button {
+      color: color("minus");
+      @include typeface("Paragraph_2_b");
+    }
+  }
+  .item-list {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    // display: flex;
+    // flex-wrap: wrap;
+    // gap: 10px;
+    // & > div {
+    //   @include Desktop() {
+    //     flex: 0 0 calc(20% - 5px);
+    //   }
+    //   @include Tablet() {
+    //     flex: 0 0 25%;
+    //   }
+    //   @include Mobile() {
+    //     flex: 0 0 50%;
+    //   }
+    // }
+    // grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  }
+}

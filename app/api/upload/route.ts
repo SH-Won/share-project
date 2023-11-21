@@ -2,6 +2,7 @@ import { IProject } from '@/app/page'
 import dbConnect from '@/lib/dbConnect'
 import Project from '@/models/Project'
 import User from '@/models/User'
+import UserInventory from '@/models/UserInventory'
 import { v2 as cloudinary } from 'cloudinary'
 import { NextResponse } from 'next/server'
 
@@ -25,7 +26,7 @@ export async function POST(req: Request) {
       })
     })) as { imageUrl: string; imagePublicId: string }
     const newProject = new Project({
-      writer: body.userId,
+      author: body.userId,
       title: body.title,
       description: body.description,
       imageUrl,
@@ -34,8 +35,9 @@ export async function POST(req: Request) {
     const result = await newProject.save()
     const uploadProject = await Project.findOne({ _id: result._id })
       .populate({
-        path: 'writer',
-        model: User,
+        path: 'author',
+        model: UserInventory,
+        select: 'name imageUrl',
       })
       .exec()
     await db.disconnect()

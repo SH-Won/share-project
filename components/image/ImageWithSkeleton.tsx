@@ -17,8 +17,8 @@ const ImageWithSkeleton = ({ imageUrl, alt, type, width, height }: Props) => {
     <div className={`image-container ${type} ${!load ? 'loading-template loading-animation' : ''}`}>
       <Image
         src={imageUrl}
-        width={width ?? 300}
-        height={height ?? 300}
+        width={width || 300}
+        height={height || 300}
         alt={alt}
         onLoad={() => setLoad(true)}
       />

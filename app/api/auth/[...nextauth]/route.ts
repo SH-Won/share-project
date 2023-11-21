@@ -3,7 +3,7 @@ import NextAuth, { AuthOptions } from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials'
 
 export const authOptions: AuthOptions = {
-  secret: '12345',
+  secret: process.env.NEXT_AUTH_SECRET,
   providers: [
     CredentialProvider({
       id: 'email-password-credential',

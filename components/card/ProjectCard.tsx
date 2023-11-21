@@ -31,19 +31,19 @@ const CardImage = () => {
 }
 const CardContent = () => {
   const project = useContext(ProjectCardContext)
-  if (!('writer' in project)) {
+  if (!('author' in project)) {
     throw new Error('Card content always need writer property')
   }
   return (
     <div className="project-card__explain">
       <div className="writer">
         <Image
-          src={project.writer.image || '/noImage.svg'}
+          src={project.author.imageUrl || '/noImage.svg'}
           width={24}
           height={24}
-          alt={project.writer.name}
+          alt={project.author.name}
         />
-        <span>{project.writer.name || 'no writer'}</span>
+        <span>{project.author.name || 'no writer'}</span>
       </div>
       <div className="user-actions">
         <FavoriteSVG selected={true} />

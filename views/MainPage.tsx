@@ -2,25 +2,34 @@
 import { IProject } from '@/app/page'
 import ProjectCard from '@/components/card/ProjectCard'
 import { getData } from '@/lib/api'
-import { useFetch } from '@/hooks'
+import { useFetch, useInfinityScroll, useInterSection } from '@/hooks'
 import Loading from '@/components/loading'
-import { Suspense } from 'react'
+import React, { Suspense, useCallback, useState } from 'react'
 
 interface Props {
   projects?: IProject[]
 }
 
 const MainPage = ({ projects: serverProjects }: Props) => {
-  const { loading, projects } = useFetch()
-  if (loading) return <Loading />
+  const { loading, hasMore, projects, loadMore } = useFetch()
+
+  const { targetRef } = useInfinityScroll<HTMLDivElement>({
+    loading,
+    hasMore,
+    callback: loadMore,
+  })
   return (
     <section className="page-container">
       {projects!.map((project) => (
-        <ProjectCard project={project} key={project._id}>
-          <ProjectCard.Image />
-          <ProjectCard.Content />
-        </ProjectCard>
+        <div key={project._id}>
+          <ProjectCard project={project}>
+            <ProjectCard.Image />
+            <ProjectCard.Content />
+          </ProjectCard>
+        </div>
       ))}
+      {loading && <Loading />}
+      <div ref={targetRef}></div>
     </section>
   )
 }

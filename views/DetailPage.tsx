@@ -26,7 +26,7 @@ const DetailPage = ({ params }: Props) => {
       <Intro project={data!.project} />
       <MoreByWriterProjects
         projects={data!.writerProjects}
-        writerName={data!.project.writer.name}
+        writerName={data!.project.author.name}
       />
     </section>
   )

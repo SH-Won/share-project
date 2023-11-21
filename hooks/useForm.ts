@@ -12,6 +12,7 @@ const useForm = <T>(initialState: T) => {
   }
   const onHandleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
+    e.stopPropagation()
     const { name, files } = e.target
     const file = files?.[0]
     if (!file) return
@@ -29,10 +30,18 @@ const useForm = <T>(initialState: T) => {
       }))
     }
   }
+  const resetForm = () => {
+    setInputValue(initialState)
+  }
+  const recoveryForm = (inputState: T) => {
+    setInputValue(inputState)
+  }
   return {
     inputValue,
     onHandleChange,
     onHandleChangeImage,
+    resetForm,
+    recoveryForm,
   }
 }
 export { useForm }

@@ -1,6 +1,6 @@
 'use client'
 import { AppDispatch } from '@/store'
-import { setUserInfo } from '@/store/user/userSlice'
+import { setLoading, setUserInfo } from '@/store/user/userSlice'
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
@@ -13,9 +13,11 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     console.log('useEffect userProvider')
     if (!session?.id) {
       console.log('return ')
+      dispatch(setLoading(false))
       return
     }
     console.log('fetch start')
+    dispatch(setLoading(true))
     ;(async () => {
       await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/api/user?userId=${session.id}`, {
         method: 'GET',
@@ -30,17 +32,10 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
         .catch((e) => {
           console.log(e)
         })
+        .finally(() => {
+          dispatch(setLoading(false))
+        })
     })()
-    // fetch(process.env.NEXT_PUBLIC_BASE_URL + `/api/user?favoriteId=${session.favoriteId}`, {})
-    //   .then(async (response) => {
-    //     if (response.ok) {
-    //       const json = await response.json()
-    //       dispatch(setUserInfo(json))
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     console.log(e)
-    //   })
   }, [session])
   return <>{children}</>
 }

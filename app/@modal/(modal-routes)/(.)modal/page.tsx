@@ -1,4 +1,4 @@
-import Modal from '@/components/modal'
+'use client'
 import BottomSheetModal from '@/components/modal/BottomSheetModal'
 import UploadProject from '@/components/upload/UploadProject'
 

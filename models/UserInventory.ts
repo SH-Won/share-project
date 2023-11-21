@@ -20,13 +20,30 @@ const userInventorySchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
   },
+  name: {
+    type: String,
+    default: '',
+  },
+  userName: {
+    type: String,
+    default: '',
+  },
+  imageUrl: {
+    type: String,
+  },
+  imagePublicId: {
+    type: String,
+  },
+
   favorites: {
     type: [mongoose.Schema.Types.ObjectId],
     default: [],
+    ref: 'Project',
   },
-  clipping: {
-    type: Array,
+  clippings: {
+    type: [mongoose.Schema.Types.ObjectId],
     default: [],
+    ref: 'Project',
   },
 })
 

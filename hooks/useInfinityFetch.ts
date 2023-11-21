@@ -1,0 +1,3 @@
+const useInfinityFetch = () => {}
+
+export { useInfinityFetch }

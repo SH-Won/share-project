@@ -7,7 +7,7 @@ interface BottomModalProps {
   children: React.ReactElement
   close?: () => void
 }
-const BottomSheetModal = ({ children, close }: BottomModalProps) => {
+const BottomSheetModal = ({ children }: BottomModalProps) => {
   const [open, setOpen] = useState<boolean>(true)
   const router = useRouter()
   const closeModal = () => {
