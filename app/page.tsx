@@ -7,9 +7,9 @@ export interface IProject {
   title: string
   description: string
   imageUrl: string
-  writer: {
+  author: {
     _id: string
-    image: string
+    imageUrl: string
     name: string
   }
   favoriteUsers: string[]

@@ -85,9 +85,9 @@ export async function GET(req: NextRequest) {
         {
           path: 'favorites',
           populate: {
-            path: 'writer',
-            model: User,
-            select: 'name',
+            path: 'author',
+            model: UserInventory,
+            select: 'name imageUrl',
           },
           model: Project,
           perDocumentLimit: 5,
@@ -95,8 +95,9 @@ export async function GET(req: NextRequest) {
         {
           path: 'clippings',
           populate: {
-            path: 'writer',
-            model: User,
+            path: 'author',
+            model: UserInventory,
+            select: 'name imageUrl',
           },
           model: Project,
           perDocumentLimit: 5,

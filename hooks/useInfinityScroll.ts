@@ -8,14 +8,17 @@ type Props = {
 const useInfinityScroll = <T extends HTMLElement>({ loading, hasMore, callback }: Props) => {
   const observer = useRef<IntersectionObserver>()
   const handleInterSecting: IntersectionObserverCallback = ([entry], ob) => {
-    if (entry.isIntersecting && !loading) {
+    console.log('hasMore', hasMore)
+    if (entry.isIntersecting && hasMore) {
       console.log('target')
+
       callback()
       ob.unobserve(entry.target)
     }
   }
   const targetRef = useCallback(
     (node: T) => {
+      if (loading) return
       if (observer.current) observer.current.disconnect()
       observer.current = new IntersectionObserver(handleInterSecting, {
         threshold: 0.8,

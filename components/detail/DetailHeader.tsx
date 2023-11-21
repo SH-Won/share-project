@@ -33,14 +33,14 @@ const DetailHeader = ({ project }: DetailHeaderProps) => {
         <div className="detail-header__user-content">
           <div className="user-image">
             <Image
-              src={project.writer?.image || '/noImage.svg'}
-              width={32}
-              height={32}
-              alt={project.writer?.name}
+              src={project.author?.imageUrl || '/noImage.svg'}
+              width={48}
+              height={48}
+              alt={project.author?.name}
             />
           </div>
           <div className="user-content-container">
-            <span className="user-name">{project.writer?.name}</span>
+            <span className="user-name">{project.author?.name}</span>
             <span className="user-status">Good</span>
           </div>
         </div>

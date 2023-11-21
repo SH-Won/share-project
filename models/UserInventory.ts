@@ -20,6 +20,10 @@ const userInventorySchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
   },
+  name: {
+    type: String,
+    default: '',
+  },
   userName: {
     type: String,
     default: '',

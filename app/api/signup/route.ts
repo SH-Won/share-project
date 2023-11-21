@@ -23,6 +23,8 @@ export async function POST(req: NextRequest) {
     })
     const userInfo = await UserInventory.create({
       _id: result._id,
+      name,
+      userName,
     })
     db?.disconnect()
     return NextResponse.json({ success: true, message: '회원 가입 성공' }, { status: 200 })

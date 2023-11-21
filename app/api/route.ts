@@ -1,6 +1,7 @@
 import dbConnect from '@/lib/dbConnect'
 import Project from '@/models/Project'
 import User from '@/models/User'
+import UserInventory from '@/models/UserInventory'
 import { NextRequest, NextResponse } from 'next/server'
 export const dynamic = 'force-dynamic'
 interface Params {
@@ -23,13 +24,16 @@ export async function GET(request: NextRequest) {
     const projects = await Project.find()
       .skip(parseInt(skip))
       .limit(parseInt(limit))
+      // .select('-favoriteUsers')
       .populate({
-        path: 'writer',
-        model: User,
+        path: 'author',
+        model: UserInventory,
+        select: 'name imageUrl',
       })
       .sort({ $natural: -1 })
       .exec()
     // await db.disconnect()
+    console.log(totalLength)
     return NextResponse.json({ projects: projects, totalLength: totalLength || 0 })
   } catch (e) {
     return NextResponse.json({ message: e, success: false })

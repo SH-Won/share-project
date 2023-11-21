@@ -1,6 +1,7 @@
 import dbConnect from '@/lib/dbConnect'
 import Project from '@/models/Project'
 import User from '@/models/User'
+import UserInventory from '@/models/UserInventory'
 import { NextRequest, NextResponse } from 'next/server'
 
 interface Params {
@@ -14,11 +15,12 @@ export async function GET(req: NextRequest, { params }: Params) {
     const db = await dbConnect()
     const project = await Project.find({ _id: id })
       .populate({
-        path: 'writer',
-        model: User,
+        path: 'author',
+        model: UserInventory,
+        select: 'name imageUrl',
       })
       .exec()
-    const result = await Project.find({ writer: project[0].writer }).exec()
+    const result = await Project.find({ author: project[0].author }).exec()
     const writerProjects = result.filter((project) => project._id.toString() !== id)
     return NextResponse.json({ project: project[0], writerProjects }, { status: 200 })
   } catch (e) {

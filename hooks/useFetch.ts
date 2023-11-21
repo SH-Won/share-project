@@ -1,15 +1,17 @@
 'use client'
 import { getData, getDetailData, TDetailData } from '@/lib/api'
 import { RootState } from '@/store'
-import { setLoading, setProjects, setQuery } from '@/store/project/projectSlice'
+import { setLoading, setProjects, setQuery, setReadyToFetch } from '@/store/project/projectSlice'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 const useFetch = () => {
   const dispatch = useDispatch()
-  const { loading, projects, totalLength, query } = useSelector((state: RootState) => state.project)
+  const { loading, projects, hasMore, query, isReadyToFetch } = useSelector(
+    (state: RootState) => state.project
+  )
   const loadMore = () => {
-    if (projects.length >= totalLength) {
+    if (!hasMore) {
       return
     }
     console.log(query)
@@ -19,9 +21,12 @@ const useFetch = () => {
         skip: query.skip + query.limit,
       })
     )
+    dispatch(setReadyToFetch(true))
   }
+
   useEffect(() => {
-    // if (isInitialFetching) return
+    if (!isReadyToFetch) return
+    console.log(query)
     dispatch(setLoading(true))
     getData(query)
       .then(async (response) => {
@@ -37,10 +42,12 @@ const useFetch = () => {
       .finally(() => dispatch(setLoading(false)))
     return () => {
       console.log('clear use fetch func')
+      dispatch(setReadyToFetch(false))
     }
   }, [query])
   return {
     loading,
+    hasMore,
     projects,
     loadMore,
   }

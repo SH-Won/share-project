@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose'
 const ProjectSchema = new mongoose.Schema(
   {
-    writer: {
+    author: {
       type: Schema.Types.ObjectId,
       ref: 'User',
     },

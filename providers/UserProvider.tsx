@@ -13,6 +13,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     console.log('useEffect userProvider')
     if (!session?.id) {
       console.log('return ')
+      dispatch(setLoading(false))
       return
     }
     console.log('fetch start')
@@ -35,16 +36,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
           dispatch(setLoading(false))
         })
     })()
-    // fetch(process.env.NEXT_PUBLIC_BASE_URL + `/api/user?favoriteId=${session.favoriteId}`, {})
-    //   .then(async (response) => {
-    //     if (response.ok) {
-    //       const json = await response.json()
-    //       dispatch(setUserInfo(json))
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     console.log(e)
-    //   })
   }, [session])
   return <>{children}</>
 }

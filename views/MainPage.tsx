@@ -11,11 +11,11 @@ interface Props {
 }
 
 const MainPage = ({ projects: serverProjects }: Props) => {
-  const { loading, projects, loadMore } = useFetch()
+  const { loading, hasMore, projects, loadMore } = useFetch()
 
   const { targetRef } = useInfinityScroll<HTMLDivElement>({
     loading,
-    hasMore: true,
+    hasMore,
     callback: loadMore,
   })
   return (

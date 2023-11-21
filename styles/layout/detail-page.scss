@@ -111,9 +111,10 @@
       width: 100%;
       height: 100%;
       margin-left: 1rem;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 4px;
       .user-name {
-        @include typeface("Paragraph_2_b");
+        @include typeface("Heading_3");
       }
       .user-status {
         @include typeface("Paragraph_3_b");
@@ -124,6 +125,7 @@
   &__user-actions {
     position: relative;
     display: flex;
+    align-items: center;
     gap: 8px;
   }
 }
