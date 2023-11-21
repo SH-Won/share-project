@@ -38,6 +38,7 @@ const useFetch = () => {
       .catch((e) => {
         console.log(e)
         // 다시 fetching
+        dispatch(setReadyToFetch(false))
       })
       .finally(() => dispatch(setLoading(false)))
     return () => {

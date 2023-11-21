@@ -12,7 +12,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     console.log('useEffect userProvider')
     if (!session?.id) {
-      console.log('return ')
       dispatch(setLoading(false))
       return
     }
