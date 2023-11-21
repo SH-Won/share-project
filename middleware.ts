@@ -6,7 +6,7 @@ import { authOptions } from './app/api/auth/[...nextauth]/route'
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   // const session = await getServerSession(authOptions)
-  const token = await getToken({ req: request, secret: '12345' })
+  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
   const absoluteURL = new URL('/signin', request.nextUrl.origin)
   // console.log(request.url)
   // console.log(request.nextUrl.pathname)
