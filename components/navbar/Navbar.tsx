@@ -7,9 +7,9 @@ const Navbar = () => {
       <Link href="/">
         <div>logo</div>
       </Link>
-      <Link href="/modal" shallow={true}>
+      {/* <Link href="/modal" shallow={true}>
         <div>Create</div>
-      </Link>
+      </Link> */}
       <UserState />
     </nav>
   )

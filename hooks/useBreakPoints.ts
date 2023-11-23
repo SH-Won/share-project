@@ -5,7 +5,7 @@ import { setTimeout } from 'timers'
 export type TScreenState = 'mobile' | 'tablet' | 'desktop' | ''
 const useBreakPoints = () => {
   const [currentClass, setCurrentClass] = useState<TScreenState>('')
-  const [breakPoints, setBreakPoints] = useState<number>(window.innerWidth)
+  const [breakPoints, setBreakPoints] = useState<number>(0)
   const defaultBreakPoinsts = {
     mobile: 600,
     tablet: 900,

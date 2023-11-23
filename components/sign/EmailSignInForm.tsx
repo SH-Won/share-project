@@ -38,7 +38,9 @@ const EmailSignInForm = () => {
         value={inputValue.email}
         onHandleChange={onHandleChange}
         validator={emailValidator}
-      />
+      >
+        <InputBox.Label name="email" />
+      </InputBox>
       <InputBox
         type="password"
         name="password"
@@ -46,7 +48,9 @@ const EmailSignInForm = () => {
         value={inputValue.password}
         onHandleChange={onHandleChange}
         validator={passwordValidator}
-      />
+      >
+        <InputBox.Label name="password" />
+      </InputBox>
       <Button
         size="large"
         type="black"

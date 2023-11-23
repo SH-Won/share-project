@@ -42,6 +42,8 @@
   background: transparent;
   width: 32px;
   height: 32px;
+  box-sizing: content-box;
+  padding: 0;
   border-radius: 50%;
   border: 1px solid color("grey_ccc");
   @include flexCenter();
