@@ -160,6 +160,35 @@
     border: 1px solid #5c5ce7;
   }
 }
+.block-controller {
+  display: inline-flex;
+  // + .focus {
+  //   display: inline-flex;
+  // }
+  position: absolute;
+  align-items: center;
+  border-radius: 48px;
+  background-color: #fff;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+  padding: 4px 6px;
+  top: -10px;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  // top: -100%;/
+  & > span {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    &:nth-child(2) {
+      border-right: 0.5px solid #e7e7e9;
+    }
+    &:nth-child(3) {
+      border-right: 0.5px solid #e7e7e9;
+    }
+  }
+}
 
 .add-block-line {
   cursor: pointer;
@@ -171,8 +200,8 @@
   }
   & > .icon-plus {
     @include flexCenter();
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     flex-shrink: 0;
     border: 1.5px solid #e7e7e9;
