@@ -5,10 +5,23 @@ import { useUploadDispatch, useUploadState } from '@/context/UploadContext'
 import AddBlockLine from '@/components/upload/AddBlockLine'
 import Button from '@/components/common/Button'
 import BlockList from '@/components/upload/BlockList'
+import { useForm } from '@/hooks'
 
+export type TInputValue = {
+  thumbnail: string
+  [key: string]: string
+}
+const initialInputValue = {
+  thumbnail: '',
+}
 const UploadPage = () => {
-  const { openSideBar, editBlocks, blockIndex } = useUploadState()
-  const { setOpenSideBar } = useUploadDispatch()
+  // const { openSideBar, blockIndex } = useUploadState()
+  // const { setOpenSideBar } = useUploadDispatch()
+  const { blockIndex } = useUploadState()
+  const { openSideBar } = useUploadDispatch()
+
+  const { inputValue, onHandleChangeImage, onHandleChange } =
+    useForm<TInputValue>(initialInputValue)
 
   // const onClick = () => {
   //   const values = Object.values(inputValue)
@@ -18,8 +31,8 @@ const UploadPage = () => {
   console.log('upload page render')
 
   return (
-    <div className={`upload-page ${openSideBar ? 'open' : ''}`}>
-      <div>
+    <div className="upload-page">
+      <div className="header__upload">
         <Button
           type="black"
           text="업로드"
@@ -30,20 +43,35 @@ const UploadPage = () => {
       <SideBar />
       <div className="upload-content">
         <div className="file-upload-wrapper">
-          <InputFileBox id="tumbnail" name="tumbnail" onHandleChange={() => {}}>
+          <InputFileBox
+            id="thumbnail"
+            name="thumbnail"
+            value={inputValue.thumbnail}
+            onHandleChange={onHandleChangeImage}
+          >
             <InputFileBox.ProjectUploader />
           </InputFileBox>
         </div>
-        <AddBlockLine
-          onClick={() => {
-            setOpenSideBar(true)
-            blockIndex.current = 0
-          }}
-        />
-        <BlockList />
+        {/* {inputValue.thumbnail ? ( */}
+        <>
+          <AddBlockLine
+            onClick={() => {
+              // setOpenSideBar(true)
+              openSideBar()
+              blockIndex.current = 0
+            }}
+          />
+          <BlockList
+          // inputValue={inputValue}
+          // onHandleChange={onHandleChange}
+          // onHandleChangeImage={onHandleChangeImage}
+          />
+        </>
+        {/* ) : null} */}
       </div>
     </div>
   )
 }
+// {`upload-page ${openSideBar ? 'open' : ''}`}
 
 export default UploadPage

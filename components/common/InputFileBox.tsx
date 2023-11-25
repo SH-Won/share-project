@@ -26,9 +26,9 @@ const FileChangeView = () => {
           <div>
             <Image src="/noImage.svg" width={80} height={60} alt="placeholder-image" />
             <span>최대 10mb 이하 jpeg, png, gif, 첨부</span>
-            <div>
-              <Button type="black" size="small" text="이미지 가져오기" />
-            </div>
+            {/* <div> */}
+            <div className="button small black">이미지 가져오기</div>
+            {/* </div> */}
           </div>
         </div>
       ) : (

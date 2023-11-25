@@ -52,7 +52,7 @@
   justify-content: center;
   align-items: center;
 }
-@mixin ItemHover {
+@mixin ItemHover($isRadius: true) {
   &:hover {
     &::after {
       position: absolute;
@@ -63,7 +63,9 @@
       left: 0;
       opacity: 0.3;
       background-color: color("grey_ccc");
-      border-radius: 8px;
+      @if ($isRadius) {
+        border-radius: 8px;
+      }
     }
   }
 }

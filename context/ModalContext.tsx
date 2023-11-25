@@ -4,7 +4,7 @@ import { createContext, Dispatch, SetStateAction, useState } from 'react'
 type ModalType = 'bottomSheet' | 'basic' | 'modal'
 export type TModalState = {
   type: ModalType
-  Component: React.FC
+  Component: React.FC<any>
   props: any
 }
 // interface ModalState {

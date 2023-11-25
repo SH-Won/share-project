@@ -21,7 +21,7 @@ const Modal = () => {
         return (
           <BasicModal>
             <ModalHeader closeModal={closeModal} />
-            <ModalState.Component {...ModalState.props} />
+            <ModalState.Component {...ModalState.props} closeModal={closeModal} />
           </BasicModal>
         )
       default:

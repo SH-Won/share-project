@@ -1,4 +1,3 @@
-import { useUploadState } from '@/context/UploadContext'
 import Image from 'next/image'
 import React from 'react'
 
@@ -11,8 +10,6 @@ interface Props {
   }[]
 }
 const SelectEditCategory = ({ items }: Props) => {
-  const { page } = useUploadState()
-
   return (
     <div className="select-block-container">
       <ul className="block-list">
@@ -22,7 +19,7 @@ const SelectEditCategory = ({ items }: Props) => {
               <Image src={item.iconUrl} width={20} height={20} alt={item.name} />
               <span className="title">{item.name}</span>
             </div>
-            {item.next && <Image src="/arrowRight.svg" width={13} height={13} alt="next" />}
+            {item.next && <Image src="/arrowRight.svg" width={10} height={10} alt="next" />}
           </li>
         ))}
       </ul>
