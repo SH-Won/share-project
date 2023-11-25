@@ -124,7 +124,7 @@ const UploadContext = ({ children }: UploadContextProps) => {
       editBlocks,
       sideBar,
     }
-  }, [page, openSideBar, editBlocks])
+  }, [page, editBlocks])
   const dispatch = useMemo(() => {
     return {
       setPage,
@@ -140,7 +140,7 @@ const UploadContext = ({ children }: UploadContextProps) => {
       goSideBarPage,
       backSideBarPage,
     }
-  }, [editBlocks, setPage])
+  }, [editBlocks])
   return (
     <UploadStateContext.Provider value={value}>
       <UploadDispatchContext.Provider value={dispatch}>{children}</UploadDispatchContext.Provider>

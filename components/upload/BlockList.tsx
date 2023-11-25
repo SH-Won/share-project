@@ -8,21 +8,27 @@ import BlockHeading from './input-block/BlockHeading'
 import BlockImage from './input-block/BlockImage'
 import BlockTextArea from './input-block/BlockTextArea'
 
-interface Props {}
-const BlockList = () => {
+type Props = Pick<
+  ReturnType<typeof useForm<TInputValue>>,
+  'inputValue' | 'onHandleChange' | 'onHandleChangeImage'
+>
+const BlockList = ({ inputValue, onHandleChange, onHandleChangeImage }: Props) => {
   const { editBlocks, blockIndex } = useUploadState()
-  // const { setOpenSideBar } = useUploadDispatch()
   const { openSideBar } = useUploadDispatch()
   const [focusBlock, setFocusBlock] = useState<string>('')
-  const initialState = useMemo(() => {
-    return Object.fromEntries(editBlocks.map((block) => [block.name, block.value]))
-  }, [editBlocks])
-  const { inputValue, onHandleChange, onHandleChangeImage } =
-    useForm<typeof initialState>(initialState)
+  // const initialState = useMemo(() => {
+  //   return Object.fromEntries(editBlocks.map((block) => [block.name, block.value]))
+  // }, [editBlocks])
+  // const { inputValue, onHandleChange, onHandleChangeImage } =
+  // useForm<typeof initialState>(initialState)
 
   const onClickFocus = (name: string, index: number) => {
     setFocusBlock(name)
     blockIndex.current = index
+  }
+  const onClickBlockLine = (index: number) => {
+    openSideBar()
+    blockIndex.current = index + 1
   }
   const renderBlocks = useMemo(() => {
     return editBlocks.map((block, index) => {
@@ -39,13 +45,7 @@ const BlockList = () => {
                   focus={block.name === focusBlock}
                 />
               </div>
-              <AddBlockLine
-                onClick={() => {
-                  // setOpenSideBar(true)
-                  openSideBar()
-                  blockIndex.current = index + 1
-                }}
-              />
+              <AddBlockLine onClick={() => onClickBlockLine(index)} />
             </React.Fragment>
           )
         case 'image':
@@ -59,13 +59,7 @@ const BlockList = () => {
                   name={block.name}
                 />
               </div>
-              <AddBlockLine
-                onClick={() => {
-                  // setOpenSideBar(true)
-                  openSideBar()
-                  blockIndex.current = index + 1
-                }}
-              />
+              <AddBlockLine onClick={() => onClickBlockLine(index)} />
             </React.Fragment>
           )
         case 'textArea':
@@ -84,13 +78,7 @@ const BlockList = () => {
                   focus={block.name === focusBlock}
                 />
               </div>
-              <AddBlockLine
-                onClick={() => {
-                  // setOpenSideBar(true)
-                  openSideBar()
-                  blockIndex.current = index + 1
-                }}
-              />
+              <AddBlockLine onClick={() => onClickBlockLine(index)} />
             </React.Fragment>
           )
         default:
@@ -98,7 +86,7 @@ const BlockList = () => {
       }
     })
   }, [editBlocks, inputValue, focusBlock])
-  return <div className="upload-content__blocks">{renderBlocks}</div>
+  return <div className="upload__content__blocks">{renderBlocks}</div>
 }
 
 export default BlockList

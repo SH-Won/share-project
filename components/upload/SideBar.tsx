@@ -13,7 +13,7 @@ const backPageMapper: Record<StateContext['page'], string> = {
 
 const SideBar = () => {
   const { sideBar, page } = useUploadState()
-  const { goSideBarPage, backSideBarPage, addBlock, closeSideBar, setPage } = useUploadDispatch()
+  const { goSideBarPage, backSideBarPage, addBlock, closeSideBar } = useUploadDispatch()
   const items = [
     {
       name: 'Text',

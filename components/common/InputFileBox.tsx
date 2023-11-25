@@ -1,7 +1,10 @@
+import { useUploadDispatch } from '@/context/UploadContext'
+import { useModal } from '@/hooks'
 import '@/styles/components/input.scss'
 import { Element } from 'my-react-component'
 import Image from 'next/image'
 import { ChangeEvent, createContext, useContext, useMemo, useState } from 'react'
+import ConfirmDelete from '../upload/modal/ConfirmDelete'
 import UserImage, { EditUserImage } from '../user/UserImage'
 import Button from './Button'
 
@@ -93,28 +96,42 @@ const items = [
 
 const UploadBox = ({ focus }: { focus?: boolean }) => {
   const { id } = useContext(FileBoxContext)
+  const { moveUpBlock, moveDownBlock, deleteBlock } = useUploadDispatch()
+  const { showModal } = useModal()
   const computedClass = useMemo(() => {
     let className = 'file__wrapper'
     if (focus) className += ' focus'
     // if (typeof validator === 'function' && !valid) className += ' error'
     return className
   }, [focus])
+  const onClickDelete = () => {
+    showModal({
+      type: 'basic',
+      props: {
+        deleteBlock: () => deleteBlock(id!),
+      },
+      Component: ConfirmDelete,
+    })
+  }
   return (
     // <div className="file-wrapper">
-
     <div className={computedClass}>
       {focus && (
         <div className="block-controller">
-          <span>
+          <span onClick={() => moveUpBlock(id!)}>
             <Image src="/arrowUp.svg" alt="up" width={13} height={18} />
           </span>
-          <span>
+          <span onClick={() => moveDownBlock(id!)}>
             <Image src="/arrowDown.svg" alt="down" width={13} height={18} />
           </span>
-          <span>
-            <label htmlFor={id || 'input-file'}>L</label>
-          </span>
-          <span>
+
+          <label
+            htmlFor={id || 'input-file'}
+            style={{ padding: '5px 9px', display: 'flex', cursor: 'pointer' }}
+          >
+            <Image src="/image.svg" width={14} height={16} alt="upload-image" />
+          </label>
+          <span onClick={() => onClickDelete()}>
             <Image src="/delete.svg" alt="delete" width={13} height={18} />
           </span>
         </div>
