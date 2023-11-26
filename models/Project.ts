@@ -9,18 +9,19 @@ const ProjectSchema = new mongoose.Schema(
       type: String,
       maxlength: 50,
     },
-    description: {
-      type: String,
-      maxlength: 50,
+    thumbnail: {
+      type: Object,
+      default: {
+        imageUrl: '',
+        imagePublicId: '',
+      },
     },
-    imageUrl: {
-      type: String,
+    blocks: {
+      type: Array,
+      default: [],
     },
     category: {
       type: Number,
-    },
-    imagePublicId: {
-      type: String,
     },
     link: {
       type: String,

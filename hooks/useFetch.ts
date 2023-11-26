@@ -42,7 +42,6 @@ const useFetch = () => {
       })
       .finally(() => dispatch(setLoading(false)))
     return () => {
-      console.log('clear use fetch func')
       dispatch(setReadyToFetch(false))
     }
   }, [query])

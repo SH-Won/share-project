@@ -5,8 +5,12 @@ import { useUploadDispatch, useUploadState } from '@/context/UploadContext'
 import AddBlockLine from '@/components/upload/AddBlockLine'
 import Button from '@/components/common/Button'
 import BlockList from '@/components/upload/BlockList'
-import { useForm } from '@/hooks'
-import React, { useCallback } from 'react'
+import { useError, useForm } from '@/hooks'
+import React, { useCallback, useRef } from 'react'
+import BlockHeading from '@/components/upload/input-block/BlockHeading'
+import { useSession } from 'next-auth/react'
+import { uploadProject } from '@/lib/api'
+import { handleJson } from '@/lib/responseHandler'
 
 export type TInputValue = {
   thumbnail: string
@@ -14,42 +18,44 @@ export type TInputValue = {
 }
 const initialInputValue = {
   thumbnail: '',
+  title: '',
 }
 const UploadPage = () => {
   const { blockIndex, editBlocks } = useUploadState()
   const { openSideBar } = useUploadDispatch()
+  const titleRef = useRef<HTMLDivElement>(null)
+  const { data: session } = useSession()
+  const { handleError } = useError()
 
   const { inputValue, onHandleChangeImage, onHandleChange } =
     useForm<TInputValue>(initialInputValue)
 
-  const onClick = () => {
-    console.log(inputValue)
-    const result = editBlocks.map((block, index) => ({
+  const onClick = async () => {
+    if (!inputValue.title) {
+      console.log(titleRef.current)
+      titleRef.current?.focus()
+      return
+    }
+    const blocks = editBlocks.map((block, index) => ({
       type: block.type,
       value: inputValue[block.name],
     }))
-    // textArea replace('\n','&nbsp;')
-    console.log([{ type: 'thumbnail', value: inputValue['thumbnail'] }].concat(result))
+    const body = {
+      userId: session?.id,
+      title: inputValue.title,
+      thumbnail: {
+        value: inputValue.thumbnail,
+      },
+      blocks,
+    }
+    uploadProject(body)
+      .then((response) => handleJson(response))
+      .then((json) => {
+        console.log('success', json)
+      })
+      .catch(handleError)
   }
   console.log('upload page render')
-
-  const Header = useCallback(() => {
-    return (
-      <React.Fragment>
-        <div className="upload__header">
-          <div className="button-group">
-            <Button type="basic" text="취소" size="medium" />
-          </div>
-          <div className="button-group">
-            <Button type="grey" text="임시 저장" size="medium" />
-            <Button type="black" text="업로드" size="medium" onClick={onClick} />
-          </div>
-        </div>
-
-        <SideBar />
-      </React.Fragment>
-    )
-  }, [])
   return (
     <div className="upload-page">
       <div className="upload__header">
@@ -64,6 +70,16 @@ const UploadPage = () => {
 
       <SideBar />
       <div className="upload__content">
+        {inputValue.thumbnail && (
+          <div ref={titleRef} tabIndex={1} className="upload__content__title">
+            <BlockHeading
+              onHandleChange={onHandleChange}
+              placeholder="제목을 입력해 주세요"
+              value={inputValue.title}
+              name="title"
+            />
+          </div>
+        )}
         <div className="file-upload-wrapper">
           <InputFileBox
             id="thumbnail"

@@ -1,6 +1,6 @@
 'use client'
 import React, { ChangeEvent, useCallback, useRef, useState } from 'react'
-// import '@/styles/components/input.scss'
+import '@/styles/components/input.scss'
 interface InputBoxProps {
   type?: string
   name: string

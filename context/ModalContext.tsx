@@ -7,10 +7,6 @@ export type TModalState = {
   Component: React.FC<any>
   props: any
 }
-// interface ModalState {
-//   modalStack: ModalState[]
-// }
-// const initialState: ModalStack[] = []
 export const ModalStateContext = createContext<TModalState>({} as TModalState)
 export const ModalSetterContext = createContext<Dispatch<SetStateAction<TModalState>> | null>(null)
 

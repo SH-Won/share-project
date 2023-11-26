@@ -3,6 +3,7 @@ import React, { ChangeEvent, useCallback, useMemo, useRef, useState } from 'reac
 import BlockController from '../BlockController'
 // import '@/styles/components/input.scss'
 interface InputBoxProps {
+  title?: boolean
   name: string
   value: string
   placeholder?: string
@@ -17,6 +18,7 @@ const BlockHeading = ({
   validator,
   onHandleChange,
   focus,
+  title,
 }: InputBoxProps) => {
   const valid = validator?.(value)
   const computedClass = useMemo(() => {

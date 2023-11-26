@@ -11,7 +11,7 @@ import React, {
   useState,
 } from 'react'
 
-type TEditBlock = {
+export type TEditBlock = {
   type: 'heading' | 'textArea' | 'image'
   name: string
   value: string

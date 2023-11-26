@@ -78,17 +78,21 @@
   box-sizing: border-box;
   // background-color: color("line_02");
   border: 2px dashed #e7e7e9;
+  padding: 10px;
   &.focus {
     border: 1px solid color("minus");
   }
   & > .file__image {
     cursor: pointer;
     position: relative;
-    padding-bottom: 62.5%;
+    // padding-bottom: 62.5%;
     &.none {
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100%;
+      position: relative;
+      padding-bottom: 62.5%;
       & > div {
         position: absolute;
         top: 50%;
@@ -98,7 +102,6 @@
         flex-direction: column;
         align-items: center;
         color: black;
-        // width: 70%;
 
         gap: 12px;
         & > span {
@@ -108,7 +111,8 @@
       }
     }
     & > img {
-      position: absolute;
+      // position: absolute;
+      border-radius: 8px;
       top: 0;
       left: 0;
       width: 100%;
