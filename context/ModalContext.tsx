@@ -4,13 +4,9 @@ import { createContext, Dispatch, SetStateAction, useState } from 'react'
 type ModalType = 'bottomSheet' | 'basic' | 'modal'
 export type TModalState = {
   type: ModalType
-  Component: React.FC
+  Component: React.FC<any>
   props: any
 }
-// interface ModalState {
-//   modalStack: ModalState[]
-// }
-// const initialState: ModalStack[] = []
 export const ModalStateContext = createContext<TModalState>({} as TModalState)
 export const ModalSetterContext = createContext<Dispatch<SetStateAction<TModalState>> | null>(null)
 

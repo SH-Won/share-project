@@ -27,7 +27,6 @@ export const SignUpStateContext = createContext<SignUpStateContextProps>(
 
 const SignUpContext = ({ children }: SignUpContextProps) => {
   const [state, setState] = useState(initialState)
-  // const [result, setResult] = useState<InitialState['result']>(initialState['result'])
   const goPage = (pageName: SignUpStateContextProps['page']) =>
     setState((prev) => ({ ...prev, page: pageName }))
   return (

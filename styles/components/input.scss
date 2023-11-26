@@ -1,5 +1,5 @@
-// @import "@/styles/common/_mixins.scss";
 .input-container {
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -17,13 +17,45 @@
   border-radius: 4px;
   outline: none;
   width: 100%;
-  font-size: 16px;
+  @include typeface("Paragraph_1_m");
   box-sizing: border-box;
+
+  &.upload {
+    font-size: 20px;
+    font-weight: 500;
+    border: 1px solid transparent;
+  }
+  &.border-none {
+    border: none;
+  }
+  &:hover {
+    border: 1px solid #e7e7e9;
+  }
   &.focus {
     border: 1px solid color("minus");
   }
   &.error {
     border: 1px solid color("plus");
+  }
+}
+
+.textarea {
+  position: relative;
+  padding: 20px 14px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  outline: none;
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+  resize: none;
+  height: 100%;
+  overflow-y: visible;
+  &:hover {
+    border: 1px solid #e7e7e9;
+  }
+  &.focus {
+    border: 1px solid color("minus");
   }
 }
 #input-file {
@@ -33,7 +65,9 @@
   display: none;
 }
 .file__wrapper {
-  max-width: 480px;
+  // max-width: 480px;
+  // padding: 10px;
+  position: relative;
   margin: 0 auto;
   width: 100%;
   border-radius: 8px;
@@ -41,24 +75,44 @@
   flex-direction: column;
   justify-content: center;
   color: color("white");
-  background-color: color("line_02");
+  box-sizing: border-box;
+  // background-color: color("line_02");
+  border: 2px dashed #e7e7e9;
+  padding: 10px;
+  &.focus {
+    border: 1px solid color("minus");
+  }
   & > .file__image {
     cursor: pointer;
     position: relative;
-    padding-bottom: 70%;
+    // padding-bottom: 62.5%;
     &.none {
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100%;
+      position: relative;
+      padding-bottom: 62.5%;
       & > div {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: black;
+
+        gap: 12px;
+        & > span {
+          color: color("grey_bbb");
+          @include typeface("Paragraph_3_b");
+        }
       }
     }
     & > img {
-      position: absolute;
+      // position: absolute;
+      border-radius: 8px;
       top: 0;
       left: 0;
       width: 100%;
@@ -81,4 +135,6 @@
   //   background-color: color("white");
   //   border-radius: 50%;
   // }
+}
+.file-wrapper {
 }

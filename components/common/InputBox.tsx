@@ -1,16 +1,30 @@
 'use client'
-import React, { ChangeEvent, useLayoutEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, useCallback, useRef, useState } from 'react'
 import '@/styles/components/input.scss'
 interface InputBoxProps {
   type?: string
   name: string
   value: string
+  border?: boolean
   placeholder?: string
   validator?: (text: string) => boolean
-  onHandleChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onHandleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  children?: React.ReactElement
+  focus?: boolean
 }
 
-const InputBox = ({ type, name, value, placeholder, validator, onHandleChange }: InputBoxProps) => {
+const InputBoxLabel = ({ name }: Pick<InputBoxProps, 'name'>) => {
+  return <label htmlFor={name}>{name}</label>
+}
+const InputBox = ({
+  type,
+  name,
+  value,
+  placeholder,
+  validator,
+  onHandleChange,
+  children,
+}: InputBoxProps) => {
   const [focus, setFocus] = useState(false)
   const valid = validator?.(value)
   const computedClass = () => {
@@ -22,19 +36,20 @@ const InputBox = ({ type, name, value, placeholder, validator, onHandleChange }:
 
   return (
     <div className="input-container">
-      <label htmlFor={name}>{name}</label>
+      {children}
       <input
         type={type || 'text'}
         name={name}
         className={computedClass()}
         placeholder={placeholder}
         onChange={onHandleChange}
-        value={value}
+        value={value || ''}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
       />
     </div>
   )
 }
+InputBox.Label = InputBoxLabel
 
 export default InputBox

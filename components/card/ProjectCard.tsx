@@ -23,7 +23,7 @@ const CardImage = () => {
         type="main"
         width={400}
         height={400}
-        imageUrl={project.imageUrl ?? ''}
+        imageUrl={project.thumbnail.imageUrl ?? ''}
         alt={project.title ?? 'loading'}
       />
     </Link>

@@ -1,5 +1,7 @@
 import { IProject } from '@/app/page'
+import { TEditBlock } from '@/context/UploadContext'
 import { IUserInventory } from '@/store/user/userSlice'
+import { IDetailProject } from '@/views/DetailPage'
 type UserFavoriteParams = {
   projectId: string
   userId: string
@@ -15,13 +17,26 @@ type TQuery = {
   skip: number
   limit: number
 }
-// type UploadProjectParams = {}
-export type TDetailData = {
+interface IUploadBody {
+  userId: string | undefined
+  title: string
+  thumbnail: {
+    value: string
+  }
+  blocks: Omit<TEditBlock, 'name'>[]
+}
+interface ISuccess {
+  success: boolean
+}
+interface UploadResponse extends ISuccess {
   project: IProject
+}
+export type TDetailData = {
+  project: IDetailProject
   writerProjects: Omit<IProject, 'writer'>[]
 }
-type BadRequest = { error: string }
-type CustomResponse<T> =
+export type BadRequest = { error: string; status: number }
+export type CustomResponse<T> =
   | (Omit<Response, 'json'> & {
       status: 200
       json: () => T | PromiseLike<T>
@@ -39,6 +54,11 @@ type TData = {
   projects: IProject[]
   totalLength: number
 }
+// export class ErrorHandler {
+//   constructor(error){
+
+//   }
+// }
 export const getData = async (query: TQuery) => {
   const queryString = Object.entries(query)
     .map(([key, value]) => `${key}=${value}`)
@@ -56,7 +76,13 @@ export const getDetailData = async (id: string) => {
   })
   return responseHandler<TDetailData>(response)
 }
-export const uploadProject = async () => {}
+export const uploadProject = async (body: IUploadBody) => {
+  const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/upload', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  })
+  return responseHandler<UploadResponse>(response)
+}
 
 export const updateUserFavorite = async (params: UserFavoriteParams) => {
   const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/user/favorite', {

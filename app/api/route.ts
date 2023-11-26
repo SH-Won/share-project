@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     const projects = await Project.find()
       .skip(parseInt(skip))
       .limit(parseInt(limit))
-      // .select('-favoriteUsers')
+      .select('-blocks')
       .populate({
         path: 'author',
         model: UserInventory,

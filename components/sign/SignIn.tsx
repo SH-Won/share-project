@@ -4,7 +4,7 @@ import Sign from './Sign'
 
 const SignIn = () => {
   return (
-    <>
+    <div className="sign-container">
       <Sign>
         <Sign.SignHeader text="로그인" />
         <Sign.Button size="large" type="basic" text="Google로 로그인" disabled>
@@ -14,7 +14,7 @@ const SignIn = () => {
         <EmailSignInForm />
         <Sign.AuthLink type="signup" />
       </Sign>
-    </>
+    </div>
   )
 }
 

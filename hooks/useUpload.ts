@@ -1,0 +1,3 @@
+const useUpload = () => {}
+
+export { useUpload }

@@ -12,6 +12,13 @@ interface Params {
 export async function GET(req: NextRequest, { params }: Params) {
   const id = params.id
   try {
+    // await new Promise((res, rej) => {
+    //   setTimeout(() => {
+    //     res(1)
+    //   }, 1000)
+    // })
+    // return NextResponse.json({ message: 'failed fetch' }, { status: 400 })
+
     const db = await dbConnect()
     const project = await Project.find({ _id: id })
       .populate({

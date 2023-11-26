@@ -7,14 +7,14 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 const useFetch = () => {
   const dispatch = useDispatch()
+  const [error, setError] = useState(false)
   const { loading, projects, hasMore, query, isReadyToFetch } = useSelector(
     (state: RootState) => state.project
   )
   const loadMore = () => {
-    if (!hasMore) {
+    if (!hasMore || error) {
       return
     }
-    console.log(query)
     dispatch(
       setQuery({
         ...query,
@@ -24,9 +24,15 @@ const useFetch = () => {
     dispatch(setReadyToFetch(true))
   }
 
+  const refresh = () => {
+    setError(false)
+    dispatch(setReadyToFetch(true))
+    dispatch(setLoading(true))
+    dispatch(setQuery({ ...query }))
+  }
+
   useEffect(() => {
     if (!isReadyToFetch) return
-    console.log(query)
     dispatch(setLoading(true))
     getData(query)
       .then(async (response) => {
@@ -38,19 +44,21 @@ const useFetch = () => {
       .catch((e) => {
         console.log(e)
         // 다시 fetching
+        setError(true)
         dispatch(setReadyToFetch(false))
       })
       .finally(() => dispatch(setLoading(false)))
     return () => {
-      console.log('clear use fetch func')
       dispatch(setReadyToFetch(false))
     }
   }, [query])
   return {
     loading,
+    error,
     hasMore,
     projects,
     loadMore,
+    refresh,
   }
 }
 
@@ -59,7 +67,13 @@ const useDetailFetch = (id: string) => {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<TDetailData>()
   const [error, setError] = useState(false)
+
+  const refresh = () => {
+    setLoading(true)
+    setError(false)
+  }
   useEffect(() => {
+    if (error) return
     const isModal = document.querySelector('.modal')
     if (isModal) document.body.style.overflow = 'hidden'
     getDetailData(id)
@@ -73,19 +87,19 @@ const useDetailFetch = (id: string) => {
       })
       .catch((e) => {
         setError(true)
-        console.log(e)
-        router.back()
+        // router.back()
       })
       .finally(() => setLoading(false))
 
     return () => {
       document.body.style.removeProperty('overflow')
     }
-  }, [id])
+  }, [id, error])
   return {
     loading,
     error,
     data,
+    refresh,
   }
 }
 export { useFetch, useDetailFetch }

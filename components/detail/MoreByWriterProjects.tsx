@@ -12,7 +12,7 @@ const MoreByWriterProjects = ({ projects, writerName }: Props) => {
       <h2 className="heading">More by {writerName} </h2>
       <div className="more-by-project-container">
         {projects.map((project) => (
-          <ProjectCard project={project} key={project._id}>
+          <ProjectCard project={project} key={'more_by_' + project._id}>
             <ProjectCard.Image />
           </ProjectCard>
         ))}

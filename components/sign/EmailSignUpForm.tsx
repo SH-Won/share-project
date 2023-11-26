@@ -71,7 +71,9 @@ const EmailSignUpForm = () => {
         value={inputValue.name}
         onHandleChange={onHandleChange}
         validator={emailValidator}
-      />
+      >
+        <InputBox.Label name="name" />
+      </InputBox>
       <InputBox
         type="text"
         name="username"
@@ -79,7 +81,9 @@ const EmailSignUpForm = () => {
         value={inputValue.username}
         onHandleChange={onHandleChange}
         validator={emailValidator}
-      />
+      >
+        <InputBox.Label name="username" />
+      </InputBox>
       <InputBox
         type="text"
         name="email"
@@ -87,7 +91,9 @@ const EmailSignUpForm = () => {
         value={inputValue.email}
         onHandleChange={onHandleChange}
         validator={emailValidator}
-      />
+      >
+        <InputBox.Label name="email" />
+      </InputBox>
       <InputBox
         type="password"
         name="password"
@@ -95,7 +101,9 @@ const EmailSignUpForm = () => {
         value={inputValue.password}
         onHandleChange={onHandleChange}
         validator={passwordValidator}
-      />
+      >
+        <InputBox.Label name="password" />
+      </InputBox>
       <Button
         size="large"
         type="black"

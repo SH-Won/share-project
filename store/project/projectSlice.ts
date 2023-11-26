@@ -22,7 +22,7 @@ const initialState: InitialState = {
   },
   totalLength: Infinity,
   isInitialFetching: false,
-  hasMore: true,
+  hasMore: false,
   isReadyToFetch: true,
 }
 

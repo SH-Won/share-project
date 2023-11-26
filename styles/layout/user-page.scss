@@ -64,19 +64,7 @@
       &.selected {
         color: color("grey_111");
       }
-      &:hover {
-        &::after {
-          position: absolute;
-          content: "";
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-          opacity: 0.3;
-          background-color: color("grey_ccc");
-          border-radius: 8px;
-        }
-      }
+      @include ItemHover();
     }
   }
 }

@@ -13,6 +13,7 @@ const Modal = () => {
       case 'bottomSheet':
         return (
           <BottomSheetModal>
+            <ModalHeader closeModal={closeModal} />
             <ModalState.Component {...ModalState.props} />
           </BottomSheetModal>
         )
@@ -20,22 +21,15 @@ const Modal = () => {
         return (
           <BasicModal>
             <ModalHeader closeModal={closeModal} />
-            <ModalState.Component {...ModalState.props} />
+            <ModalState.Component {...ModalState.props} closeModal={closeModal} />
           </BasicModal>
         )
       default:
         return null
     }
   }, [ModalState.type])
-  return (
-    <React.Fragment>
-      {isModalOpen ? (
-        <div className="modal">
-          <ModalLayout />
-        </div>
-      ) : null}
-    </React.Fragment>
-  )
+  console.log(ModalState)
+  return <React.Fragment>{isModalOpen ? <ModalLayout /> : null}</React.Fragment>
 }
 
 export default Modal

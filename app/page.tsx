@@ -5,8 +5,10 @@ import { lazy, Suspense, use } from 'react'
 export interface IProject {
   _id: string
   title: string
-  description: string
-  imageUrl: string
+  // description: string
+  thumbnail: {
+    imageUrl: string
+  }
   author: {
     _id: string
     imageUrl: string

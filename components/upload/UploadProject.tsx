@@ -59,7 +59,8 @@ const UploadProject = ({ close }: UploadProjectProps) => {
       <form>
         <InputFileBox name="image" onHandleChange={onHandleChangeImage} value={inputValue.image}>
           <InputFileBox.Title text="사진 추가" />
-          <InputFileBox.ProjectUploader />
+          {/* <InputFileBox.ProjectUploader /> */}
+          <InputFileBox.Uploader />
         </InputFileBox>
         <InputBox
           name="title"

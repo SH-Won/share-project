@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from 'react'
 
 const useForm = <T>(initialState: T) => {
   const [inputValue, setInputValue] = useState(initialState)
-  const onHandleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onHandleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setInputValue((prev) => ({
       ...prev,
@@ -36,12 +36,16 @@ const useForm = <T>(initialState: T) => {
   const recoveryForm = (inputState: T) => {
     setInputValue(inputState)
   }
+  const setInitialState = (initialState: T) => {
+    setInputValue(initialState)
+  }
   return {
     inputValue,
     onHandleChange,
     onHandleChangeImage,
     resetForm,
     recoveryForm,
+    setInitialState,
   }
 }
 export { useForm }
