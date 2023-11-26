@@ -28,7 +28,6 @@ export default async function RootLayout({ children, detail, modal, project }: P
                 <BaseLayout>
                   {children}
                   {detail}
-                  {modal}
                 </BaseLayout>
                 <Modal />
               </ModalContext>

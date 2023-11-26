@@ -2,12 +2,13 @@
 import '@/styles/layout/detail-page.scss'
 import { IProject } from '@/app/page'
 import Intro from '@/components/detail/Intro'
-import SkeletonDetail from '@/components/detail/SkeletonDetail'
+import SkeletonDetail, { SkeletonDetailHeader } from '@/components/detail/SkeletonDetail'
 import MoreByWriterProjects from '@/components/detail/MoreByWriterProjects'
 import DetailHeader from '@/components/detail/DetailHeader'
 import { useDetailFetch } from '@/hooks'
 import { TEditBlock } from '@/context/UploadContext'
 import DetailBlocks from '@/components/detail/DetailBlocks'
+import ErrorNotification from '@/components/common/ErrorNotification'
 
 interface Props {
   params: {
@@ -23,8 +24,14 @@ interface IProjectData {
 }
 const DetailPage = ({ params }: Props) => {
   const id = params!.id
-  const { data, loading, error } = useDetailFetch(id)
-  if (loading || error) return <SkeletonDetail />
+  const { data, loading, error, refresh } = useDetailFetch(id)
+  if (loading) return <SkeletonDetail />
+  if (error)
+    return (
+      <SkeletonDetailHeader>
+        <ErrorNotification onClick={refresh} />
+      </SkeletonDetailHeader>
+    )
   console.log(data)
   return (
     <section className="detail-page">

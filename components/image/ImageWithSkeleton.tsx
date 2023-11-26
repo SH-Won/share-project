@@ -13,6 +13,7 @@ interface Props {
 
 const ImageWithSkeleton = ({ imageUrl, alt, type, width, height }: Props) => {
   const [load, setLoad] = useState(false)
+  console.log(load)
   return (
     <div className={`image-container ${type} ${!load ? 'loading-template loading-animation' : ''}`}>
       <Image

@@ -24,7 +24,6 @@ interface IProjectBlock extends Omit<TEditBlock, 'name'> {
 }
 export async function POST(req: NextRequest) {
   try {
-    return NextResponse.json({ success: false }, { status: 401 })
     const db = await dbConnect()
     const body = (await req.json()) as {
       userId: string
@@ -88,7 +87,6 @@ export async function POST(req: NextRequest) {
       thumbnail: uploadedImages[0],
       blocks,
     })
-    console.log(newProject)
     const result = await newProject.save()
     const uploadProject = await Project.findOne({ _id: result._id })
       .populate({
