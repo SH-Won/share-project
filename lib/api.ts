@@ -80,6 +80,7 @@ export const getDetailData = async (id: string) => {
   // }
   const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/api/detail/${id}`, {
     method: 'GET',
+    // next: { revalidate: 0 },
   })
   return responseHandler<TDetailData>(response)
 }
