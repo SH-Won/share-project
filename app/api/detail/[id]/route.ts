@@ -1,6 +1,5 @@
 import dbConnect from '@/lib/dbConnect'
 import Project from '@/models/Project'
-import User from '@/models/User'
 import UserInventory from '@/models/UserInventory'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -17,7 +16,7 @@ export async function GET(req: NextRequest, { params }: Params) {
     //     res(1)
     //   }, 1000)
     // })
-    // return NextResponse.json({ message: 'failed fetch' }, { status: 400 })
+    // return NextResponse.json({ message: 'failed fetch', status: 400 }, { status: 400 })
 
     const db = await dbConnect()
     const project = await Project.find({ _id: id })

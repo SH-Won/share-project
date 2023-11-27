@@ -2,6 +2,7 @@ import { IProject } from '@/app/page'
 import { TEditBlock } from '@/context/UploadContext'
 import { IUserInventory } from '@/store/user/userSlice'
 import { IDetailProject } from '@/views/DetailPage'
+import { ErrorBase } from './error'
 type UserFavoriteParams = {
   projectId: string
   userId: string
@@ -29,7 +30,7 @@ interface ISuccess {
   success: boolean
 }
 interface UploadResponse extends ISuccess {
-  project: IProject
+  uploadProject: IProject
 }
 export type TDetailData = {
   project: IDetailProject
@@ -48,29 +49,35 @@ export type CustomResponse<T> =
 
 const responseHandler = <T>(response: Response) => {
   const res = response as CustomResponse<T>
-  return res
+  if (res.status !== 200) throw res
+  // return res.json()
+  return res.json()
 }
 type TData = {
   projects: IProject[]
   totalLength: number
 }
-// export class ErrorHandler {
-//   constructor(error){
 
-//   }
-// }
 export const getData = async (query: TQuery) => {
   const queryString = Object.entries(query)
     .map(([key, value]) => `${key}=${value}`)
     .join('&')
   // await new Promise((res) => setTimeout(res, 1000000))
   const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api?' + queryString, {
-    // next: { revalidate: 0 },
+    next: { revalidate: 0 },
   })
 
   return responseHandler<TData>(response)
 }
 export const getDetailData = async (id: string) => {
+  // try {
+  //   const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/api/detail/${id}`, {
+  //     method: 'GET',
+  //   })
+  //   return responseHandler<TDetailData>(response)
+  // } catch (e) {
+  //   throw e
+  // }
   const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/api/detail/${id}`, {
     method: 'GET',
   })

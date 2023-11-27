@@ -11,7 +11,6 @@ const useBlock = (blocks: IDetailProject['blocks']) => {
     return (
       <React.Fragment key="blocks">
         {blocks.map((block, index) => {
-          console.log(block.type + index)
           switch (block.type) {
             case 'heading':
               return (

@@ -49,7 +49,7 @@ export const authOptions: AuthOptions = {
       if (refreshTime > 0) {
         return token
       }
-      // await dbConnect()
+      await dbConnect()
       const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/auth/refresh', {
         method: 'POST',
         body: JSON.stringify({

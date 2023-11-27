@@ -4,6 +4,7 @@
 @import "../styles/components/skeleton.scss";
 @import "../styles/components/image.scss";
 @import "../styles/layout/error.scss";
+@import "../styles/layout/loading.scss";
 .page-container {
   margin: 0 auto;
   display: grid;
@@ -13,25 +14,85 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 .navbar {
+  position: relative;
+  z-index: 80;
   width: 100%;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80px;
-  padding: 0 20px;
+  height: var(--navbar-height);
+  padding: 0 24px;
+  box-sizing: border-box;
   box-shadow: 0 0 0 1px #f3f3f4;
   &__user-state {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    span {
-      @include typeface("Paragraph_3_b");
-      color: color("grey_333");
+  }
+}
+.user-navigation-wrapper {
+  width: 100%;
+  position: fixed;
+  background-color: color("white");
+  z-index: 50;
+  top: calc(var(--navbar-height) + 1px);
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  // transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+  //   -webkit-transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  &.open {
+    visibility: visible;
+    opacity: 1;
+    @include Overlay();
+  }
+  .user-navigation {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 36px;
+    align-items: center;
+    box-sizing: border-box;
+    gap: 20px;
+
+    .user {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      &__name {
+        @include typeface("Paragraph_1_m");
+      }
+    }
+
+    & > .list {
+      width: 100%;
+      align-self: flex-start;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      & > .item {
+        cursor: pointer;
+        padding: 10px 0;
+        @include typeface("Paragraph_2_b");
+        color: color("grey_333");
+        &.logout {
+          color: color("grey_999");
+          padding-top: 20px;
+          border-top: 1px solid #e7e7e9;
+        }
+      }
     }
   }
 }
+
 a {
   text-decoration: none;
   outline: none;
@@ -39,5 +100,49 @@ a {
 }
 main {
   height: 100%;
-  // box-sizing: border-box;
+}
+:root {
+  --navbar-height: 60px;
+  --navbar-user-image-size: 36px;
+  --detail-header-z-index: 100;
+  --overlay-base-z-index: 49;
+
+  --primary-color: hsl(196, 78%, 61%);
+  --secondary-color: hsl(217, 15%, 83%);
+  --success-color: hsl(165, 58%, 55%);
+  --info-color: hsl(214, 79%, 65%);
+  --warning-color: hsl(43, 100%, 66%);
+  --danger-color: hsl(354, 81%, 63%);
+  --primary-color-darker: hsl(196, 68%, 54%);
+  --secondary-color-darker: hsl(215, 13%, 70%);
+  --success-color-darker: hsl(165, 55%, 48%);
+  --info-color-darker: hsl(214, 68%, 58%);
+  --warning-color-darker: hsl(39, 97%, 62%);
+  --danger-color-darker: hsl(354, 67%, 56%);
+  --primary-color-lighter: hsl(196, 78%, 81%);
+  --secondary-color-lighter: hsl(214, 16%, 92%);
+  --success-color-lighter: hsl(165, 58%, 75%);
+  --info-color-lighter: hsl(214, 79%, 85%);
+  --warning-color-lighter: hsl(43, 100%, 86%);
+  --danger-color-lighter: hsl(354, 81%, 83%);
+  --secondary-color-darkest: hsl(215, 11%, 30%);
+  --secondary-color-lightest: hsl(220, 1%, 98%);
+  --ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  --ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --ease-in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+  --ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+  --ease-in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  --ease-in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1);
+  --ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
+  --ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
+  --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
 }

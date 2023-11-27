@@ -104,8 +104,8 @@ export async function GET(req: NextRequest) {
         },
       ])
       .exec()
-    console.log('count is')
-    console.log(userInventory.favorites.length, userInventory.clippings.length)
+    // console.log('count is')
+    // console.log(userInventory.favorites.length, userInventory.clippings.length)
 
     // db.disconnect()
     return NextResponse.json({ userInventory: userInventory }, { status: 200 })

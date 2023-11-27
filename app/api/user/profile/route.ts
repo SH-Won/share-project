@@ -23,7 +23,6 @@ export async function PUT(req: NextRequest) {
         })
       })
     })) as { imageUrl: string; imagePublicId: string }
-    console.log(imageUrl)
     // const result = new Promise((resolve, reject) => {
     //   cloudinary.uploader.destroy(id, (result) => {
     //     resolve(result)

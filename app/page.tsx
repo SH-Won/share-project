@@ -1,11 +1,9 @@
-import Loading from '@/components//loading'
 import { getData } from '@/lib/api'
 import MainPage from '@/views/MainPage'
-import { lazy, Suspense, use } from 'react'
+import { use } from 'react'
 export interface IProject {
   _id: string
   title: string
-  // description: string
   thumbnail: {
     imageUrl: string
   }
@@ -17,9 +15,15 @@ export interface IProject {
   favoriteUsers: string[]
 }
 
-export default function Home() {
-  // const projects = use(getData())
-  return <MainPage />
+export default async function Home() {
+  // const projects = use(
+  //   getData({
+  //     skip: 0,
+  //     limit: 20,
+  //   })
+  // )
+  const projects = await getData({ skip: 0, limit: 20 })
+  return <MainPage projects={projects.projects || []} />
 }
 {
   // /* @ts-expect-error Async Server Component */

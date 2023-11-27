@@ -32,7 +32,7 @@ const DetailPage = ({ params }: Props) => {
         <ErrorNotification onClick={refresh} />
       </SkeletonDetailHeader>
     )
-  console.log(data)
+  console.log('detail data', data)
   return (
     <section className="detail-page">
       <DetailHeader project={data!.project} />

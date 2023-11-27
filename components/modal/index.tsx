@@ -28,7 +28,6 @@ const Modal = () => {
         return null
     }
   }, [ModalState.type])
-  console.log(ModalState)
   return <React.Fragment>{isModalOpen ? <ModalLayout /> : null}</React.Fragment>
 }
 

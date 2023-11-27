@@ -1,6 +1,6 @@
 import dbConnect from '@/lib/dbConnect'
 import Project from '@/models/Project'
-import User from '@/models/User'
+
 import UserInventory from '@/models/UserInventory'
 import { NextRequest, NextResponse } from 'next/server'
 export const dynamic = 'force-dynamic'
@@ -14,6 +14,7 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const skip = searchParams.get('skip') || '0'
   const limit = searchParams.get('limit') || '10'
+  console.log('next search params ', searchParams)
   // const path = request.nextUrl.searchParams
   try {
     const db = await dbConnect()
@@ -21,6 +22,7 @@ export async function GET(request: NextRequest) {
     if (skip === '0') {
       totalLength = await Project.collection.countDocuments()
     }
+    console.log('skip', skip, 'limit', limit)
     const projects = await Project.find()
       .skip(parseInt(skip))
       .limit(parseInt(limit))

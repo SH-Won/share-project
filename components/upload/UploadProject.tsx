@@ -28,32 +28,32 @@ const UploadProject = ({ close }: UploadProjectProps) => {
     onHandleChange,
     validator: validatorXSS,
   }
-  const onSubmit = async (e: React.MouseEvent) => {
-    e.preventDefault()
-    const body = {
-      ...inputValue,
-      userId: session.data?.id,
-      category: 0,
-      link: 'https://github.com/SH-Won',
-    }
-    try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/upload', {
-        method: 'POST',
-        body: JSON.stringify(body),
-      })
-      if (response.ok) {
-        const uploadProject = (await response.json()).uploadProject as IProject
-        console.log(uploadProject)
-        dispatch(addProject(uploadProject))
-        close?.()
-        // router.refresh()
-      } else {
-        alert('권한이 없습니다, 로그인 하시겠어요?')
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }
+  // const onSubmit = async (e: React.MouseEvent) => {
+  //   e.preventDefault()
+  //   const body = {
+  //     ...inputValue,
+  //     userId: session.data?.id,
+  //     category: 0,
+  //     link: 'https://github.com/SH-Won',
+  //   }
+  //   try {
+  //     const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/upload', {
+  //       method: 'POST',
+  //       body: JSON.stringify(body),
+  //     })
+  //     if (response.ok) {
+  //       const uploadProject = (await response.json()).uploadProject as IProject
+  //       console.log(uploadProject)
+  //       dispatch(addProject(uploadProject))
+  //       close?.()
+  //       // router.refresh()
+  //     } else {
+  //       alert('권한이 없습니다, 로그인 하시겠어요?')
+  //     }
+  //   } catch (e) {
+  //     console.log(e)
+  //   }
+  // }
   return (
     <div className="project-container">
       <form>
@@ -90,7 +90,7 @@ const UploadProject = ({ close }: UploadProjectProps) => {
               close?.()
             }}
           />
-          <Button type="black" size="large" text="올리기" onClick={(e) => onSubmit(e)} />
+          <Button type="black" size="large" text="올리기" onClick={(e) => {}} />
         </div>
       </form>
     </div>
