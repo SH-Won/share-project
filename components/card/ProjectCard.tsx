@@ -6,7 +6,6 @@ import ImageWithSkeleton from '../image/ImageWithSkeleton'
 import { FavoriteSVG } from '../user_action/Favorite'
 import { IProject } from '@/app/page'
 import { Card } from '../ui'
-import { useRouter } from 'next/navigation'
 interface ProjectCardProps {
   project: IProject | Omit<IProject, 'writer'>
   children: React.ReactNode
@@ -15,20 +14,17 @@ interface ProjectCardProps {
 const ProjectCardContext = createContext<IProject | Omit<IProject, 'writer'>>({} as IProject)
 const CardImage = () => {
   const project = useContext(ProjectCardContext)
-  const router = useRouter()
   return (
-    // <Link href={`/detail/${project._id}`}>
-
-    <div className="image-container main" onClick={() => router.push(`/detail/${project._id}`)}>
-      <Image
-        src={project.thumbnail.imageUrl || '/noImage.svg'}
-        width={400}
-        height={400}
-        alt={project.title}
-      />
-    </div>
-
-    // </Link>
+    <Link href={`/detail/${project._id}`} prefetch={false}>
+      <div className="image-container main">
+        <Image
+          src={project.thumbnail.imageUrl || '/noImage.svg'}
+          width={400}
+          height={400}
+          alt={project.title}
+        />
+      </div>
+    </Link>
   )
 }
 {

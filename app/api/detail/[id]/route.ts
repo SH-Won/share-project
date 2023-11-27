@@ -2,7 +2,7 @@ import dbConnect from '@/lib/dbConnect'
 import Project from '@/models/Project'
 import UserInventory from '@/models/UserInventory'
 import { NextRequest, NextResponse } from 'next/server'
-
+// export const dynamic = 'force-dynamic'
 interface Params {
   params: {
     id: string
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest, { params }: Params) {
         select: 'name imageUrl',
       })
       .exec()
-    const result = await Project.find({ author: project[0].author }).exec()
+    const result = await Project.find({ author: project[0].author }).select('-blocks').exec()
     const writerProjects = result.filter((project) => project._id.toString() !== id)
     return NextResponse.json({ project: project[0], writerProjects }, { status: 200 })
   } catch (e) {

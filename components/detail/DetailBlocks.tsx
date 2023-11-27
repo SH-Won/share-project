@@ -8,10 +8,12 @@ interface Props {
 }
 const DetailBlocks = ({ blocks }: Props) => {
   // const RenderBlocks = useBlock(blocks)
+  console.log(blocks)
   return (
     <div className="detail-content">
       {/* <RenderBlocks /> */}
       {blocks.map((block, index) => {
+        if (!block.value) return null
         switch (block.type) {
           case 'heading':
             return (
@@ -23,10 +25,10 @@ const DetailBlocks = ({ blocks }: Props) => {
             return (
               <p className="description" key={crypto.randomUUID()}>
                 {block.value.split('\n').map((string) => (
-                  <>
+                  <React.Fragment key={crypto.randomUUID()}>
                     <span>{string}</span>
                     <br />
-                  </>
+                  </React.Fragment>
                 ))}
               </p>
             )
