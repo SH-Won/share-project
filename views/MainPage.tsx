@@ -12,29 +12,30 @@ interface Props {
 }
 
 const MainPage = ({ projects: serverProjects }: Props) => {
-  const { loading, hasMore, projects, loadMore, error, refresh } = useFetch()
+  // const { loading, hasMore, projects, loadMore, error, refresh } = useFetch()
 
-  const { targetRef } = useInfinityScroll<HTMLDivElement>({
-    loading,
-    hasMore,
-    error,
-    callback: loadMore,
-  })
+  // const { targetRef } = useInfinityScroll<HTMLDivElement>({
+  //   loading,
+  //   hasMore,
+  //   error,
+  //   callback: loadMore,
+  // })
   return (
     <>
       <section className="page-container">
-        {projects!.map((project) => (
-          <div key={project._id}>
-            <ProjectCard project={project}>
-              <ProjectCard.Image />
-              <ProjectCard.Content />
-            </ProjectCard>
-          </div>
-        ))}
-        {loading && <Loading />}
-        <div ref={targetRef}></div>
+        {serverProjects &&
+          serverProjects!.map((project) => (
+            <div key={project._id}>
+              <ProjectCard project={project}>
+                <ProjectCard.Image />
+                <ProjectCard.Content />
+              </ProjectCard>
+            </div>
+          ))}
+        {/* {loading && <Loading />}
+        <div ref={targetRef}></div> */}
       </section>
-      {error && <ErrorNotification onClick={refresh} />}
+      {/* {error && <ErrorNotification onClick={refresh} />} */}
     </>
   )
 }

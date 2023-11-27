@@ -15,14 +15,12 @@
   &.main {
     padding-top: 75%;
     border-radius: 8px;
-    // background-color: #e7e7e9;
     & > img {
       border-radius: 8px;
       object-fit: cover;
     }
   }
   &.detail {
-    // padding-bottom: 85%;
     padding-bottom: unset;
     position: unset;
     margin: 0 -20px;
@@ -38,7 +36,6 @@
   border-radius: 50%;
   border: 1px solid #f7f7f7;
   color: #fff;
-  // background-color: #fff;
   overflow: hidden;
   & > img {
     text-align: center;
@@ -46,17 +43,9 @@
     object-fit: cover;
     color: transparent;
   }
-  &.small {
-    width: 80px;
-    height: 80px;
-  }
-  &.medium {
-    width: 80px;
-    height: 80px;
-  }
-  &.large {
-    width: 80px;
-    height: 80px;
+  &.loading {
+    width: var(--navbar-user-image-size);
+    height: var(--navbar-user-image-size);
   }
 }
 .edit-user-image {

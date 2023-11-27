@@ -13,8 +13,6 @@ const count: Record<TScreenState, number> = {
 }
 const useUserInventory = () => {
   const { loading, favorites, clippings } = useSelector((state: RootState) => state.user)
-  // const { breakPointsClass } = useBreakPoints()
-  // console.log(breakPointsClass)
   const favoritesLength = useMemo(() => {
     return Object.keys(favorites).length
   }, [favorites])

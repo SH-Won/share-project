@@ -5,6 +5,6 @@ export const handleError = async (response: BadRequest) => {
 }
 export const handleJson = async <T extends CustomResponse<any>>(response: T) => {
   if (!response.ok) throw response
-  return (await response.json()) as Promise<T>
+  return (await response.json()) as ReturnType<T['json']>
 }
 export default handleError

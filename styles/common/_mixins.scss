@@ -21,13 +21,13 @@
 @mixin animate-bottom-sheet-up($percent: 15%) {
   @keyframes animate-bottom-sheet-up {
     0% {
-      transform: translateY($percent);
-      opacity: 0;
+      transform: translateY($percent) scale(0.98);
+      // opacity: 0.2;
       -webkit-transform: translate3d(0, $percent, 0);
     }
     100% {
-      transform: translateY(0);
-      opacity: 1;
+      transform: translateY(0) scale(1);
+      // opacity: 1;
       -webkit-transform: translate3d(0, 0, 0);
     }
   }
@@ -35,14 +35,14 @@
 @mixin animate-bottom-sheet-down {
   @keyframes animate-bottom-sheet-down {
     0% {
-      transform: translateY(0);
-      opacity: 1;
+      transform: translateY(0) scale(1);
+      // opacity: 1;
       -webkit-transform: translate3d(0, 0, 0);
     }
     100% {
-      transform: translateY(15%);
+      transform: translateY(15%) scale(0.98);
 
-      opacity: 0;
+      // opacity: 0.2;
       -webkit-transform: translate3d(0, 15%, 0);
     }
   }
@@ -67,5 +67,16 @@
         border-radius: 8px;
       }
     }
+  }
+}
+@mixin Overlay($zIndex: 49, $opacity: 0.5) {
+  &::after {
+    content: "";
+    position: fixed;
+    z-index: $zIndex;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, $opacity);
   }
 }

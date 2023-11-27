@@ -7,15 +7,13 @@ import { useDispatch } from 'react-redux'
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: session } = useSession()
-  console.log(session)
+  console.log('session', session)
   const dispatch = useDispatch<AppDispatch>()
   useEffect(() => {
-    console.log('useEffect userProvider')
     if (!session?.id) {
       dispatch(setLoading(false))
       return
     }
-    console.log('fetch start')
     dispatch(setLoading(true))
     ;(async () => {
       await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/api/user?userId=${session.id}`, {
@@ -29,7 +27,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
           }
         })
         .catch((e) => {
-          console.log(e)
+          console.log('user provider error', e)
         })
         .finally(() => {
           dispatch(setLoading(false))

@@ -6,11 +6,18 @@ import AddBlockLine from '@/components/upload/AddBlockLine'
 import Button from '@/components/common/Button'
 import BlockList from '@/components/upload/BlockList'
 import { useError, useForm } from '@/hooks'
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import BlockHeading from '@/components/upload/input-block/BlockHeading'
 import { useSession } from 'next-auth/react'
 import { uploadProject } from '@/lib/api'
 import { handleJson } from '@/lib/responseHandler'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/store'
+import { addProject } from '@/store/project/projectSlice'
+import LoadingSpinner from '@/components/common/LoadingSpinner'
+import LoadingWave from '@/components/common/LoadingWave'
+import LoadingArc from '@/components/common/LoadingArc'
+import { useRouter } from 'next/navigation'
 
 export type TInputValue = {
   thumbnail: string
@@ -26,13 +33,15 @@ const UploadPage = () => {
   const titleRef = useRef<HTMLDivElement>(null)
   const { data: session } = useSession()
   const { handleError } = useError()
+  const dispatch = useDispatch<AppDispatch>()
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
   const { inputValue, onHandleChangeImage, onHandleChange } =
     useForm<TInputValue>(initialInputValue)
 
   const onClick = async () => {
     if (!inputValue.title) {
-      console.log(titleRef.current)
       titleRef.current?.focus()
       return
     }
@@ -48,12 +57,17 @@ const UploadPage = () => {
       },
       blocks,
     }
+    setLoading(true)
     uploadProject(body)
-      .then((response) => handleJson(response))
-      .then((json) => {
-        console.log('success', json)
+      // .then((response) => handleJson(response))
+      .then((response) => {
+        // alert('업로드 완료')
+        // console.log(response)
+        dispatch(addProject(response.uploadProject))
+        router.push('/')
       })
       .catch(handleError)
+      .finally(() => setLoading(false))
   }
   console.log('upload page render')
   return (
@@ -67,7 +81,6 @@ const UploadPage = () => {
           <Button type="black" text="업로드" size="medium" onClick={onClick} />
         </div>
       </div>
-
       <SideBar />
       <div className="upload__content">
         {inputValue.thumbnail && (
@@ -107,9 +120,9 @@ const UploadPage = () => {
         </>
         {/* ) : null} */}
       </div>
+      {loading ? <LoadingArc text="업로드 중입니다" /> : null}
     </div>
   )
 }
-// {`upload-page ${openSideBar ? 'open' : ''}`}
 
 export default UploadPage

@@ -89,6 +89,7 @@ export async function POST(req: NextRequest) {
     })
     const result = await newProject.save()
     const uploadProject = await Project.findOne({ _id: result._id })
+      .select('-blocks')
       .populate({
         path: 'author',
         model: UserInventory,

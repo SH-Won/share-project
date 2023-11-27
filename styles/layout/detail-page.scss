@@ -58,7 +58,7 @@
   &.sticky {
     position: sticky;
     width: 100%;
-    z-index: 1000;
+    z-index: var(--detail-header-z-index);
     top: 0px;
 
     &::before {

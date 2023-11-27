@@ -1,7 +1,6 @@
 .loading-template {
   position: relative;
   overflow: hidden;
-  // background-color: color("grey_bbb");
   background-color: #e7e7e9;
 }
 .loading-animation {
@@ -16,8 +15,8 @@
     -webkit-transform: translateX(-100%);
     -ms-transform: translateX(-100%);
     transform: translateX(-100%);
-    -webkit-animation: loading 2s infinite;
-    animation: loading 2s infinite;
+    -webkit-animation: loading-skeleton 2s infinite;
+    animation: loading-skeleton 2s infinite;
     background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(#fff), to(transparent));
     background: linear-gradient(90deg, transparent, #fff, transparent);
     &.dark {
@@ -50,6 +49,7 @@
   }
 }
 .skeleton-loading-container {
+  position: relative;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -106,7 +106,7 @@
   }
 }
 
-@keyframes loading {
+@keyframes loading-skeleton {
   100% {
     transform: translateX(100%);
     -webkit-transform: translateX(100%);

@@ -52,13 +52,13 @@ const useUserActions = (project: IProject) => {
       isAdd: isFavoriteAdd,
     })
       .then(async (response) => {
-        if (response.status !== 200) {
-          //403
-          throw Error('로그인 다시 해주세요')
-          // 400
-          // throw Error('request failed')
-        }
-        const json = await response.json()
+        // if (response.status !== 200) {
+        //   //403
+        //   throw Error('로그인 다시 해주세요')
+        //   // 400
+        //   // throw Error('request failed')
+        // }
+        // const json = await response.json()
         if (isFavoriteAdd) {
           dispatch(addFavorite(project))
         } else {
@@ -95,8 +95,8 @@ const useUserActions = (project: IProject) => {
       isAdd: isClippingAdd,
     })
       .then(async (response) => {
-        if (response.status !== 200) throw Error('failed')
-        const json = await response.json()
+        // if (response.status !== 200) throw Error('failed')
+        // const json = await response.json()
         if (isClippingAdd) {
           dispatch(addClipping(project))
         } else {
