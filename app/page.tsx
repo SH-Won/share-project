@@ -1,6 +1,5 @@
 import { getData } from '@/lib/api'
 import MainPage from '@/views/MainPage'
-import { use } from 'react'
 export interface IProject {
   _id: string
   title: string
