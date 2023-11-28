@@ -1,11 +1,11 @@
 'use client'
 import { IProject } from '@/app/page'
 import ProjectCard from '@/components/card/ProjectCard'
-import { getData } from '@/lib/api'
-import { useFetch, useInfinityScroll, useInterSection } from '@/hooks'
-import Loading from '@/components/loading'
-import React, { Suspense, useCallback, useState } from 'react'
-import ErrorNotification from '@/components/common/ErrorNotification'
+// import { getData } from '@/lib/api'
+// import { useFetch, useInfinityScroll, useInterSection } from '@/hooks'
+// import Loading from '@/components/loading'
+// import React, { Suspense, useCallback, useState } from 'react'
+// import ErrorNotification from '@/components/common/ErrorNotification'
 
 interface Props {
   projects?: IProject[]
