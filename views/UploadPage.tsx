@@ -47,7 +47,6 @@ const UploadPage = () => {
     useForm<TInputValue>(initialInputValue)
 
   const handleSave = () => {
-    console.log(inputValue)
     if (!inputValue.thumbnail && !editBlocks.length) return
     const blocks = editBlocks.map((block) => ({
       ...block,
