@@ -9,9 +9,8 @@ const useError = () => {
     switch (response.status) {
       case 401:
         return showModal({
-          type: 'basic',
-          Component: SignIn,
-          props: {},
+          type: 'user_signin',
+          props: undefined,
         })
       default:
         return null

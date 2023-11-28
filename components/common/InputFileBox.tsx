@@ -4,7 +4,7 @@ import '@/styles/components/input.scss'
 import { Element } from 'my-react-component'
 import Image from 'next/image'
 import { ChangeEvent, createContext, useContext, useMemo, useState } from 'react'
-import ConfirmDelete from '../upload/modal/ConfirmDelete'
+import ConfirmDelete from '../upload/modal/ConfirmAction'
 import UserImage, { EditUserImage } from '../user/UserImage'
 import Button from './Button'
 
@@ -106,11 +106,10 @@ const UploadBox = ({ focus }: { focus?: boolean }) => {
   }, [focus])
   const onClickDelete = () => {
     showModal({
-      type: 'basic',
+      type: 'user_confirm',
       props: {
-        deleteBlock: () => deleteBlock(id!),
+        handleConfirm: () => deleteBlock(id!),
       },
-      Component: ConfirmDelete,
     })
   }
   return (

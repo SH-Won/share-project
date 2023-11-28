@@ -38,6 +38,7 @@ const UserNavigation = ({ userName, userImageUrl }: Props) => {
     }
   }, [open])
   const handleSignOut = async () => {
+    setOpen(false)
     signOut({
       redirect: false,
       callbackUrl: '/',
@@ -50,7 +51,7 @@ const UserNavigation = ({ userName, userImageUrl }: Props) => {
       <div onClick={handleNavigation}>
         <UserImage size={36} imageUrl={userImageUrl} />
       </div>
-      <div className={`user-navigation-wrapper ${open ? 'open' : ''}`}>
+      <div className={`navbar__navigation-wrapper ${open ? 'open' : ''}`}>
         <div className="user-navigation">
           <div className="user">
             <UserImage size={80} imageUrl={userImageUrl} />
@@ -58,12 +59,14 @@ const UserNavigation = ({ userName, userImageUrl }: Props) => {
           </div>
           <ul className="list">
             {items.map((item) => (
-              <li key={item.key} className="item" onClick={handleNavigation}>
-                <Link href={item.href}>{item.name}</Link>
+              <li key={item.key} className="item">
+                <Link href={item.href} onClick={handleNavigation}>
+                  {item.name}
+                </Link>
               </li>
             ))}
-            <li className="item logout" onClick={handleSignOut}>
-              로그아웃
+            <li className="item logout">
+              <span onClick={handleSignOut}>로그아웃</span>
             </li>
           </ul>
         </div>

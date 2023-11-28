@@ -32,6 +32,7 @@
   }
 }
 .user-image {
+  cursor: pointer;
   @include flexCenter();
   border-radius: 50%;
   border: 1px solid #f7f7f7;

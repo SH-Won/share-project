@@ -29,10 +29,9 @@ interface DispatchContext {
   closeSideBar: () => void
   goSideBarPage: (page: StateContext['page']) => void
   backSideBarPage: () => void
-  // setOpenSideBar: Dispatch<SetStateAction<boolean>>
   setPage: Dispatch<SetStateAction<StateContext['page']>>
+  setInitialBlocks: (blocks: TEditBlock[]) => void
   addBlock: (blockType: TEditBlock['type']) => void
-  // reset: () => void
   moveUpBlock: (name: TEditBlock['name']) => void
   moveDownBlock: (name: TEditBlock['name']) => void
   pasteBlock: (name: TEditBlock['name']) => void
@@ -47,14 +46,12 @@ const UploadDispatchContext = createContext<DispatchContext | null>(null)
 
 const UploadContext = ({ children }: UploadContextProps) => {
   const [page, setPage] = useState<StateContext['page']>('selectBlock')
-  // const [openSideBar, setOpenSideBar] = useState<boolean>(false)
   const [editBlocks, setEditBlocks] = useState<TEditBlock[]>([])
   const blockIndex = useRef<number>(0)
   const sideBar = useRef<HTMLDivElement>(null)
-  // const reset = useCallback(() => {
-  //   setOpenSideBar(false)
-  //   setPage('selectBlock')
-  // }, [])
+  const setInitialBlocks = (blocks: TEditBlock[]) => {
+    setEditBlocks(blocks)
+  }
   const addBlock = (blockType: TEditBlock['type']) => {
     const block = {
       type: blockType,
@@ -64,7 +61,6 @@ const UploadContext = ({ children }: UploadContextProps) => {
     const copyBlocks = [...editBlocks]
     copyBlocks.splice(blockIndex.current, 0, block)
     setEditBlocks(copyBlocks)
-    // reset()
     closeSideBar()
   }
   const moveUpBlock = (name: TEditBlock['name']) => {
@@ -130,6 +126,7 @@ const UploadContext = ({ children }: UploadContextProps) => {
       setPage,
       // setOpenSideBar,
       // reset,
+      setInitialBlocks,
       addBlock,
       moveUpBlock,
       moveDownBlock,

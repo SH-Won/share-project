@@ -30,12 +30,13 @@
     &__content {
       box-sizing: border-box;
       width: 100%;
-      // max-width: 1000px;
       margin: 0 auto;
       overflow: auto;
       padding: 4px;
 
       &__title {
+        margin: 0 auto;
+        max-width: 1000px;
         border-radius: 4px;
         border: 1px solid transparent;
         &:focus {

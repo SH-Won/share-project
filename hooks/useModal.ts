@@ -1,41 +1,47 @@
 'use client'
-import { ModalSetterContext, ModalStateContext, TModalState } from '@/context/ModalContext'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { TModalComponent, TModalKey } from '@/components/modal'
+import { ModalSetterContext, ModalStateContext, ICustomModalState } from '@/context/ModalContext'
 import { useContext } from 'react'
 
-interface FOO {
-  type: TModalState['type']
-}
-const modalType: TModalState['type'][] = ['bottomSheet', 'basic']
+const modalType: ICustomModalState['type'][] = ['bottomSheet', 'basic']
 const modalTypeChecker = (type: unknown): boolean => {
   if (typeof type !== 'string') return false
-  return modalType.includes(type as TModalState['type']) ? true : false
+  return modalType.includes(type as ICustomModalState['type']) ? true : false
 }
-const createQueryUrl = (params: TModalState) => {
+const createQueryUrl = (params: ICustomModalState) => {
   return `?type=${params.type}`
 }
+
+interface IShowModalProps<T extends TModalKey> {
+  type: T
+  props: Parameters<TModalComponent<T>>[0]
+}
 const useModal = () => {
-  // const router = useRouter()
-  // const searchParams = useSearchParams()
-  // const type = searchParams.get('type')
-  const modalState = useContext(ModalStateContext)
-  const isModalOpen = modalTypeChecker(modalState.type)
-  const setModalState = useContext(ModalSetterContext)
-  if (!setModalState) {
+  const { customModalState, modalState } = useContext(ModalStateContext)
+  // const isModalOpen = modalTypeChecker(modalState.type)
+  const { setCustomModalState, setModalState } = useContext(ModalSetterContext)
+  if (!setModalState || !setCustomModalState) {
     throw new Error('MyConsumer must be used within a MyProvider')
   }
-  const showModal = (params: TModalState) => {
-    setModalState(params)
-    // router.push(createQueryUrl(params))
+  const showCustomModal = (params: ICustomModalState) => {
+    setCustomModalState(params)
   }
-  // console.log(isModalOpen)
-  const closeModal = () => setModalState({} as TModalState)
+  const closCustomModal = () => setCustomModalState({} as ICustomModalState)
 
+  const showModal = <T extends TModalKey>({ type, props }: IShowModalProps<T>) => {
+    setModalState((prev) => [...prev, { type, props }])
+  }
+  const closeModal = () => {
+    setModalState((prev) => prev.slice(0, prev.length - 1))
+  }
   return {
-    isModalOpen,
+    // isModalOpen,
+    customModalState,
     modalState,
     showModal,
     closeModal,
+    showCustomModal,
+    closCustomModal,
   }
 }
 

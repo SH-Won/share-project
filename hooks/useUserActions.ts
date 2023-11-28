@@ -38,9 +38,8 @@ const useUserActions = (project: IProject) => {
     e.preventDefault()
     if (!session?.id) {
       showModal({
-        type: 'basic',
-        Component: SignupPage,
-        props: {},
+        type: 'user_signin',
+        props: undefined,
       })
       return
     }
@@ -81,9 +80,8 @@ const useUserActions = (project: IProject) => {
     e.preventDefault()
     if (!session?.id) {
       showModal({
-        type: 'basic',
-        Component: SignupPage,
-        props: {},
+        type: 'user_signin',
+        props: undefined,
       })
       return
     }
