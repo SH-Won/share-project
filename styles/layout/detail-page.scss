@@ -6,11 +6,7 @@
   width: 100%;
   min-width: 240px;
   max-width: 800px;
-  // justify-content: center;
   margin: 0 auto;
-  // height: 100%;
-  // overflow: auto;
-  // position: relative;
   box-sizing: border-box;
 }
 .detail-container {
@@ -18,7 +14,6 @@
   // max-width: 800px;
   display: flex;
   flex-direction: column;
-  // padding: 0 1rem;
   height: 100%;
   width: 100%;
   margin-bottom: 48px;
@@ -49,16 +44,14 @@
   justify-content: space-between;
   &__title {
     display: inline-block;
-
     align-self: flex-start;
     @include typeface("Heading_2");
     margin-top: 0;
-    // margin-bottom: 10px;
   }
   &.sticky {
     position: sticky;
     width: 100%;
-    z-index: var(--detail-header-z-index);
+    z-index: calc(var(--navbar-z-index) - 1);
     top: 0px;
 
     &::before {

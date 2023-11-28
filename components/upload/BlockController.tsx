@@ -2,11 +2,11 @@ import { useUploadDispatch, useUploadState } from '@/context/UploadContext'
 import { useModal } from '@/hooks'
 import Image from 'next/image'
 import React from 'react'
-import ConfirmDelete from './modal/ConfirmDelete'
+import ConfirmAction from './modal/ConfirmAction'
 
 const useItems = () => {
   const { moveUpBlock, moveDownBlock, pasteBlock, deleteBlock } = useUploadDispatch()
-  const { showModal } = useModal()
+  const { showModal, closeModal } = useModal()
   const items = [
     {
       name: 'up',
@@ -28,11 +28,11 @@ const useItems = () => {
       iconUrl: '/delete.svg',
       onClick: (name: string) => {
         showModal({
-          type: 'basic',
+          type: 'user_confirm',
           props: {
-            deleteBlock: () => deleteBlock(name),
+            handleConfirm: () => deleteBlock(name),
+            closeModal,
           },
-          Component: ConfirmDelete,
         })
       },
     },

@@ -16,12 +16,6 @@ const BlockList = ({ inputValue, onHandleChange, onHandleChangeImage }: Props) =
   const { editBlocks, blockIndex } = useUploadState()
   const { openSideBar } = useUploadDispatch()
   const [focusBlock, setFocusBlock] = useState<string>('')
-  // const initialState = useMemo(() => {
-  //   return Object.fromEntries(editBlocks.map((block) => [block.name, block.value]))
-  // }, [editBlocks])
-  // const { inputValue, onHandleChange, onHandleChangeImage } =
-  // useForm<typeof initialState>(initialState)
-
   const onClickFocus = (name: string, index: number) => {
     setFocusBlock(name)
     blockIndex.current = index

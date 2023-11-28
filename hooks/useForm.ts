@@ -36,7 +36,7 @@ const useForm = <T>(initialState: T) => {
   const recoveryForm = (inputState: T) => {
     setInputValue(inputState)
   }
-  const setInitialState = (initialState: T) => {
+  const setFormInitialState = (initialState: T) => {
     setInputValue(initialState)
   }
   return {
@@ -45,7 +45,7 @@ const useForm = <T>(initialState: T) => {
     onHandleChangeImage,
     resetForm,
     recoveryForm,
-    setInitialState,
+    setFormInitialState,
   }
 }
 export { useForm }

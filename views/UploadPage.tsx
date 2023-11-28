@@ -1,12 +1,12 @@
 'use client'
 import InputFileBox from '@/components/common/InputFileBox'
 import SideBar from '@/components/upload/SideBar'
-import { useUploadDispatch, useUploadState } from '@/context/UploadContext'
+import { TEditBlock, useUploadDispatch, useUploadState } from '@/context/UploadContext'
 import AddBlockLine from '@/components/upload/AddBlockLine'
 import Button from '@/components/common/Button'
 import BlockList from '@/components/upload/BlockList'
-import { useError, useForm } from '@/hooks'
-import React, { useCallback, useRef, useState } from 'react'
+import { useError, useForm, useModal } from '@/hooks'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import BlockHeading from '@/components/upload/input-block/BlockHeading'
 import { useSession } from 'next-auth/react'
 import { uploadProject } from '@/lib/api'
@@ -23,13 +23,19 @@ export type TInputValue = {
   thumbnail: string
   [key: string]: string
 }
+interface ISavedUserContent {
+  thumbnail?: string
+  blocks?: TEditBlock[]
+}
 const initialInputValue = {
   thumbnail: '',
   title: '',
 }
+const SAVED_CONTENTS = 'saved-contents'
 const UploadPage = () => {
+  const { showCustomModal, showModal } = useModal()
   const { blockIndex, editBlocks } = useUploadState()
-  const { openSideBar } = useUploadDispatch()
+  const { openSideBar, setInitialBlocks } = useUploadDispatch()
   const titleRef = useRef<HTMLDivElement>(null)
   const { data: session } = useSession()
   const { handleError } = useError()
@@ -37,10 +43,23 @@ const UploadPage = () => {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  const { inputValue, onHandleChangeImage, onHandleChange } =
+  const { inputValue, onHandleChangeImage, onHandleChange, setFormInitialState } =
     useForm<TInputValue>(initialInputValue)
 
-  const onClick = async () => {
+  const handleSave = () => {
+    console.log(inputValue)
+    if (!inputValue.thumbnail && !editBlocks.length) return
+    const blocks = editBlocks.map((block) => ({
+      ...block,
+      value: inputValue[block.name],
+    }))
+    const savedBlocks = {
+      thumbnail: inputValue.thumbnail,
+      blocks,
+    }
+    localStorage.setItem(SAVED_CONTENTS, JSON.stringify(savedBlocks))
+  }
+  const handleUpload = async () => {
     if (!inputValue.title) {
       titleRef.current?.focus()
       return
@@ -59,26 +78,49 @@ const UploadPage = () => {
     }
     setLoading(true)
     uploadProject(body)
-      // .then((response) => handleJson(response))
       .then((response) => {
-        // alert('업로드 완료')
-        // console.log(response)
         dispatch(addProject(response.uploadProject))
+        localStorage.removeItem(SAVED_CONTENTS)
         router.push('/')
       })
       .catch(handleError)
       .finally(() => setLoading(false))
   }
+  useEffect(() => {
+    const stringSavedContents = localStorage.getItem(SAVED_CONTENTS)
+    if (!stringSavedContents) return
+    const loadSaved = () => {
+      const parseSavedContents = JSON.parse(stringSavedContents) as ISavedUserContent
+      const initialEditBlocks: TEditBlock[] = []
+      const initialFormValue: TInputValue = {
+        thumbnail: parseSavedContents.thumbnail || '',
+      }
+      parseSavedContents.blocks!.forEach((block) => {
+        initialEditBlocks.push({ type: block.type, name: block.name, value: '' })
+        initialFormValue[block.name] = block.value
+      })
+      setInitialBlocks(initialEditBlocks)
+      setFormInitialState(initialFormValue)
+    }
+    showModal({
+      type: 'user_confirm',
+      props: {
+        text: '작성 하던 내용을 불러 오시겠어요 ?',
+        confirmText: '불러오기',
+        handleConfirm: loadSaved,
+      },
+    })
+  }, [])
   console.log('upload page render')
   return (
     <div className="upload-page">
       <div className="upload__header">
         <div className="button-group">
-          <Button type="basic" text="취소" size="medium" />
+          <Button type="basic" text="취소" size="medium" onClick={() => router.back()} />
         </div>
         <div className="button-group">
-          <Button type="grey" text="임시 저장" size="medium" />
-          <Button type="black" text="업로드" size="medium" onClick={onClick} />
+          <Button type="grey" text="임시 저장" size="medium" onClick={handleSave} />
+          <Button type="black" text="업로드" size="medium" onClick={handleUpload} />
         </div>
       </div>
       <SideBar />
