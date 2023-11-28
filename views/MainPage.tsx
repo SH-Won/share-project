@@ -11,7 +11,7 @@ interface Props {
   projects?: IProject[]
 }
 
-const MainPage = ({ projects: serverProjects }: Props) => {
+function MainPage({ projects: serverProjects }: Props) {
   // const { loading, hasMore, projects, loadMore, error, refresh } = useFetch()
 
   // const { targetRef } = useInfinityScroll<HTMLDivElement>({
