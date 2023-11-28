@@ -105,13 +105,12 @@ const UploadPage = () => {
     showModal({
       type: 'user_confirm',
       props: {
-        text: '작성 하던 내용을 불러 오시겠어요 ?',
+        text: '작성 하던 내용을 불러 오시겠어요?',
         confirmText: '불러오기',
         handleConfirm: loadSaved,
       },
     })
   }, [])
-  console.log('upload page render ')
   return (
     <div className="upload-page">
       <div className="upload__header">
