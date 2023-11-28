@@ -29,6 +29,8 @@ const useItems = () => {
         showModal({
           type: 'user_confirm',
           props: {
+            text: '정말 삭제 하시겠어요?',
+            confirmText: '삭제',
             handleConfirm: () => deleteBlock(name),
             closeModal,
           },
