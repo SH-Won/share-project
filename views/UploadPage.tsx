@@ -111,7 +111,7 @@ const UploadPage = () => {
       },
     })
   }, [])
-  console.log('upload page render')
+  console.log('upload page render ')
   return (
     <div className="upload-page">
       <div className="upload__header">
