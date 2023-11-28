@@ -1,8 +1,7 @@
-import { useUploadDispatch, useUploadState } from '@/context/UploadContext'
+import { useUploadDispatch } from '@/context/UploadContext'
 import { useModal } from '@/hooks'
 import Image from 'next/image'
 import React from 'react'
-import ConfirmAction from './modal/ConfirmAction'
 
 const useItems = () => {
   const { moveUpBlock, moveDownBlock, pasteBlock, deleteBlock } = useUploadDispatch()
