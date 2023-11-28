@@ -148,7 +148,6 @@ const UploadPage = () => {
         <>
           <AddBlockLine
             onClick={() => {
-              // setOpenSideBar(true)
               openSideBar()
               blockIndex.current = 0
             }}
