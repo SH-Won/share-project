@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Button from '../common/Button'
-import UserImage from '../user/UserImage'
 import UserNavigation from './UserNavigation'
 
 const UserState = () => {

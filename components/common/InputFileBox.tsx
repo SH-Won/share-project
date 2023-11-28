@@ -1,3 +1,4 @@
+'use client'
 import { useUploadDispatch } from '@/context/UploadContext'
 import { useModal } from '@/hooks'
 import '@/styles/components/input.scss'
