@@ -82,7 +82,6 @@ export const authOptions: AuthOptions = {
       // session.favorites = token.favorites
       session.favoriteId = token.favoriteId
       session.error = token.error
-      // session.error = token.error
       // console.log('session', token)
       // console.log('session', session)
       // session.refreshToken = token.refreshToken
