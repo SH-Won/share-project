@@ -5,17 +5,14 @@ import { TEditBlock, useUploadDispatch, useUploadState } from '@/context/UploadC
 import AddBlockLine from '@/components/upload/AddBlockLine'
 import Button from '@/components/common/Button'
 import BlockList from '@/components/upload/BlockList'
-import { useError, useForm, useModal } from '@/hooks'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useError, useForm, useModal, useToast } from '@/hooks'
+import React, { useEffect, useRef, useState } from 'react'
 import BlockHeading from '@/components/upload/input-block/BlockHeading'
 import { useSession } from 'next-auth/react'
 import { uploadProject } from '@/lib/api'
-import { handleJson } from '@/lib/responseHandler'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/store'
 import { addProject } from '@/store/project/projectSlice'
-import LoadingSpinner from '@/components/common/LoadingSpinner'
-import LoadingWave from '@/components/common/LoadingWave'
 import LoadingArc from '@/components/common/LoadingArc'
 import { useRouter } from 'next/navigation'
 
@@ -25,6 +22,7 @@ export type TInputValue = {
 }
 interface ISavedUserContent {
   thumbnail?: string
+  title?: string
   blocks?: TEditBlock[]
 }
 const initialInputValue = {
@@ -33,7 +31,8 @@ const initialInputValue = {
 }
 const SAVED_CONTENTS = 'saved-contents'
 const UploadPage = () => {
-  const { showCustomModal, showModal } = useModal()
+  const { showModal } = useModal()
+  const { showToast } = useToast()
   const { blockIndex, editBlocks } = useUploadState()
   const { openSideBar, setInitialBlocks } = useUploadDispatch()
   const titleRef = useRef<HTMLDivElement>(null)
@@ -46,22 +45,52 @@ const UploadPage = () => {
   const { inputValue, onHandleChangeImage, onHandleChange, setFormInitialState } =
     useForm<TInputValue>(initialInputValue)
 
+  console.log('upload page render')
   const handleSave = () => {
-    if (!inputValue.thumbnail && !editBlocks.length) return
+    if (!inputValue.thumbnail && !editBlocks.length) {
+      return showToast({
+        type: 'notification',
+        text: '저장할 내용이 없습니다',
+      })
+    }
     const blocks = editBlocks.map((block) => ({
       ...block,
       value: inputValue[block.name],
     }))
     const savedBlocks = {
       thumbnail: inputValue.thumbnail,
+      title: inputValue.title,
       blocks,
     }
     localStorage.setItem(SAVED_CONTENTS, JSON.stringify(savedBlocks))
+    showToast({
+      type: 'success',
+      text: '임시 저장 되었습니다',
+    })
+  }
+  const handleCancel = () => {
+    if (!inputValue.thumbnail) {
+      return router.back()
+    }
+    showModal({
+      type: 'USER_CONFIRM',
+      props: {
+        text: '작성 하던 것을 임시 저장 하시겠어요?',
+        confirmText: '임시 저장',
+        handleConfirm: () => {
+          handleSave()
+          router.back()
+        },
+      },
+    })
   }
   const handleUpload = async () => {
-    if (!inputValue.title) {
+    if (!inputValue.title || !inputValue.thumbnail) {
       titleRef.current?.focus()
-      return
+      return showToast({
+        type: 'notification',
+        text: '메인 이미지, 제목을 입력해주세요',
+      })
     }
     const blocks = editBlocks.map((block, index) => ({
       type: block.type,
@@ -80,6 +109,10 @@ const UploadPage = () => {
       .then((response) => {
         dispatch(addProject(response.uploadProject))
         localStorage.removeItem(SAVED_CONTENTS)
+        showToast({
+          type: 'success',
+          text: '업로드 되었습니다',
+        })
         router.push('/')
       })
       .catch(handleError)
@@ -93,6 +126,7 @@ const UploadPage = () => {
       const initialEditBlocks: TEditBlock[] = []
       const initialFormValue: TInputValue = {
         thumbnail: parseSavedContents.thumbnail || '',
+        title: parseSavedContents.title || '',
       }
       parseSavedContents.blocks!.forEach((block) => {
         initialEditBlocks.push({ type: block.type, name: block.name, value: '' })
@@ -102,7 +136,7 @@ const UploadPage = () => {
       setFormInitialState(initialFormValue)
     }
     showModal({
-      type: 'user_confirm',
+      type: 'USER_CONFIRM',
       props: {
         text: '작성 하던 내용을 불러 오시겠어요?',
         confirmText: '불러오기',
@@ -114,7 +148,7 @@ const UploadPage = () => {
     <div className="upload-page">
       <div className="upload__header">
         <div className="button-group">
-          <Button type="basic" text="취소" size="medium" onClick={() => router.back()} />
+          <Button type="basic" text="취소" size="medium" onClick={handleCancel} />
         </div>
         <div className="button-group">
           <Button type="grey" text="임시 저장" size="medium" onClick={handleSave} />

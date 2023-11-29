@@ -1,6 +1,11 @@
 'use client'
-import { TModalComponent, TModalKey } from '@/components/modal'
-import { ModalSetterContext, ModalStateContext, ICustomModalState } from '@/context/ModalContext'
+import { IModalState, TModalKey } from '@/components/modal/config'
+import {
+  ModalSetterContext,
+  ModalStateContext,
+  ICustomModalState,
+  // IModalState,
+} from '@/context/ModalContext'
 import { useContext } from 'react'
 
 const modalType: ICustomModalState['type'][] = ['bottomSheet', 'basic']
@@ -12,10 +17,10 @@ const createQueryUrl = (params: ICustomModalState) => {
   return `?type=${params.type}`
 }
 
-interface IShowModalProps<T extends TModalKey> {
-  type: T
-  props: Parameters<TModalComponent<T>>[0]
-}
+// interface IShowModalProps<T extends TModalKey> {
+//   type: T
+//   props?: TModalProps<T>
+// }
 const useModal = () => {
   const { customModalState, modalState } = useContext(ModalStateContext)
   // const isModalOpen = modalTypeChecker(modalState.type)
@@ -28,7 +33,10 @@ const useModal = () => {
   }
   const closCustomModal = () => setCustomModalState({} as ICustomModalState)
 
-  const showModal = <T extends TModalKey>({ type, props }: IShowModalProps<T>) => {
+  // const showModal = <T extends TModalKey>({ type, props }: IShowModalProps<T>) => {
+  //   setModalState((prev) => [...prev, { type, props }])
+  // }
+  const showModal = <T extends TModalKey>({ type, props }: IModalState<T>) => {
     setModalState((prev) => [...prev, { type, props }])
   }
   const closeModal = () => {

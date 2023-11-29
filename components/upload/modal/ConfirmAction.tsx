@@ -2,9 +2,9 @@ import Button from '@/components/common/Button'
 import React from 'react'
 
 interface Props {
-  text?: string
-  confirmText?: string
-  handleConfirm?: () => void
+  text: string
+  confirmText: string
+  handleConfirm: () => void
   closeModal?: () => void
 }
 const ConfirmAction = ({ text, confirmText, handleConfirm, closeModal }: Props) => {

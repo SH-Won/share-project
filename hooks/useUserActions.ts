@@ -3,19 +3,20 @@ import { updateProjectFavorite, updateUserClipping, updateUserFavorite } from '@
 import { AppDispatch, RootState } from '@/store'
 import { updateProject } from '@/store/project/projectSlice'
 import { addClipping, addFavorite, deleteClipping, deleteFavorite } from '@/store/user/userSlice'
-import SignupPage from '@/views/SignupPage'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useModal } from './useModal'
 import { useSelectState } from './useSelectState'
+import { useToast } from './useToast'
 
 const useUserActions = (project: IProject) => {
   const dispatch = useDispatch<AppDispatch>()
   const router = useRouter()
   const { data: session } = useSession()
   const { showModal } = useModal()
+  const { showToast } = useToast()
   const { favorites, clippings } = useSelector((state: RootState) => state.user)
   const {
     selected: favoriteSelected,
@@ -38,8 +39,8 @@ const useUserActions = (project: IProject) => {
     e.preventDefault()
     if (!session?.id) {
       showModal({
-        type: 'user_signin',
-        props: undefined,
+        type: 'USER_CONFIRM',
+        props: null,
       })
       return
     }
@@ -51,13 +52,6 @@ const useUserActions = (project: IProject) => {
       isAdd: isFavoriteAdd,
     })
       .then(async (response) => {
-        // if (response.status !== 200) {
-        //   //403
-        //   throw Error('로그인 다시 해주세요')
-        //   // 400
-        //   // throw Error('request failed')
-        // }
-        // const json = await response.json()
         if (isFavoriteAdd) {
           dispatch(addFavorite(project))
         } else {
@@ -69,6 +63,10 @@ const useUserActions = (project: IProject) => {
             userId: session.id,
           })
         )
+        showToast({
+          type: 'success',
+          text: isFavoriteAdd ? '좋아요 목록에 추가 되었습니다' : '좋아요 목록에서 삭제 되었습니다',
+        })
       })
       .catch((e) => {
         console.log(e)
@@ -80,7 +78,7 @@ const useUserActions = (project: IProject) => {
     e.preventDefault()
     if (!session?.id) {
       showModal({
-        type: 'user_signin',
+        type: 'USER_SIGNUP',
         props: undefined,
       })
       return
@@ -93,13 +91,15 @@ const useUserActions = (project: IProject) => {
       isAdd: isClippingAdd,
     })
       .then(async (response) => {
-        // if (response.status !== 200) throw Error('failed')
-        // const json = await response.json()
         if (isClippingAdd) {
           dispatch(addClipping(project))
         } else {
           dispatch(deleteClipping({ key: project._id }))
         }
+        showToast({
+          type: 'success',
+          text: isClippingAdd ? '스크랩 목록에 추가 되었습니다' : '스크랩 목록에서 삭제 되었습니다',
+        })
       })
       .catch((e) => {
         console.log(e)
