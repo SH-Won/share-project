@@ -9,7 +9,7 @@ const useError = () => {
     switch (response.status) {
       case 401:
         return showModal({
-          type: 'user_signin',
+          type: 'USER_SIGNUP',
           props: undefined,
         })
       default:

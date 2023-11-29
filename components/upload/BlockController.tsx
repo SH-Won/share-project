@@ -27,7 +27,7 @@ const useItems = () => {
       iconUrl: '/delete.svg',
       onClick: (name: string) => {
         showModal({
-          type: 'user_confirm',
+          type: 'USER_CONFIRM',
           props: {
             text: '정말 삭제 하시겠어요?',
             confirmText: '삭제',

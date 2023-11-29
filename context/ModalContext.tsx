@@ -1,5 +1,5 @@
 'use client'
-import { TModalComponent, TModalKey } from '@/components/modal'
+import { IModalState, TModalKey } from '@/components/modal/config'
 import { createContext, Dispatch, SetStateAction, useState } from 'react'
 
 type TCoustomModal = 'bottomSheet' | 'basic' | 'modal'
@@ -8,10 +8,7 @@ export interface ICustomModalState {
   Component: React.FC<any>
   props: any
 }
-export interface IModalState<T extends TModalKey> {
-  type: T
-  props: Parameters<TModalComponent<T>>[0]
-}
+
 interface IModalStateContext {
   customModalState: ICustomModalState
   modalState: IModalState<TModalKey>[]
@@ -29,7 +26,6 @@ const ModalContext = ({ children }: { children: React.ReactNode }) => {
   const [customModalState, setCustomModalState] = useState<IModalStateContext['customModalState']>(
     {} as IModalStateContext['customModalState']
   )
-
   return (
     <ModalStateContext.Provider value={{ modalState, customModalState }}>
       <ModalSetterContext.Provider value={{ setModalState, setCustomModalState }}>

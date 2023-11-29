@@ -4,15 +4,7 @@ import BottomSheetModal from './BottomSheetModal'
 import React, { useCallback, useMemo } from 'react'
 import BasicModal from './BasicModal'
 import ModalHeader from './ModalHeader'
-import ConfirmAction from '../upload/modal/ConfirmAction'
-import SignupPage from '@/views/SignupPage'
-
-const MODAL_CONFIG = {
-  user_confirm: ConfirmAction,
-  user_signin: SignupPage,
-}
-export type TModalKey = keyof typeof MODAL_CONFIG
-export type TModalComponent<T extends TModalKey> = (typeof MODAL_CONFIG)[T]
+import { MODAL_CONFIG, MODAL_KEY, TModalProps } from './config'
 
 const Modal = () => {
   const {
@@ -48,13 +40,28 @@ const Modal = () => {
     return (
       <>
         {ModalState.map((modal, index) => {
-          const Component = MODAL_CONFIG[modal.type]
-          return (
-            <BasicModal key={index}>
-              <ModalHeader closeModal={closeModal} />
-              <Component {...modal.props} closeModal={closeModal} />
-            </BasicModal>
-          )
+          switch (modal.type) {
+            case 'USER_CONFIRM': {
+              const Component = MODAL_CONFIG[modal.type]
+              const props = modal.props as TModalProps<typeof modal.type>
+              return (
+                <BasicModal key={index}>
+                  <ModalHeader closeModal={closeModal} />
+                  <Component {...props} closeModal={closeModal} />
+                </BasicModal>
+              )
+            }
+
+            case 'USER_SIGNUP': {
+              const Component = MODAL_CONFIG[modal.type]
+              return (
+                <BasicModal key={index}>
+                  <ModalHeader closeModal={closeModal} />
+                  <Component />
+                </BasicModal>
+              )
+            }
+          }
         })}
       </>
     )

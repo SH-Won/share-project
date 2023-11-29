@@ -5,6 +5,7 @@ import '@/styles/components/input.scss'
 import { Element } from 'my-react-component'
 import Image from 'next/image'
 import { ChangeEvent, createContext, useContext, useMemo, useState } from 'react'
+import { MODAL_KEY } from '../modal/config'
 import ConfirmDelete from '../upload/modal/ConfirmAction'
 import UserImage, { EditUserImage } from '../user/UserImage'
 import Button from './Button'
@@ -98,7 +99,7 @@ const items = [
 const UploadBox = ({ focus }: { focus?: boolean }) => {
   const { id } = useContext(FileBoxContext)
   const { moveUpBlock, moveDownBlock, deleteBlock } = useUploadDispatch()
-  const { showModal } = useModal()
+  const { showModal, closeModal } = useModal()
   const computedClass = useMemo(() => {
     let className = 'file__wrapper'
     if (focus) className += ' focus'
@@ -107,9 +108,12 @@ const UploadBox = ({ focus }: { focus?: boolean }) => {
   }, [focus])
   const onClickDelete = () => {
     showModal({
-      type: 'user_confirm',
+      type: 'USER_CONFIRM',
       props: {
+        text: '정말 삭제 하시겠어요?',
+        confirmText: '삭제',
         handleConfirm: () => deleteBlock(id!),
+        closeModal,
       },
     })
   }
