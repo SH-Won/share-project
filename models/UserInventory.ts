@@ -34,7 +34,11 @@ const userInventorySchema = new mongoose.Schema({
   imagePublicId: {
     type: String,
   },
-
+  projects: {
+    type: [mongoose.Schema.Types.ObjectId],
+    default: [],
+    ref: 'Project',
+  },
   favorites: {
     type: [mongoose.Schema.Types.ObjectId],
     default: [],

@@ -47,7 +47,13 @@ const Modal = () => {
               return (
                 <BasicModal key={index}>
                   <ModalHeader closeModal={closeModal} />
-                  <Component {...props} closeModal={closeModal} />
+                  <Component
+                    {...props}
+                    closeModal={() => {
+                      closeModal()
+                      props.closeModal?.()
+                    }}
+                  />
                 </BasicModal>
               )
             }

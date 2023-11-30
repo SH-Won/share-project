@@ -1,20 +1,22 @@
 'use client'
+import '@/styles/layout/user-profile.scss'
 import Button from '@/components/common/Button'
 import InputFileBox from '@/components/common/InputFileBox'
-
 import UserProfileSkeleton from '@/components/user/UserProfileSkeleton'
 import { useForm } from '@/hooks'
 import { AppDispatch, RootState } from '@/store'
-import { updateUserImage } from '@/store/user/userSlice'
+import { setLoading, updateUserImage } from '@/store/user/userSlice'
 import { useSession } from 'next-auth/react'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import LoadingArc from '@/components/common/LoadingArc'
 
 const initialState = {
   image: '',
 }
-const UserProfilePage = () => {
+const UserEditProfile = () => {
   const { data: session, status } = useSession()
+  const [updateLoading, setUpdateLoading] = useState(false)
   const { imageUrl, loading } = useSelector((state: RootState) => state.user)
   const { inputValue, onHandleChangeImage, resetForm, recoveryForm } =
     useForm<typeof initialState>(initialState)
@@ -29,7 +31,7 @@ const UserProfilePage = () => {
       image: inputValue.image,
       userId: session?.id,
     }
-
+    setUpdateLoading(true)
     fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/user/profile', {
       method: 'PUT',
       body: JSON.stringify(body),
@@ -42,9 +44,10 @@ const UserProfilePage = () => {
       .catch((e) => {
         console.log(e)
       })
+      .finally(() => setUpdateLoading(false))
   }
   return (
-    <div className="profile-container">
+    <div className="edit-profile-container">
       <div className="profile__heading">
         <InputFileBox
           id="input-user-file"
@@ -68,27 +71,30 @@ const UserProfilePage = () => {
       </div>
 
       {inputValue.image ? (
-        <div className="button-container">
-          <Button
-            type="basic"
-            size="large"
-            text="되돌리기"
-            onClick={(e) => {
-              e.preventDefault()
-              resetForm()
-            }}
-          />
-          <Button
-            type="black"
-            size="large"
-            text="수정"
-            onClick={(e) => editUserImage(e)}
-            disabled={!inputValue.image}
-          />
+        <div>
+          <div className="button-container">
+            <Button
+              type="basic"
+              size="medium"
+              text="되돌리기"
+              onClick={(e) => {
+                e.preventDefault()
+                resetForm()
+              }}
+            />
+            <Button
+              type="black"
+              size="medium"
+              text="수정"
+              onClick={(e) => editUserImage(e)}
+              disabled={!inputValue.image}
+            />
+          </div>
         </div>
       ) : null}
+      {updateLoading && <LoadingArc text="업데이트 중입니다" />}
     </div>
   )
 }
 
-export default UserProfilePage
+export default UserEditProfile

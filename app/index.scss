@@ -15,7 +15,9 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 .navbar {
-  position: relative;
+  position: sticky;
+  top: 0;
+  background-color: color("white");
   z-index: var(--navbar-z-index);
   width: 100%;
   box-sizing: border-box;
@@ -101,8 +103,11 @@ a {
   outline: none;
   color: #111;
 }
+body {
+  height: auto;
+}
 main {
-  height: 100%;
+  // height: 100%;
 }
 :root {
   --navbar-height: 70px;

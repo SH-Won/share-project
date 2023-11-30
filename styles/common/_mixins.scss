@@ -1,7 +1,6 @@
 // @import "my-react-component/src/styles/typeface.module.scss";
 // @import "my-react-component/src/styles/colors.module.scss";
 @import "./variables.scss";
-//(min-width : #{$breakpoint-mobile}) and
 @mixin Mobile {
   @media (max-width: #{$breakpoint-tablet - 1px}) {
     @content;

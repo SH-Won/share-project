@@ -28,17 +28,19 @@ $color-map: (
   width: 100vw;
   height: 100vh;
   position: fixed;
+  // top: var(--navbar-height);
+  top: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 16px;
-  z-index: calc(var(--overlay-base-z-index) + 1);
+  z-index: calc(var(--overlay-base-z-index) - 1);
   &__square {
     border-radius: 8px;
     overflow: hidden;
     position: relative;
-    z-index: calc(var(--overlay-base-z-index) + 1);
+    z-index: calc(var(--overlay-base-z-index) - 1);
     display: grid;
     width: 80px;
     height: 80px;

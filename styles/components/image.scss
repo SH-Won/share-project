@@ -29,6 +29,12 @@
       height: auto;
       background-color: #e7e7e9;
     }
+    @media screen and (min-width: 801px) {
+      & > img {
+        border-radius: 8px;
+      }
+      margin: 0;
+    }
   }
 }
 .user-image {

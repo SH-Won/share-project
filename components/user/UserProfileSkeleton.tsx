@@ -2,7 +2,7 @@ import React from 'react'
 
 const UserProfileSkeleton = () => {
   return (
-    <div className="profile-container skeleton">
+    <div className="edit-profile-container skeleton">
       <div className="profile__heading">
         <div className="profile__image loading-template loading-animation"></div>
         <div className="profile-info">
