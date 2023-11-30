@@ -104,10 +104,11 @@ a {
   color: #111;
 }
 body {
-  height: auto;
+  height: unset;
 }
 main {
   // height: 100%;
+  height: auto;
 }
 :root {
   --navbar-height: 70px;
