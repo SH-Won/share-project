@@ -1,5 +1,4 @@
 import React from 'react'
-// type Props
 interface Props<T> {
   title: string
   totalCount: number

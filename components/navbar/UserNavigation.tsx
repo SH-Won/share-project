@@ -4,6 +4,7 @@ import { signOut } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import UserImage from '../user/UserImage'
 import { useRouter } from 'next/navigation'
+import { useCloseEvent } from '@/hooks'
 
 const items = [
   {
@@ -12,14 +13,14 @@ const items = [
     href: '/upload',
   },
   {
-    key: 'favorite_clipping',
-    name: '좋아요,스크랩 목록',
-    href: '/user/activity',
+    key: 'favorite',
+    name: '좋아요',
+    href: '/user/favorite',
   },
   {
-    key: 'setting',
-    name: '설정',
-    href: '/user/profile',
+    key: 'clipping',
+    name: '스크랩',
+    href: '/user/clipping',
   },
 ]
 interface Props {
@@ -30,6 +31,11 @@ const UserNavigation = ({ userName, userImageUrl }: Props) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const handleNavigation = () => setOpen((prev) => !prev)
+  const { container } = useCloseEvent<HTMLDivElement>({
+    callback: () => {
+      setOpen(false)
+    },
+  })
   useEffect(() => {
     if (open) {
       document.querySelector('body')!.style.overflow = 'hidden'
@@ -51,10 +57,12 @@ const UserNavigation = ({ userName, userImageUrl }: Props) => {
       <div onClick={handleNavigation}>
         <UserImage size={36} imageUrl={userImageUrl} />
       </div>
-      <div className={`navbar__navigation-wrapper ${open ? 'open' : ''}`}>
+      <div className={`navbar__navigation-wrapper ${open ? 'open' : ''}`} ref={container}>
         <div className="user-navigation">
           <div className="user">
-            <UserImage size={80} imageUrl={userImageUrl} />
+            <Link href="/user/work" onClick={handleNavigation}>
+              <UserImage size={80} imageUrl={userImageUrl} />
+            </Link>
             <span className="user__name">{userName}</span>
           </div>
           <ul className="list">
@@ -71,6 +79,9 @@ const UserNavigation = ({ userName, userImageUrl }: Props) => {
           </ul>
         </div>
       </div>
+      {/* <div className="overlay">
+
+      </div> */}
     </>
   )
 }

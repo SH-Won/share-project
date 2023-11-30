@@ -41,6 +41,7 @@ const UploadPage = () => {
   const dispatch = useDispatch<AppDispatch>()
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const [disable, setDisabled] = useState(false)
 
   const { inputValue, onHandleChangeImage, onHandleChange, setFormInitialState } =
     useForm<TInputValue>(initialInputValue)
@@ -79,6 +80,9 @@ const UploadPage = () => {
         confirmText: '임시 저장',
         handleConfirm: () => {
           handleSave()
+          router.back()
+        },
+        closeModal: () => {
           router.back()
         },
       },

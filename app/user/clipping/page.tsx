@@ -1,7 +1,6 @@
-'use client'
-import React from 'react'
-import '@/styles/layout/user-activity.scss'
 import UserActivityPage from '@/views/UserActivityPage'
+import React from 'react'
+
 const page = () => {
   return <UserActivityPage />
 }

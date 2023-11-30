@@ -8,9 +8,11 @@ export type TFavorite = {
 }
 export interface IUserInventory {
   _id: string
+  name: string
   favorites: IProject[]
   clippings: IProject[]
   imageUrl: string
+  projects: Omit<IProject, 'blocks'>[]
 }
 export interface UserState {
   loading: boolean
@@ -22,6 +24,7 @@ export interface UserState {
   favorites: Record<string, IProject>
   clippings: Record<string, IProject>
   imageUrl: string
+  projects: IProject[]
 }
 const initialState: UserState = {
   loading: true,
@@ -33,6 +36,7 @@ const initialState: UserState = {
   favorites: {},
   clippings: {},
   imageUrl: '/noImage.svg',
+  projects: [],
 }
 
 export const userSlice = createSlice({
@@ -62,8 +66,10 @@ export const userSlice = createSlice({
       action.payload.clippings.forEach((clipping) => {
         clippings[clipping._id] = clipping
       })
+      state.name = action.payload.name
       state.favorites = favorites
       state.clippings = clippings
+      state.projects = action.payload.projects
       state.imageUrl = action.payload.imageUrl
     },
     addFavorite: (state, action: PayloadAction<IProject>) => {
