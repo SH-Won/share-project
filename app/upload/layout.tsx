@@ -1,4 +1,3 @@
-import '@/styles/layout/upload-page.scss'
 // import { useSelectedLayoutSegment } from 'next/navigation'
 type Props = {
   children: React.ReactNode

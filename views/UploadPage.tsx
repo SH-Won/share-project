@@ -1,4 +1,5 @@
 'use client'
+import '@/styles/layout/upload-page.scss'
 import InputFileBox from '@/components/common/InputFileBox'
 import SideBar from '@/components/upload/SideBar'
 import { TEditBlock, useUploadDispatch, useUploadState } from '@/context/UploadContext'
