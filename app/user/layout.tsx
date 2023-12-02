@@ -3,12 +3,15 @@ import UserNavigation from '@/components/user/UserNavigation'
 import UserProfile from '@/components/user/UserProfile'
 import '@/styles/layout/user-page.scss'
 import '@/styles/layout/user-activity.scss'
+import { getServerSession } from 'next-auth'
 // import { useSelectedLayoutSegment } from 'next/navigation'
 type Props = {
   children: React.ReactNode
 }
-export default function UserLayout({ children, ...arg }: Props) {
+export default async function UserLayout({ children, ...arg }: Props) {
   // const segment = useSelectedLayoutSegment()
+  // const session = await getServerSession()
+  // console.log(session)
   return (
     // <section className="user-layout">
     //   <div className="user-navigation-wrapper">

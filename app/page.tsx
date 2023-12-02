@@ -14,15 +14,15 @@ export interface IProject {
   favoriteUsers: string[]
 }
 
-export default function Home() {
+export default async function Home() {
   // const projects = use(
   //   getData({
   //     skip: 0,
   //     limit: 20,
   //   })
   // )
-  // const projects = await getData({ skip: 0, limit: 20 })
-  return <MainPage />
+  const projects = await getData({ skip: 0, limit: 5 })
+  return <MainPage projects={projects.projects} />
 }
 {
   // /* @ts-expect-error Async Server Component */

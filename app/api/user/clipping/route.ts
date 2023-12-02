@@ -8,7 +8,6 @@ export async function GET(req: NextRequest) {
   const skip = searchParams.get('skip') || '5'
   const limit = searchParams.get('limit') || '5'
   const userId = req.headers.get('Authorization')
-  console.log('clipping', userId)
   // const userInventory = await UserInventory.findOne({_id : userId})
 }
 export async function PUT(req: NextRequest) {

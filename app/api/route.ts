@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
   try {
     const db = await dbConnect()
     let totalLength
-    if (skip === '0') {
+    if (skip === '5') {
       totalLength = await Project.collection.countDocuments()
     }
     const projects = await Project.find()
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
       })
       .sort({ $natural: -1 })
       .exec()
-    return NextResponse.json({ projects: projects, totalLength: totalLength || 0 })
+    return NextResponse.json({ projects: projects, totalLength })
   } catch (e) {
     return NextResponse.json({ message: e, success: false })
   }

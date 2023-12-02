@@ -6,7 +6,8 @@ import mongoose from 'mongoose'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
-  const userId = req.nextUrl.searchParams.get('userId')
+  // const userId = req.nextUrl.searchParams.get('userId')
+  const userId = req.headers.get('Authorization')
   try {
     const db = await dbConnect()
 
