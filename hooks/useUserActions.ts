@@ -39,7 +39,7 @@ const useUserActions = (project: IProject) => {
     e.preventDefault()
     if (!session?.id) {
       showModal({
-        type: 'USER_CONFIRM',
+        type: 'USER_SIGNUP',
         props: null,
       })
       return

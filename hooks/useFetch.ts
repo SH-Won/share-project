@@ -59,6 +59,7 @@ const useFetch = () => {
     projects,
     loadMore,
     refresh,
+    limit: query.limit,
   }
 }
 

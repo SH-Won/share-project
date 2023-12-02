@@ -14,7 +14,7 @@ const EmailSignUpForm = () => {
   const { setState, goPage } = useContext(SignUpStateContext)
   const [disabled, setDisabled] = useState(false)
   const { inputValue, onHandleChange } = useForm<typeof initialState>(initialState)
-  const { emailValidator, passwordValidator } = useValidation()
+  const { emailValidator, passwordValidator, validatorXSS } = useValidation()
   const onSubmit = async (e: React.MouseEvent) => {
     e.preventDefault()
     const entries = Object.values(inputValue)
@@ -70,7 +70,7 @@ const EmailSignUpForm = () => {
         placeholder="name"
         value={inputValue.name}
         onHandleChange={onHandleChange}
-        validator={emailValidator}
+        validator={validatorXSS}
       >
         <InputBox.Label name="name" />
       </InputBox>
@@ -80,7 +80,7 @@ const EmailSignUpForm = () => {
         placeholder="user name"
         value={inputValue.username}
         onHandleChange={onHandleChange}
-        validator={emailValidator}
+        validator={validatorXSS}
       >
         <InputBox.Label name="username" />
       </InputBox>

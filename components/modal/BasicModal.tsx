@@ -1,8 +1,11 @@
 import React from 'react'
-
-const BasicModal = ({ children }: { children: React.ReactNode }) => {
+interface BasicModalProps {
+  children: React.ReactNode
+  closeModal: () => void
+}
+const BasicModal = ({ children, closeModal }: BasicModalProps) => {
   return (
-    <div className="modal">
+    <div className="modal" onClick={closeModal}>
       <div className="modal__container--basic">{children}</div>
     </div>
   )

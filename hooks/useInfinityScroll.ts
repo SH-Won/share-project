@@ -7,6 +7,7 @@ type Props = {
   callback: () => void
 }
 const useInfinityScroll = <T extends HTMLElement>({ loading, hasMore, error, callback }: Props) => {
+  console.log(hasMore, ' hasMore')
   const observer = useRef<IntersectionObserver>()
   const handleInterSecting: IntersectionObserverCallback = ([entry], ob) => {
     if (entry.isIntersecting && hasMore) {

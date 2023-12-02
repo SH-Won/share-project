@@ -96,6 +96,15 @@ export async function POST(req: NextRequest) {
         select: 'name imageUrl',
       })
       .exec()
+    await UserInventory.findOneAndUpdate(
+      { _id: userId },
+      {
+        $push: {
+          projects: uploadProject._id,
+        },
+      },
+      { new: true }
+    )
     await db.disconnect()
     return NextResponse.json({ success: true, uploadProject }, { status: 200 })
   } catch (e) {

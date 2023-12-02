@@ -15,6 +15,7 @@ import { AppDispatch } from '@/store'
 import { addProject } from '@/store/project/projectSlice'
 import LoadingArc from '@/components/common/LoadingArc'
 import { useRouter } from 'next/navigation'
+import { addUserProjects } from '@/store/user/userSlice'
 
 export type TInputValue = {
   thumbnail: string
@@ -112,6 +113,7 @@ const UploadPage = () => {
     uploadProject(body)
       .then((response) => {
         dispatch(addProject(response.uploadProject))
+        dispatch(addUserProjects(response.uploadProject))
         localStorage.removeItem(SAVED_CONTENTS)
         showToast({
           type: 'success',

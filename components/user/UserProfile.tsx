@@ -24,6 +24,7 @@ const UserProfile = () => {
   const goEditPage = () => {
     //
   }
+  console.log('loading', loading, 'status', status)
   if (loading || status === 'loading') return <ProfileSkeleton />
   return (
     <div className="profile-container">

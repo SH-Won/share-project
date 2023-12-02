@@ -12,6 +12,7 @@ const BaseLayout = ({ children }: BaseLayoutProps) => {
   const pathname = usePathname()
   const isHeader = !['signup', 'signin', 'upload'].includes(pathname.split('/')[1])
   console.log('base layout render')
+  // const isHeader = true
   return (
     <>
       {isHeader && <Navbar />}

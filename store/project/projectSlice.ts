@@ -17,8 +17,8 @@ const initialState: InitialState = {
   loading: true,
   projects: [],
   query: {
-    skip: 0,
-    limit: 10,
+    skip: 5,
+    limit: 5,
   },
   totalLength: Infinity,
   isInitialFetching: false,
@@ -37,9 +37,10 @@ const projectSlice = createSlice({
       // state.projects = [...action.payload.projects, ...state.projects]
       state.projects.push(...action.payload.projects)
       if (typeof action.payload.totalLength !== 'undefined') {
+        console.log('total length', action.payload.totalLength)
         state.totalLength = action.payload.totalLength
-        state.hasMore = action.payload.totalLength > state.projects.length
       }
+      state.hasMore = state.totalLength - 5 > state.projects.length
     },
     addProject: (state, action: PayloadAction<IProject>) => {
       state.projects = [action.payload, ...state.projects]
@@ -50,7 +51,7 @@ const projectSlice = createSlice({
         (project) => project._id === action.payload.project._id
       )
       // state.projects.splice(findIndex, 1, action.payload)
-      state.projects[findIndex].favoriteUsers.push(action.payload.userId)
+      if (findIndex > -1) state.projects[findIndex]!.favoriteUsers.push(action.payload.userId)
     },
     setQuery: (state, action: PayloadAction<InitialState['query']>) => {
       state.query = action.payload

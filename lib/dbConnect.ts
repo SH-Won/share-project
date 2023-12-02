@@ -4,7 +4,7 @@ let connection: typeof mongoose | null = null
 const poolsize = 10
 
 export const dbConnect = async () => {
-  console.log('connect status', connection?.connection.readyState)
+  // console.log('connect status', connection?.connection.readyState)
   if (
     !connection ||
     (connection.connection.readyState !== ConnectionStates.connected &&

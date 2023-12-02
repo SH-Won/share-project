@@ -26,7 +26,7 @@ const Modal = () => {
         )
       case 'basic':
         return (
-          <BasicModal>
+          <BasicModal closeModal={closeModal}>
             <ModalHeader closeModal={closCustomModal} />
             <CustomModalState.Component {...CustomModalState.props} closeModal={closeModal} />
           </BasicModal>
@@ -45,7 +45,7 @@ const Modal = () => {
               const Component = MODAL_CONFIG[modal.type]
               const props = modal.props as TModalProps<typeof modal.type>
               return (
-                <BasicModal key={index}>
+                <BasicModal key={index} closeModal={closeModal}>
                   <ModalHeader closeModal={closeModal} />
                   <Component
                     {...props}
@@ -61,7 +61,7 @@ const Modal = () => {
             case 'USER_SIGNUP': {
               const Component = MODAL_CONFIG[modal.type]
               return (
-                <BasicModal key={index}>
+                <BasicModal key={index} closeModal={closeModal}>
                   <ModalHeader closeModal={closeModal} />
                   <Component />
                 </BasicModal>
