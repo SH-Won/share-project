@@ -2,16 +2,18 @@
 import { AppDispatch } from '@/store'
 import { setLoading, setUserInfo } from '@/store/user/userSlice'
 import { Session } from 'next-auth'
+import { useSession } from 'next-auth/react'
 // import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 const SettingClientUser = ({
-  children,
-  session,
+  children, // session,
 }: {
   children: React.ReactNode
-  session: Session
+  session?: Session
 }) => {
+  const { data: session } = useSession()
+  console.log(session)
   const dispatch = useDispatch<AppDispatch>()
   useEffect(() => {
     if (!session?.id) {
