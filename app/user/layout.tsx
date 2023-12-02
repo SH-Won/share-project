@@ -1,9 +1,6 @@
 import ContentNavigation from '@/components/user/ContentNavigation'
-import UserNavigation from '@/components/user/UserNavigation'
+// import UserNavigation from '@/components/user/UserNavigation'
 import UserProfile from '@/components/user/UserProfile'
-import '@/styles/layout/user-page.scss'
-import '@/styles/layout/user-activity.scss'
-import { getServerSession } from 'next-auth'
 // import { useSelectedLayoutSegment } from 'next/navigation'
 type Props = {
   children: React.ReactNode
