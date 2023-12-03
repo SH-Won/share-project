@@ -1,18 +1,11 @@
 'use client'
-import { IProject } from '@/app/page'
+import { IProject } from '@/lib/network/types/project'
+import { IUserInventory } from '@/lib/network/types/user'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type TFavorite = {
   _id: string
   project: IProject
-}
-export interface IUserInventory {
-  _id: string
-  name: string
-  favorites: IProject[]
-  clippings: IProject[]
-  imageUrl: string
-  projects: Omit<IProject, 'blocks'>[]
 }
 export interface UserState {
   loading: boolean

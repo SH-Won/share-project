@@ -24,8 +24,8 @@
 
     &.animate {
       // transform: translateX(-100%);
-      animation: move-left-right 5s ease-in-out;
-      -webkit-animation: move-left-right 5s ease-in-out;
+      animation: move-left-right 3s ease-in-out;
+      -webkit-animation: move-left-right 3s ease-in-out;
     }
     &.success {
       &::before {

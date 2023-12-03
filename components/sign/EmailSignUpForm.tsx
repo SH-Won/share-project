@@ -4,6 +4,9 @@ import InputBox from '@/components/common/InputBox'
 import Button from '../common/Button'
 import { useContext, useState } from 'react'
 import { SignUpStateContext } from '@/context/SignUpContext'
+import BackEnd from '@/lib/network'
+import { BadRequest, BadResponse, CustomError } from '@/lib/network/fetchAPI'
+
 const initialState = {
   name: '',
   username: '',
@@ -36,31 +39,28 @@ const EmailSignUpForm = () => {
       password: inputValue.password,
     }
     setDisabled(true)
-    await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/signup', {
-      method: 'POST',
-      body: JSON.stringify(body),
-    }).then(async (response) => {
-      const json = await response.json()
-      if (response.status !== 200) {
-        setState((prev) => ({
-          ...prev,
-          result: {
-            type: 'error',
-            message: json.message,
-          },
-        }))
-        setDisabled(false)
-      } else {
+    BackEnd.getInstance()
+      .user.signup(body)
+      .then(async (response) => {
         setState((prev) => ({
           ...prev,
           result: {
             type: 'success',
-            message: json.message,
+            message: response.message,
           },
         }))
         goPage?.('signupSuccess')
-      }
-    })
+      })
+      .catch(async (e: BadResponse) => {
+        setState((prev) => ({
+          ...prev,
+          result: {
+            type: 'error',
+            message: e.message,
+          },
+        }))
+      })
+      .finally(() => setDisabled(false))
   }
   return (
     <form className="sign-form">

@@ -88,14 +88,10 @@ const ICON_CONFIG = {
   notification: NotificationSVG,
 }
 const ToastComponent = ({ removeToast, toastItem, startAnimiation }: ToastComponentProps) => {
-  const duration = 5000
+  const duration = 3000
   const [timer, setTimer] = useState<ReturnType<typeof setTimeout>>()
   useEffect(() => {
-    // let timer: NodeJS.Timeout
     if (startAnimiation) {
-      // timer = setTimeout(() => {
-      //   removeToast()
-      // }, duration - 100)
       setTimer(
         setTimeout(() => {
           removeToast()
@@ -103,7 +99,6 @@ const ToastComponent = ({ removeToast, toastItem, startAnimiation }: ToastCompon
       )
     }
     return () => {
-      console.log('clear timer')
       clearTimeout(timer)
     }
   }, [startAnimiation])
@@ -117,7 +112,6 @@ const ToastComponent = ({ removeToast, toastItem, startAnimiation }: ToastCompon
   return (
     <div className={className} onClick={onClick}>
       <div className="icon">
-        {/* {toastItem.type === 'error' ? <ErrorSVG /> : <SuccessSVG />} */}
         <Icon />
       </div>
       <span className="text">{toastItem.text}</span>

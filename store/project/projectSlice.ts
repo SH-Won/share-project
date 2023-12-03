@@ -1,4 +1,4 @@
-import { IProject } from '@/app/page'
+import { IProject } from '@/lib/network/types/project'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface InitialState {
@@ -17,8 +17,8 @@ const initialState: InitialState = {
   loading: true,
   projects: [],
   query: {
-    skip: 5,
-    limit: 5,
+    skip: 0,
+    limit: 2,
   },
   totalLength: Infinity,
   isInitialFetching: false,
@@ -40,18 +40,29 @@ const projectSlice = createSlice({
         console.log('total length', action.payload.totalLength)
         state.totalLength = action.payload.totalLength
       }
-      state.hasMore = state.totalLength - 5 > state.projects.length
+      state.hasMore = state.totalLength > state.projects.length
     },
     addProject: (state, action: PayloadAction<IProject>) => {
       state.projects = [action.payload, ...state.projects]
     },
-    updateProject: (state, action: PayloadAction<{ project: IProject; userId: string }>) => {
-      //PayloadAction<IProject>
+    updateProject: (
+      state,
+      action: PayloadAction<{ project: IProject; userId: string; isAdd: boolean }>
+    ) => {
       const findIndex = state.projects.findIndex(
         (project) => project._id === action.payload.project._id
       )
       // state.projects.splice(findIndex, 1, action.payload)
-      if (findIndex > -1) state.projects[findIndex]!.favoriteUsers.push(action.payload.userId)
+      if (findIndex > -1) {
+        if (action.payload.isAdd)
+          state.projects[findIndex]!.favoriteUsers.push(action.payload.userId)
+        else {
+          const deleteIndex = state.projects[findIndex]!.favoriteUsers.findIndex(
+            (user) => user === action.payload.userId
+          )
+          state.projects[findIndex].favoriteUsers.splice(deleteIndex, 1)
+        }
+      }
     },
     setQuery: (state, action: PayloadAction<InitialState['query']>) => {
       state.query = action.payload

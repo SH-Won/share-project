@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { v2 as cloudinary } from 'cloudinary'
 import UserInventory from '@/models/UserInventory'
 import dbConnect from '@/lib/dbConnect'
+import User from '@/models/User'
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
@@ -12,7 +13,7 @@ export async function PUT(req: NextRequest) {
   const { userId, image } = body
   try {
     await dbConnect()
-    const userInventory = await UserInventory.findOne({ _id: userId }).exec()
+    const userInventory = await User.findOne({ _id: userId }).exec()
     const { imageUrl, imagePublicId } = (await new Promise((res, rej) => {
       if (userInventory.imagePublicId) cloudinary.uploader.destroy(userInventory.imagePublicId)
       cloudinary.uploader.upload(image, { folder: 'user-image' }, (err, result) => {

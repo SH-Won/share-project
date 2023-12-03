@@ -28,12 +28,12 @@ const userInventorySchema = new mongoose.Schema({
     type: String,
     default: '',
   },
-  imageUrl: {
-    type: String,
-  },
-  imagePublicId: {
-    type: String,
-  },
+  // imageUrl: {
+  //   type: String,
+  // },
+  // imagePublicId: {
+  //   type: String,
+  // },
   projects: {
     type: [mongoose.Schema.Types.ObjectId],
     default: [],

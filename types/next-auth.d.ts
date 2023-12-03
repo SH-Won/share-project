@@ -12,8 +12,7 @@ declare module 'next-auth' {
     accessToken: string
     refreshToken: string
     accessTokenExpiry: number
-    favorites: object
-    favoriteId: string
+    imageUrl: string
   }
   interface Session {
     id: string
@@ -25,6 +24,7 @@ declare module 'next-auth' {
     accessTokenExpiry: number
     favorites: object
     favoriteId: string
+    imageUrl: string
     error: 'invalid' | undefined
     user: {
       /** The user's postal address. */
@@ -49,6 +49,7 @@ declare module 'next-auth/jwt' {
     accessToken: string
     refreshToken: string
     accessTokenExpiry: number
+    imageUrl: string
     favorites: object
     favoriteId: string
     role: number

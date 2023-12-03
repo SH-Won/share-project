@@ -1,5 +1,6 @@
 import dbConnect from '@/lib/dbConnect'
 import Project from '@/models/Project'
+import User from '@/models/User'
 import UserInventory from '@/models/UserInventory'
 import { NextRequest, NextResponse } from 'next/server'
 // export const dynamic = 'force-dynamic'
@@ -22,7 +23,7 @@ export async function GET(req: NextRequest, { params }: Params) {
     const project = await Project.find({ _id: id })
       .populate({
         path: 'author',
-        model: UserInventory,
+        model: User,
         select: 'name imageUrl',
       })
       .exec()

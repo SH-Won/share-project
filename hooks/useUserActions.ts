@@ -1,5 +1,5 @@
-import { IProject } from '@/app/page'
-import { updateProjectFavorite, updateUserClipping, updateUserFavorite } from '@/lib/api'
+import BackEnd from '@/lib/network'
+import { IProject } from '@/lib/network/types/project'
 import { AppDispatch, RootState } from '@/store'
 import { updateProject } from '@/store/project/projectSlice'
 import { addClipping, addFavorite, deleteClipping, deleteFavorite } from '@/store/user/userSlice'
@@ -46,11 +46,12 @@ const useUserActions = (project: IProject) => {
     }
     setFavoriteSelected((prev) => !prev)
     setFavoriteDisabled(true)
-    updateUserFavorite({
-      projectId: project._id,
-      userId: session!.id,
-      isAdd: isFavoriteAdd,
-    })
+    BackEnd.getInstance()
+      .user.updateUserFavorite({
+        projectId: project._id,
+        userId: session!.id,
+        isAdd: isFavoriteAdd,
+      })
       .then(async (response) => {
         if (isFavoriteAdd) {
           dispatch(addFavorite(project))
@@ -61,6 +62,7 @@ const useUserActions = (project: IProject) => {
           updateProject({
             project,
             userId: session.id,
+            isAdd: isFavoriteAdd,
           })
         )
         showToast({
@@ -85,11 +87,12 @@ const useUserActions = (project: IProject) => {
     }
     setClippingSelected((prev) => !prev)
     setClippingDisabled(true)
-    updateUserClipping({
-      projectId: project._id,
-      userId: session.id,
-      isAdd: isClippingAdd,
-    })
+    BackEnd.getInstance()
+      .user.updateUserClipping({
+        projectId: project._id,
+        userId: session.id,
+        isAdd: isClippingAdd,
+      })
       .then(async (response) => {
         if (isClippingAdd) {
           dispatch(addClipping(project))

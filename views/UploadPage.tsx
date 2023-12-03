@@ -10,13 +10,13 @@ import { useError, useForm, useModal, useToast } from '@/hooks'
 import React, { useEffect, useRef, useState } from 'react'
 import BlockHeading from '@/components/upload/input-block/BlockHeading'
 import { useSession } from 'next-auth/react'
-import { uploadProject } from '@/lib/api'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/store'
 import { addProject } from '@/store/project/projectSlice'
 import LoadingArc from '@/components/common/LoadingArc'
 import { useRouter } from 'next/navigation'
 import { addUserProjects } from '@/store/user/userSlice'
+import BackEnd from '@/lib/network'
 
 export type TInputValue = {
   thumbnail: string
@@ -111,7 +111,8 @@ const UploadPage = () => {
       blocks,
     }
     setLoading(true)
-    uploadProject(body)
+    BackEnd.getInstance()
+      .project.uploadProject(body)
       .then((response) => {
         dispatch(addProject(response.uploadProject))
         dispatch(addUserProjects(response.uploadProject))

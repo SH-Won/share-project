@@ -1,5 +1,6 @@
 import dbConnect from '@/lib/dbConnect'
 import Project from '@/models/Project'
+import User from '@/models/User'
 
 import UserInventory from '@/models/UserInventory'
 import { NextRequest, NextResponse } from 'next/server'
@@ -17,7 +18,7 @@ export async function GET(request: NextRequest) {
   try {
     const db = await dbConnect()
     let totalLength
-    if (skip === '5') {
+    if (skip === '0') {
       totalLength = await Project.collection.countDocuments()
     }
     const projects = await Project.find()
@@ -26,7 +27,7 @@ export async function GET(request: NextRequest) {
       .select('-blocks')
       .populate({
         path: 'author',
-        model: UserInventory,
+        model: User,
         select: 'name imageUrl',
       })
       .sort({ $natural: -1 })

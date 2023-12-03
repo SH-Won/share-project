@@ -67,8 +67,7 @@ export async function POST(req: Request) {
           name: user.name,
           email: user.email,
           role: user.role,
-          favoriteId: user.favoriteId,
-          // favorites: user.favorites,
+          imageUrl: user.imageUrl,
         },
         { status: 200 }
       )

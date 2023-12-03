@@ -1,5 +1,4 @@
 'use client'
-import { IProject } from '@/app/page'
 import ProjectCard from '@/components/card/ProjectCard'
 // import { getData } from '@/lib/api'
 import { useFetch, useInfinityScroll, useInterSection } from '@/hooks'
@@ -7,6 +6,7 @@ import Loading from '@/components/loading'
 import React, { Suspense, useCallback, useState } from 'react'
 import ErrorNotification from '@/components/common/ErrorNotification'
 import ProjectCardList from '@/components/list/ProjectCardList'
+import { IProject } from '@/lib/network/types/project'
 
 interface Props {
   projects?: IProject[]
@@ -24,7 +24,7 @@ function MainPage({ projects: serverProjects }: Props) {
   return (
     <>
       <section className="page-container">
-        {serverProjects &&
+        {/* {serverProjects &&
           serverProjects!.map((project) => (
             <div key={project._id}>
               <ProjectCard project={project}>
@@ -32,7 +32,7 @@ function MainPage({ projects: serverProjects }: Props) {
                 <ProjectCard.Content />
               </ProjectCard>
             </div>
-          ))}
+          ))} */}
         {/* {loading && <Loading />}
         <div ref={targetRef}></div> */}
         <ProjectCardList />

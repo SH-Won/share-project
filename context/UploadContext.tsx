@@ -1,10 +1,9 @@
 'use client'
+import { useCloseEvent } from '@/hooks'
 import React, {
   createContext,
   Dispatch,
-  Ref,
   SetStateAction,
-  useCallback,
   useContext,
   useMemo,
   useRef,
@@ -49,6 +48,13 @@ const UploadContext = ({ children }: UploadContextProps) => {
   const [editBlocks, setEditBlocks] = useState<TEditBlock[]>([])
   const blockIndex = useRef<number>(0)
   const sideBar = useRef<HTMLDivElement>(null)
+  // const { container: sideBar } = useCloseEvent({
+  //   callback: () => {
+  //     sideBar.current?.classList.remove('open')
+  //     sideBar.current?.classList.remove('transition')
+  //     setPage('selectBlock')
+  //   },
+  // })
   const setInitialBlocks = (blocks: TEditBlock[]) => {
     setEditBlocks(blocks)
   }

@@ -19,18 +19,18 @@ const ProfileSkeleton = () => {
 }
 
 const UserProfile = () => {
-  const { status } = useSession()
-  const { loading, name, imageUrl } = useSelector((state: RootState) => state.user)
+  const { status, data: session } = useSession()
+  // const { loading, name, imageUrl } = useSelector((state: RootState) => state.user)
   const goEditPage = () => {
     //
   }
-  console.log('loading', loading, 'status', status)
-  if (loading || status === 'loading') return <ProfileSkeleton />
+  // console.log('loading', loading, 'status', status)
+  if (status === 'loading') return <ProfileSkeleton />
   return (
     <div className="profile-container">
-      <UserImage imageUrl={imageUrl} size={80} />
+      <UserImage imageUrl={session?.imageUrl} size={80} />
       <div className="profile">
-        <span className="profile__name">{name}</span>
+        <span className="profile__name">{session?.name}</span>
         <Link href="/profile">
           <Button type="basic" size="medium" text="프로필 수정" />
         </Link>

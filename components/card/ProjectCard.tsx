@@ -4,8 +4,8 @@ import '@/styles/components/project-card.scss'
 import Link from 'next/link'
 import ImageWithSkeleton from '../image/ImageWithSkeleton'
 import { FavoriteSVG } from '../user_action/Favorite'
-import { IProject } from '@/app/page'
 import { Card } from '../ui'
+import { IProject } from '@/lib/network/types/project'
 interface ProjectCardProps {
   project: IProject | Omit<IProject, 'writer'>
   children: React.ReactNode
