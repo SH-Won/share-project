@@ -13,6 +13,7 @@ declare module 'next-auth' {
     refreshToken: string
     accessTokenExpiry: number
     imageUrl: string
+    message: string
   }
   interface Session {
     id: string

@@ -1,4 +1,3 @@
-import { IProject } from '@/app/page'
 import { TEditBlock } from '@/context/UploadContext'
 import dbConnect from '@/lib/dbConnect'
 import Project from '@/models/Project'

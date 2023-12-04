@@ -1,5 +1,6 @@
 'use client'
 import { useForm, useValidation } from '@/hooks'
+import { BadResponse } from '@/lib/network/fetchAPI'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -16,6 +17,7 @@ const EmailSignInForm = () => {
   const { inputValue, onHandleChange } = useForm<typeof initialState>(initialState)
   const { emailValidator, passwordValidator } = useValidation()
   const [disabled, setDisabled] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   const onSubmit = async (e: React.MouseEvent) => {
     e.preventDefault()
     const user = {
@@ -24,13 +26,21 @@ const EmailSignInForm = () => {
       redirect: false,
     }
     setDisabled(true)
-    await signIn('email-password-credential', user).then((response) => {
-      if (response?.ok) router.push('/')
-      else setDisabled(false)
-    })
+    await signIn('email-password-credential', user)
+      .then((response) => {
+        if (response?.error) throw response?.error
+        if (response?.ok) router.push('/')
+      })
+      .catch((e: BadResponse['message']) => {
+        setErrorMessage(e)
+      })
+      .finally(() => {
+        setDisabled(false)
+      })
   }
   return (
     <form className="sign-form">
+      {errorMessage && <div className="sign__result failed">{errorMessage}</div>}
       <InputBox
         type="text"
         name="email"

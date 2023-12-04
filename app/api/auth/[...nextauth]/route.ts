@@ -1,7 +1,7 @@
 import dbConnect from '@/lib/dbConnect'
 import BackEnd from '@/lib/network'
 import { IUserSignInBody } from '@/lib/network/types/user'
-import NextAuth, { AuthOptions } from 'next-auth'
+import NextAuth, { AuthOptions, User } from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials'
 
 export const authOptions: AuthOptions = {
@@ -13,12 +13,8 @@ export const authOptions: AuthOptions = {
 
       credentials: {},
       async authorize(credentials) {
-        try {
-          const user = await BackEnd.getInstance().user.signin(credentials as IUserSignInBody)
-          return user
-        } catch (e) {
-          throw new Error('user not exist')
-        }
+        const user = await BackEnd.getInstance().user.signin(credentials as IUserSignInBody)
+        return user
       },
     }),
   ],
