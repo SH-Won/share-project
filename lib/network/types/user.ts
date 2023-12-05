@@ -34,3 +34,7 @@ export interface IUserImageBody {
   image: string
   userId: string
 }
+export interface IUserItemResponse {
+  projects: IProject[]
+  projectLength: number
+}

@@ -41,7 +41,6 @@ export const authOptions: AuthOptions = {
       }
       if (trigger === 'update') {
         token.imageUrl = session.imageUrl
-        return token
       }
       console.log('jwt func called')
       const refreshTime = Math.round((token.accessTokenExpiry as number) - Date.now())

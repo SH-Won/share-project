@@ -11,7 +11,7 @@ export interface IProject {
     imageUrl: string
     name: string
   }
-  favoriteUsers: string[]
+  favoriteCount: number
 }
 export interface IProjectDetail extends IProject {
   blocks: Omit<TEditBlock, 'name'>[]
@@ -23,6 +23,8 @@ export interface IProjectResponse {
 export interface IProjectDetailResponse {
   project: IProjectDetail
   writerProjects: Omit<IProject, 'writer'>[]
+  isUserFavorite: boolean
+  isUserClipping: boolean
 }
 export interface IUploadProjectBody {
   userId: string | undefined
@@ -34,4 +36,5 @@ export interface IUploadProjectBody {
 }
 export interface IUploadProjectResponse extends ISuccess {
   uploadProject: IProject
+  projectLength: number
 }

@@ -3,7 +3,7 @@ import ProjectCard from '@/components/card/ProjectCard'
 import Loading from '@/components/loading'
 import { RootState } from '@/store'
 import Image from 'next/image'
-import { ClassType, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { TScreenState, useBreakPoints } from './useBreakPoints'
 const count: Record<TScreenState, number> = {

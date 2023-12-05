@@ -1,8 +1,9 @@
 import UserActivityPage from '@/views/UserActivityPage'
+import UserFavoritePage from '@/views/UserFavoritePage'
 import React from 'react'
 
 const page = () => {
-  return <UserActivityPage />
+  return <UserFavoritePage />
 }
 
 export default page

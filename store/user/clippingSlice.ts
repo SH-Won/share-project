@@ -26,8 +26,8 @@ const initialState: InitialState = {
   isReadyToFetch: true,
 }
 
-const projectSlice = createSlice({
-  name: 'project',
+const userClippingSlice = createSlice({
+  name: 'userClippings',
   initialState,
   reducers: {
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -42,28 +42,7 @@ const projectSlice = createSlice({
       }
       state.hasMore = state.totalLength > state.projects.length
     },
-    addProject: (state, action: PayloadAction<IProject>) => {
-      state.projects = [action.payload, ...state.projects]
-    },
-    updateProject: (state, action: PayloadAction<{ projectId: string; isAdd: boolean }>) => {
-      const findIndex = state.projects.findIndex(
-        (project) => project._id === action.payload.projectId
-      )
-      // state.projects.splice(findIndex, 1, action.payload)
-      // if (findIndex > -1) {
-      //   if (action.payload.isAdd)
-      //     state.projects[findIndex]!.favoriteUsers.push(action.payload.userId)
-      //   else {
-      //     const deleteIndex = state.projects[findIndex]!.favoriteUsers.findIndex(
-      //       (user) => user === action.payload.userId
-      //     )
-      //     state.projects[findIndex].favoriteUsers.splice(deleteIndex, 1)
-      //   }
-      // }
-      action.payload.isAdd
-        ? state.projects[findIndex].favoriteCount++
-        : state.projects[findIndex].favoriteCount--
-    },
+
     setQuery: (state, action: PayloadAction<InitialState['query']>) => {
       state.query = action.payload
     },
@@ -73,6 +52,5 @@ const projectSlice = createSlice({
   },
 })
 
-export const { setProjects, addProject, updateProject, setQuery, setLoading, setReadyToFetch } =
-  projectSlice.actions
-export default projectSlice.reducer
+export const { setProjects, setQuery, setLoading, setReadyToFetch } = userClippingSlice.actions
+export default userClippingSlice.reducer

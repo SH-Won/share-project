@@ -26,7 +26,11 @@ const DetailPage = ({ params }: Props) => {
     )
   return (
     <section className="detail-page">
-      <DetailHeader project={data!.project} />
+      <DetailHeader
+        project={data!.project}
+        isUserFavorite={data!.isUserFavorite}
+        isUserClipping={data!.isUserClipping}
+      />
       <Intro project={data!.project} />
       <DetailBlocks blocks={data!.project.blocks} />
       <MoreByWriterProjects

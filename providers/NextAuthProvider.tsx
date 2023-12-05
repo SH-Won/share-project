@@ -7,7 +7,7 @@ const NextAuthProvider = ({ children }: { children: React.ReactNode }) => {
     <SessionProvider
       refetchOnWindowFocus={false}
       refetchWhenOffline={false}
-      refetchInterval={60 * 40}
+      refetchInterval={60 * 55}
     >
       {children}
     </SessionProvider>

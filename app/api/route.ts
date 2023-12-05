@@ -1,8 +1,8 @@
 import dbConnect from '@/lib/dbConnect'
+import Favorite from '@/models/Favorite'
 import Project from '@/models/Project'
 import User from '@/models/User'
-
-import UserInventory from '@/models/UserInventory'
+import mongoose from 'mongoose'
 import { NextRequest, NextResponse } from 'next/server'
 export const dynamic = 'force-dynamic'
 interface Params {
@@ -17,6 +17,23 @@ export async function GET(request: NextRequest) {
   const limit = searchParams.get('limit') || '10'
   try {
     const db = await dbConnect()
+    // const totalFavoriteLength = await Favorite.collection.countDocuments()
+    // console.log('totalFavoriteLength', totalFavoriteLength)
+
+    // Promise.all(
+    //   Array(20000)
+    //     .fill(2)
+    //     .map((el) => {
+    //       return async () => {
+    //         const favorite = await new Favorite({
+    //           projectId: new mongoose.mongo.ObjectId(),
+    //           userId: '656ddf60d0ecda1595c1fdd7',
+    //         })
+    //         await favorite.save()
+    //       }
+    //     })
+    //     .map((func) => func())
+    // )
     let totalLength
     if (skip === '0') {
       totalLength = await Project.collection.countDocuments()

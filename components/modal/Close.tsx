@@ -8,13 +8,14 @@ type CloseProps = {
   closeFunc?: () => void
 }
 
-const CloseSVG = ({ color }: { color?: string }) => {
+export const CloseSVG = ({ color, size }: { color?: string; size?: number }) => {
+  const iconSize = size || 24
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 26 26"
-      width="24"
-      height="24"
+      width={iconSize}
+      height={iconSize}
       fill="none"
       role="img"
       className="icon fill-current"

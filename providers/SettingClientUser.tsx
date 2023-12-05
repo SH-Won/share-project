@@ -16,20 +16,21 @@ const SettingClientUser = ({
   // const { data: session, status } = useSession()
   const dispatch = useDispatch<AppDispatch>()
   useEffect(() => {
-    if (!session) {
-      dispatch(setLoading(false))
-      return
-    }
-    dispatch(setLoading(true))
-    BackEnd.getInstance()
-      .user.getUserInventory()
-      .then((response) => {
-        dispatch(setUserInfo(response.userInventory))
-      })
-      .catch((e) => {
-        console.log(e)
-      })
-      .finally(() => dispatch(setLoading(false)))
+    // if (!session) {
+    //   dispatch(setLoading(false))
+    //   return
+    // }
+    dispatch(setLoading(false))
+    // dispatch(setLoading(true))
+    // BackEnd.getInstance()
+    //   .user.getUserInventory()
+    //   .then((response) => {
+    //     dispatch(setUserInfo(response.userInventory))
+    //   })
+    //   .catch((e) => {
+    //     console.log(e)
+    //   })
+    //   .finally(() => dispatch(setLoading(false)))
   }, [session])
   return <>{children}</>
 }

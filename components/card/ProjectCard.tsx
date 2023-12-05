@@ -54,7 +54,7 @@ const CardContent = () => {
       </div>
       <div className="user-actions">
         <FavoriteSVG selected={true} />
-        <span className="favorite-count">{project.favoriteUsers.length}</span>
+        <span className="favorite-count">{project.favoriteCount}</span>
       </div>
     </div>
   )

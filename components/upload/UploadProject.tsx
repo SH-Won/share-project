@@ -7,7 +7,6 @@ import { useSession } from 'next-auth/react'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/store'
 import { addProject } from '@/store/project/projectSlice'
-import { IProject } from '@/app/page'
 import Button from '../common/Button'
 const initailState = {
   title: '',

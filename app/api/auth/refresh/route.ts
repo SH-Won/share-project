@@ -101,7 +101,7 @@ export async function POST(req: Request) {
   const response = NextResponse.json(
     {
       accessToken,
-      accessTokenExpiry: Date.now() + 60 * 60 * 1000,
+      accessTokenExpiry: Date.now() + 50 * 60 * 1000,
       refreshToken: newRefreshToken,
       name,
       email,

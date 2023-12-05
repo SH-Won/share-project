@@ -19,7 +19,7 @@ export const SkeletonDetailHeader = ({ children }: { children?: React.ReactNode 
 const SkeletonDetail = () => {
   return (
     <div className="skeleton-loading-container">
-      <Close />
+      {/* <Close /> */}
       <div className="loading-template loading-animation description"></div>
       <div className="loading-user-container">
         <div className="loading-template loading-animation user-image"></div>

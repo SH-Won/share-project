@@ -6,7 +6,7 @@ import {
   IUploadProjectResponse,
 } from './types/project'
 
-interface TProjectQuery {
+export interface IProjectQuery {
   skip: number
   limit: number
 }
@@ -16,10 +16,8 @@ export default class ProjectAPI extends FetchAPI {
     super(baseUrl)
   }
 
-  getProjects = async (query: TProjectQuery) => {
-    const queryString = Object.entries(query)
-      .map(([key, value]) => `${key}=${value}`)
-      .join('&')
+  getProjects = async (query: IProjectQuery) => {
+    const queryString = this.getQueryString(query)
     const response = await this.fetch({
       url: this.baseUrl + '?' + queryString,
       method: 'GET',

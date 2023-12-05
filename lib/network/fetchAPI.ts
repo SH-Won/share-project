@@ -38,6 +38,11 @@ class FetchAPI implements InterfaceAPI {
     }
     return await res.json()
   }
+  getQueryString = (query: object) => {
+    return Object.entries(query)
+      .map(([key, value]) => `${key}=${value}`)
+      .join('&')
+  }
   fetch = async (config: IFetchConfig) => {
     return fetch(config.url, {
       method: config.method,

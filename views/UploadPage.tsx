@@ -39,7 +39,6 @@ const UploadPage = () => {
   const { openSideBar, setInitialBlocks } = useUploadDispatch()
   const titleRef = useRef<HTMLDivElement>(null)
   const { data: session } = useSession()
-  const { handleError } = useError()
   const dispatch = useDispatch<AppDispatch>()
   const [loading, setLoading] = useState(false)
   const router = useRouter()
@@ -123,7 +122,12 @@ const UploadPage = () => {
         })
         router.push('/')
       })
-      .catch(handleError)
+      .catch((e) => {
+        showModal({
+          type: 'USER_SIGNUP',
+          props: undefined,
+        })
+      })
       .finally(() => setLoading(false))
   }
   useEffect(() => {
