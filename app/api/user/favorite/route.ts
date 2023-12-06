@@ -10,13 +10,24 @@ export async function GET(request: NextRequest) {
   const skip = searchParams.get('skip') || '0'
   const limit = searchParams.get('limit') || '10'
   // const userId = searchParams.get('userId') || null
+  const createdAt = searchParams.get('lastCreatedAt')
   const userId = request.headers.get('Authorization')
-  // const userId = searchParams.
+  const query = !createdAt
+    ? {
+        userId,
+      }
+    : {
+        userId,
+        createdAt: { $lt: createdAt },
+      }
   try {
     const db = await dbConnect()
-    const favorites = await Favorite.find({ userId })
-      .skip(parseInt(skip))
-      .limit(parseInt(limit))
+    const favorites = await Favorite.find(query)
+      .sort({ createdAt: -1 })
+      // .skip(parseInt(skip))
+      // .limit(parseInt(limit))
+      .skip(0)
+      .limit(20)
       .select('-userId')
       .populate({
         path: 'projectId',
@@ -28,11 +39,18 @@ export async function GET(request: NextRequest) {
           select: 'name imageUrl',
         },
       })
-      .sort({ $natural: -1 })
       .exec()
+    let lastCreatedAt = null
+    if (favorites.length) {
+      lastCreatedAt = favorites.at(-1)!.createdAt
+    }
+
     const projects = favorites.map((favorite) => favorite.projectId).filter((el) => !!el)
 
-    return NextResponse.json({ projects, projectLength: projects.length }, { status: 200 })
+    return NextResponse.json(
+      { projects, projectLength: projects.length, lastCreatedAt },
+      { status: 200 }
+    )
   } catch (e) {
     return NextResponse.json({ error: 'failed' }, { status: 400 })
   }
@@ -43,6 +61,9 @@ export async function PUT(req: NextRequest) {
   try {
     const db = await dbConnect()
     const projectQuery = isAdd ? { $inc: { favoriteCount: 1 } } : { $inc: { favoriteCount: -1 } }
+    const inventoryQuery = isAdd
+      ? { $inc: { totalFavoriteCount: 1 } }
+      : { $inc: { totalFavoriteCount: -1 } }
     const userFavoriteQuery = {
       projectId,
       userId,

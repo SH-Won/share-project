@@ -1,4 +1,4 @@
-import { BadRequest, CustomResponse } from './api'
+import { BadRequest, CustomResponse } from './network/fetchAPI'
 
 export const handleError = async (response: BadRequest) => {
   // const json = await response.json()

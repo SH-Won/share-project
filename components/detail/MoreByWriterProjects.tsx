@@ -1,4 +1,4 @@
-import { IProject } from '@/app/page'
+import { IProject } from '@/lib/network/types/project'
 import React from 'react'
 import ProjectCard from '../card/ProjectCard'
 

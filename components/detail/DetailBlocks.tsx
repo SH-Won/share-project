@@ -1,10 +1,11 @@
 'use client'
 import { useBlock } from '@/hooks'
-import { IDetailProject } from '@/views/DetailPage'
+import { IProjectDetail } from '@/lib/network/types/project'
+
 import React from 'react'
 import ImageWithSkeleton from '../image/ImageWithSkeleton'
 interface Props {
-  blocks: IDetailProject['blocks']
+  blocks: IProjectDetail['blocks']
 }
 const DetailBlocks = ({ blocks }: Props) => {
   // const RenderBlocks = useBlock(blocks)

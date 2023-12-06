@@ -7,32 +7,50 @@ import { useEffect, useState } from 'react'
 import { useInfinityScroll } from './useInfinityScroll'
 
 interface Props<T extends IProject> {
-  fetchFunc: (query: IUserProjectQuery) => Promise<{ projects: T[]; projectLength: number }>
+  fetchFunc: (
+    query: IUserProjectQuery
+  ) => Promise<{ projects: T[]; projectLength: number; lastCreatedAt: string }>
 }
 const useInfinityFetch = <T extends IProject, U extends HTMLElement>({ fetchFunc }: Props<T>) => {
   // const { data: session } = useSession()
   const [data, setData] = useState<T[]>([])
   const [loading, setLoading] = useState(true)
   const [hasMore, setHasMore] = useState(true)
+  const [lastCreatedAt, setCreatedAt] = useState('')
   const [error, setError] = useState(false)
+  // const [query, setQuery] = useState({
+  //   skip: 0,
+  //   limit: 5,
+  //   // userId: session?.id,
+  // })
   const [query, setQuery] = useState({
-    skip: 0,
-    limit: 5,
-    // userId: session?.id,
+    lastCreatedAt: lastCreatedAt,
   })
 
+  const updateData = (index: number) => {
+    const copyData = [...data]
+    copyData.splice(index, 1)
+    setData(copyData)
+  }
   const loadMore = () => {
-    setQuery((prev) => ({
-      ...prev,
-      skip: prev.skip + prev.limit,
-    }))
+    // setQuery((prev) => ({
+    //   ...prev,
+    //   skip: prev.skip + prev.limit,
+    // }))
+    setQuery({
+      lastCreatedAt: lastCreatedAt,
+    })
   }
   const refresh = () => {
-    setQuery((prev) => ({
-      skip: prev.skip,
-      limit: prev.limit,
-      // userId: prev.userId,
-    }))
+    // setQuery((prev) => ({
+    //   skip: prev.skip,
+    //   limit: prev.limit,
+    //   // userId: prev.userId,
+    // }))
+    setQuery({
+      lastCreatedAt: lastCreatedAt,
+    })
+    setError(false)
   }
   useEffect(() => {
     if (!hasMore) return
@@ -40,7 +58,9 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({ fetchFunc
     fetchFunc(query)
       .then((response) => {
         setData((prev) => [...prev, ...response.projects])
-        setHasMore(response.projectLength >= query.limit)
+        setCreatedAt(response.lastCreatedAt)
+        console.log(response.lastCreatedAt)
+        setHasMore(response.lastCreatedAt !== null)
       })
       .catch((e) => {
         setError(true)
@@ -61,6 +81,7 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({ fetchFunc
     loading,
     error,
     data,
+    updateData,
     refresh,
   }
 }

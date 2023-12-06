@@ -80,6 +80,7 @@ export async function POST(req: NextRequest) {
     //   imageUrl,
     //   imagePublicId,
     // })
+    const inventoryQuery = { $inc: { totalProjectCount: 1 } }
     const newProject = new Project({
       author: userId,
       title: body.title,

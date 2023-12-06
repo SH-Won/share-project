@@ -37,4 +37,5 @@ export interface IUserImageBody {
 export interface IUserItemResponse {
   projects: IProject[]
   projectLength: number
+  lastCreatedAt: string
 }

@@ -76,6 +76,7 @@ export const authOptions: AuthOptions = {
       session.name = token.name
       session.role = token.role
       session.favoriteId = token.favoriteId
+      // session.accessToken = token.accessToken
       session.error = token.error
       session.imageUrl = token.imageUrl
       return session

@@ -13,7 +13,11 @@ import {
   TUserFavoriteBody,
 } from './types/user'
 
-export interface IUserProjectQuery extends IProjectQuery {
+// export interface IUserProjectQuery extends IProjectQuery {
+//   userId?: string
+// }
+export interface IUserProjectQuery {
+  lastCreatedAt?: string
   userId?: string
 }
 export default class UserAPI extends FetchAPI {

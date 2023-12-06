@@ -28,7 +28,7 @@ const useFavorite = (projectId: string, isUserFavorite: boolean) => {
     }
     setSelected((prev) => !prev)
     setDisabled(true)
-    BackEnd.getInstance()
+    return await BackEnd.getInstance()
       .user.updateUserFavorite({
         projectId,
         userId: session!.id,
@@ -45,8 +45,10 @@ const useFavorite = (projectId: string, isUserFavorite: boolean) => {
           type: 'success',
           text: isFavoriteAdd ? '좋아요 목록에 추가 되었습니다' : '좋아요 목록에서 삭제 되었습니다',
         })
+        return true
       })
       .catch((e) => {
+        console.log(e)
         showToast({
           type: 'error',
           text: isFavoriteAdd
@@ -54,6 +56,7 @@ const useFavorite = (projectId: string, isUserFavorite: boolean) => {
             : '좋아요 목록에서 삭제에 실패했습니다. 다시 시도해 주세요',
         })
         setSelected((prev) => !prev)
+        return false
       })
       .finally(() => setDisabled(false))
   }

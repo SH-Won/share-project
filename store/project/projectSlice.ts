@@ -18,7 +18,7 @@ const initialState: InitialState = {
   projects: [],
   query: {
     skip: 0,
-    limit: 2,
+    limit: 20,
   },
   totalLength: Infinity,
   isInitialFetching: false,
@@ -60,9 +60,11 @@ const projectSlice = createSlice({
       //     state.projects[findIndex].favoriteUsers.splice(deleteIndex, 1)
       //   }
       // }
-      action.payload.isAdd
-        ? state.projects[findIndex].favoriteCount++
-        : state.projects[findIndex].favoriteCount--
+      if (findIndex > -1) {
+        action.payload.isAdd
+          ? state.projects[findIndex].favoriteCount++
+          : state.projects[findIndex].favoriteCount--
+      }
     },
     setQuery: (state, action: PayloadAction<InitialState['query']>) => {
       state.query = action.payload

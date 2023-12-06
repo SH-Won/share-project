@@ -27,7 +27,7 @@ const useClipping = (projectId: string, isUserClipping: boolean) => {
     }
     setSelected((prev) => !prev)
     setDisabled(true)
-    BackEnd.getInstance()
+    return await BackEnd.getInstance()
       .user.updateUserClipping({
         projectId,
         userId: session!.id,
@@ -38,6 +38,7 @@ const useClipping = (projectId: string, isUserClipping: boolean) => {
           type: 'success',
           text: isClippingAdd ? '스크랩 목록에 추가 되었습니다' : '스크랩 목록에서 삭제 되었습니다',
         })
+        return true
       })
       .catch((e) => {
         showToast({
@@ -47,6 +48,7 @@ const useClipping = (projectId: string, isUserClipping: boolean) => {
             : '스크랩 목록에서 삭제에 실패했습니다. 다시 시도해 주세요',
         })
         setSelected((prev) => !prev)
+        return false
       })
       .finally(() => setDisabled(false))
   }

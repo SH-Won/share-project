@@ -1,4 +1,4 @@
-import { CustomResponse } from './api'
+import { CustomResponse } from './network/fetchAPI'
 
 export class ErrorBase extends Error {
   status

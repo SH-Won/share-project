@@ -8,7 +8,6 @@ import BackEnd from '@/lib/network'
 import { IProject } from '@/lib/network/types/project'
 import Image from 'next/image'
 import React from 'react'
-//{ data }: { data: IProject[] }
 const UserWorkPage = () => {
   const { targetRef, loading, error, data, refresh } = useInfinityFetch<IProject, HTMLDivElement>({
     fetchFunc: BackEnd.getInstance().user.getUserProjects,
@@ -26,7 +25,7 @@ const UserWorkPage = () => {
             <ProjectCard.Image />
           </ProjectCard>
         ))}
-        {loading && <Loading count={5} />}
+        {loading && <Loading count={6} />}
         <div ref={targetRef}></div>
         {error && <ErrorNotification onClick={refresh} />}
       </UserItemList>

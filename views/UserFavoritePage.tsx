@@ -10,7 +10,10 @@ import Image from 'next/image'
 import React from 'react'
 
 const UserFavoritePage = () => {
-  const { targetRef, loading, error, data, refresh } = useInfinityFetch<IProject, HTMLDivElement>({
+  const { targetRef, loading, error, data, refresh, updateData } = useInfinityFetch<
+    IProject,
+    HTMLDivElement
+  >({
     fetchFunc: BackEnd.getInstance().user.getUserFavorites,
   })
   return (
@@ -20,13 +23,15 @@ const UserFavoritePage = () => {
         title="좋아요 표시한 프로젝트"
         totalCount={5}
       >
-        {data.map((el) => (
+        {data.map((el, index) => (
           <ProjectCard project={el} key={el._id}>
             <ProjectCard.Image />
-            <ProjectCard.Content />
+            <ProjectCard.UserController>
+              <ProjectCard.ClearFavorite update={() => updateData(index)} />
+            </ProjectCard.UserController>
           </ProjectCard>
         ))}
-        {loading && <Loading count={2} />}
+        {loading && <Loading count={6} />}
         <div ref={targetRef}></div>
         {error && <ErrorNotification onClick={refresh} />}
       </UserItemList>

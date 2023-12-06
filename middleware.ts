@@ -5,7 +5,6 @@ import { authOptions } from './app/api/auth/[...nextauth]/route'
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-  // const session = await getServerSession(authOptions)
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
   const absoluteURL = new URL('/signin', request.nextUrl.origin)
   // console.log(request.url)
@@ -22,7 +21,6 @@ export async function middleware(request: NextRequest) {
   // return NextResponse.rewrite(url)
   // return NextResponse.rewrite(request.url)
   if (!token?.accessToken) {
-    console.log('request url', request.url)
     const splitUrl = request.url.split(process.env.NEXT_PUBLIC_BASE_URL)[1]
     if (splitUrl.startsWith('/user')) {
       return NextResponse.redirect(new URL('/signin', request.url))

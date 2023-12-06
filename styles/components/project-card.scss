@@ -39,6 +39,37 @@
         color: color("grey_999");
       }
     }
+    .clear-actions {
+      position: relative;
+      @include flexCenter();
+      &__content {
+        border: 1px solid #f3f3f4;
+        border-radius: 8px;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 6px 0px;
+        top: -40px;
+        right: 0;
+        background-color: color("white");
+        & > .item {
+          width: 95px;
+          padding: 8px 10px;
+          box-sizing: border-box;
+          cursor: pointer;
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          @include ItemHover(false);
+          & > span {
+            display: inline-block;
+            @include typeface("Paragraph_3");
+          }
+        }
+      }
+    }
 
     &.skeleton {
       height: 24px;

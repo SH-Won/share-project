@@ -9,14 +9,24 @@ export async function GET(request: NextRequest) {
   const skip = searchParams.get('skip') || '0'
   const limit = searchParams.get('limit') || '10'
   // const userId = searchParams.get('userId') || null
-  const userId = request.headers.get('Authorization')
-  console.log(userId)
+  const createdAt = searchParams.get('lastCreatedAt')
+  const userId = request.headers.get('Authorization') || searchParams.get('userId')
+  const query = !createdAt
+    ? {
+        author: userId,
+      }
+    : {
+        author: userId,
+        createdAt: { $lt: createdAt },
+      }
   // const userId = searchParams.
   try {
     const db = await dbConnect()
-    const projects = await Project.find({ author: userId })
-      .skip(parseInt(skip))
-      .limit(parseInt(limit))
+    const projects = await Project.find(query)
+      // .skip(parseInt(skip))
+      // .limit(parseInt(limit))
+      .skip(0)
+      .limit(20)
       .select('-blocks')
       // .populate({
       //   path: 'author',
@@ -26,7 +36,14 @@ export async function GET(request: NextRequest) {
       .sort({ $natural: -1 })
       .exec()
 
-    return NextResponse.json({ projects, projectLength: projects.length }, { status: 200 })
+    let lastCreatedAt = null
+    if (projects.length) {
+      lastCreatedAt = projects.at(-1)!.createdAt
+    }
+    return NextResponse.json(
+      { projects, projectLength: projects.length, lastCreatedAt },
+      { status: 200 }
+    )
   } catch (e) {
     return NextResponse.json({ error: 'failed' }, { status: 400 })
   }

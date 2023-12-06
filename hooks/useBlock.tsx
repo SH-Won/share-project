@@ -1,10 +1,10 @@
 'use client'
 import ImageWithSkeleton from '@/components/image/ImageWithSkeleton'
 import { TEditBlock } from '@/context/UploadContext'
-import { IDetailProject } from '@/views/DetailPage'
+import { IProjectDetail } from '@/lib/network/types/project'
 import React, { useCallback } from 'react'
 
-const useBlock = (blocks: IDetailProject['blocks']) => {
+const useBlock = (blocks: IProjectDetail['blocks']) => {
   // const getBlockComponent = useCallback((block) => {}, [])
 
   const RenderBlocks = () => {
