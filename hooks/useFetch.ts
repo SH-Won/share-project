@@ -1,5 +1,6 @@
 'use client'
-import { getData, getDetailData, TDetailData } from '@/lib/api'
+import BackEnd from '@/lib/network'
+import { IProjectDetailResponse } from '@/lib/network/types/project'
 import { RootState } from '@/store'
 import { setLoading, setProjects, setQuery, setReadyToFetch } from '@/store/project/projectSlice'
 import { useRouter } from 'next/navigation'
@@ -34,11 +35,9 @@ const useFetch = () => {
   useEffect(() => {
     if (!isReadyToFetch) return
     dispatch(setLoading(true))
-    getData(query)
+    BackEnd.getInstance()
+      .project.getProjects(query)
       .then(async (response) => {
-        // if (response.status !== 200) throw Error('load failed')
-        // const json = await response.json()
-        // console.log(json)
         dispatch(setProjects(response))
       })
       .catch((e) => {
@@ -66,7 +65,7 @@ const useFetch = () => {
 const useDetailFetch = (id: string) => {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
-  const [data, setData] = useState<TDetailData>()
+  const [data, setData] = useState<IProjectDetailResponse>()
   const [error, setError] = useState(false)
 
   const refresh = () => {
@@ -77,13 +76,11 @@ const useDetailFetch = (id: string) => {
     if (error) return
     const isModal = document.querySelector('.modal')
     if (isModal) document.body.style.overflow = 'hidden'
-    getDetailData(id)
+    BackEnd.getInstance()
+      .project.getProjectDetail(id)
       .then(setData)
       .catch(async (e) => {
-        console.log(await e.json())
-
         setError(true)
-        // router.back()
       })
       .finally(() => setLoading(false))
 

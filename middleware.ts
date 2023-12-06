@@ -5,7 +5,6 @@ import { authOptions } from './app/api/auth/[...nextauth]/route'
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-  // const session = await getServerSession(authOptions)
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
   const absoluteURL = new URL('/signin', request.nextUrl.origin)
   // console.log(request.url)
@@ -22,8 +21,10 @@ export async function middleware(request: NextRequest) {
   // return NextResponse.rewrite(url)
   // return NextResponse.rewrite(request.url)
   if (!token?.accessToken) {
-    console.log('request url', request.url)
-    // return NextResponse.redirect(new URL('/signin', request.url))
+    const splitUrl = request.url.split(process.env.NEXT_PUBLIC_BASE_URL)[1]
+    if (splitUrl.startsWith('/user')) {
+      return NextResponse.redirect(new URL('/signin', request.url))
+    }
     return NextResponse.json({ message: '권한이 없습니다 로그인 해주세요' }, { status: 401 })
   }
   const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/auth', {
@@ -40,5 +41,5 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/user/:path*', '/api/user', '/api/upload', '/api/user/favorite', '/api/user/clipping'],
+  matcher: ['/user/:path*', '/api/upload', '/api/user/:path*'],
 }

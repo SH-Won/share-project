@@ -1,5 +1,7 @@
 import dbConnect from '@/lib/dbConnect'
-import NextAuth, { AuthOptions } from 'next-auth'
+import BackEnd from '@/lib/network'
+import { IUserSignInBody } from '@/lib/network/types/user'
+import NextAuth, { AuthOptions, User } from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials'
 
 export const authOptions: AuthOptions = {
@@ -11,15 +13,7 @@ export const authOptions: AuthOptions = {
 
       credentials: {},
       async authorize(credentials) {
-        const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/signin', {
-          method: 'POST',
-          body: JSON.stringify(credentials),
-        })
-        if (!response.ok) {
-          throw new Error('user not exist')
-        }
-        const user = await response.json()
-        // console.log(user)
+        const user = await BackEnd.getInstance().user.signin(credentials as IUserSignInBody)
         return user
       },
     }),
@@ -33,7 +27,7 @@ export const authOptions: AuthOptions = {
     maxAge: 14 * 24 * 60 * 60,
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id
         token.accessToken = user.accessToken
@@ -41,8 +35,12 @@ export const authOptions: AuthOptions = {
         token.accessTokenExpiry = user.accessTokenExpiry
         token.role = user.role
         // token.favorites = user.favorites
-        token.favoriteId = user.favoriteId
+        token.imageUrl = user.imageUrl || '/noImage.svg'
+        // token.favoriteId = user.favoriteId
         return token
+      }
+      if (trigger === 'update') {
+        token.imageUrl = session.imageUrl
       }
       console.log('jwt func called')
       const refreshTime = Math.round((token.accessTokenExpiry as number) - Date.now())
@@ -69,22 +67,18 @@ export const authOptions: AuthOptions = {
       token.email = json.email
       token.name = json.name
       token.id = json.id
+      token.imageUrl = json.imageUrl
       return token
     },
     async session({ session, token }) {
-      // session.accessToken = token.accessToken
-      // session.accessTokenExpiry = token.accessTokenExpiry
-
       session.email = token.email
       session.id = token.id
       session.name = token.name
       session.role = token.role
-      // session.favorites = token.favorites
       session.favoriteId = token.favoriteId
+      // session.accessToken = token.accessToken
       session.error = token.error
-      // console.log('session', token)
-      // console.log('session', session)
-      // session.refreshToken = token.refreshToken
+      session.imageUrl = token.imageUrl
       return session
     },
   },

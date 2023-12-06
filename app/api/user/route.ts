@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
           path: 'favorites',
           populate: {
             path: 'author',
-            model: UserInventory,
+            model: User,
             select: 'name imageUrl',
           },
           model: Project,
@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
           path: 'clippings',
           populate: {
             path: 'author',
-            model: UserInventory,
+            model: User,
             select: 'name imageUrl',
           },
           model: Project,

@@ -1,15 +1,13 @@
 'use client'
-import { IProject } from '@/app/page'
 import { useInterSection } from '@/hooks'
+import { IProjectDetailResponse } from '@/lib/network/types/project'
 import Image from 'next/image'
 import { useState } from 'react'
 import Clipping from '../user_action/Clipping'
 import Favorite from '../user_action/Favorite'
 
-interface DetailHeaderProps {
-  project: IProject
-}
-const DetailHeader = ({ project }: DetailHeaderProps) => {
+interface DetailHeaderProps extends Omit<IProjectDetailResponse, 'writerProjects'> {}
+const DetailHeader = ({ project, isUserFavorite, isUserClipping }: DetailHeaderProps) => {
   const [isBottomBorder, setIsBottomBorder] = useState(false)
   const { targetRef } = useInterSection<HTMLHeadingElement>({
     // callback: (bool: boolean) => setIsBottomBorder(bool),
@@ -45,8 +43,8 @@ const DetailHeader = ({ project }: DetailHeaderProps) => {
           </div>
         </div>
         <div className="detail-header__user-actions">
-          <Favorite project={project} />
-          <Clipping project={project} />
+          <Favorite isUserFavorite={isUserFavorite} projectId={project._id} />
+          <Clipping isUserClipping={isUserClipping} projectId={project._id} />
         </div>
       </div>
     </>

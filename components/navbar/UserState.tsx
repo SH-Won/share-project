@@ -26,7 +26,7 @@ const UserState = () => {
           <Button size="medium" type="black" text="Sign up" />
         </Link>
       ) : (
-        <UserNavigation userName={session!.name} userImageUrl={imageUrl} />
+        <UserNavigation userName={session!.name} userImageUrl={session!.imageUrl} />
       )}
     </div>
   )

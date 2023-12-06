@@ -26,9 +26,9 @@ const ProjectSchema = new mongoose.Schema(
     link: {
       type: String,
     },
-    favoriteUsers: {
-      type: [mongoose.Schema.Types.ObjectId],
-      default: [],
+    favoriteCount: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

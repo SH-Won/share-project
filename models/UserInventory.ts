@@ -16,39 +16,42 @@ import mongoose, { Mongoose, Types } from 'mongoose'
 //     type : mongoose.Schema.Types.ObjectId,
 //   }
 // })
-const userInventorySchema = new mongoose.Schema({
-  _id: {
-    type: mongoose.Schema.Types.ObjectId,
+const userInventorySchema = new mongoose.Schema(
+  {
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
+    name: {
+      type: String,
+      default: '',
+    },
+    userName: {
+      type: String,
+      default: '',
+    },
+    // imageUrl: {
+    //   type: String,
+    // },
+    // imagePublicId: {
+    //   type: String,
+    // },
+    projects: {
+      type: [mongoose.Schema.Types.ObjectId],
+      default: [],
+      ref: 'Project',
+    },
+    favorites: {
+      type: [mongoose.Schema.Types.ObjectId],
+      default: [],
+      ref: 'Project',
+    },
+    clippings: {
+      type: [mongoose.Schema.Types.ObjectId],
+      default: [],
+      ref: 'Project',
+    },
   },
-  name: {
-    type: String,
-    default: '',
-  },
-  userName: {
-    type: String,
-    default: '',
-  },
-  imageUrl: {
-    type: String,
-  },
-  imagePublicId: {
-    type: String,
-  },
-  projects: {
-    type: [mongoose.Schema.Types.ObjectId],
-    default: [],
-    ref: 'Project',
-  },
-  favorites: {
-    type: [mongoose.Schema.Types.ObjectId],
-    default: [],
-    ref: 'Project',
-  },
-  clippings: {
-    type: [mongoose.Schema.Types.ObjectId],
-    default: [],
-    ref: 'Project',
-  },
-})
+  { timestamps: true }
+)
 
 export default mongoose.models.UserInventory || mongoose.model('UserInventory', userInventorySchema)

@@ -26,11 +26,14 @@ const userSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
     },
-    image: {
+    imageUrl: {
+      type: String,
+    },
+    imagePublicId: {
       type: String,
     },
   },
-  { collection: 'users' }
+  { collection: 'users', timestamps: true }
 )
 
 export default mongoose.models.User || mongoose.model('User', userSchema)

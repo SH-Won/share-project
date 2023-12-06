@@ -20,8 +20,6 @@ export const toastSlice = createSlice({
       state.toastItems.push(action.payload)
     },
     popToast: (state) => {
-      // state.toastItems = action.payload
-      console.log(state.toastItems)
       state.toastItems.splice(0, 1)
     },
   },

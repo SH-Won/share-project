@@ -10,12 +10,13 @@ import { useSession } from 'next-auth/react'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import LoadingArc from '@/components/common/LoadingArc'
+import BackEnd from '@/lib/network'
 
 const initialState = {
   image: '',
 }
 const UserEditProfile = () => {
-  const { data: session, status } = useSession()
+  const { data: session, status, update: sessionUpdate } = useSession()
   const [updateLoading, setUpdateLoading] = useState(false)
   const { imageUrl, loading } = useSelector((state: RootState) => state.user)
   const { inputValue, onHandleChangeImage, resetForm, recoveryForm } =
@@ -32,14 +33,26 @@ const UserEditProfile = () => {
       userId: session?.id,
     }
     setUpdateLoading(true)
-    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/user/profile', {
-      method: 'PUT',
-      body: JSON.stringify(body),
-    })
-      .then(async (response) => {
-        const json = await response.json()
-        if (!response.ok) throw Error('failed')
-        dispatch(updateUserImage(json.imageUrl))
+    // fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/user/profile', {
+    //   method: 'PUT',
+    //   body: JSON.stringify(body),
+    // })
+    //   .then(async (response) => {
+    //     const json = await response.json()
+    //     if (!response.ok) throw Error('failed')
+    //     // dispatch(updateUserImage(json.imageUrl))
+    //     // sessionUpdate()
+    //   })
+    //   .catch((e) => {
+    //     console.log(e)
+    //   })
+    //   .finally(() => setUpdateLoading(false))
+    BackEnd.getInstance()
+      .user.updateUserImage(body)
+      .then((response) => {
+        sessionUpdate({
+          imageUrl: response.imageUrl,
+        })
       })
       .catch((e) => {
         console.log(e)
@@ -55,7 +68,7 @@ const UserEditProfile = () => {
           onHandleChange={onHandleChangeImage}
           value={inputValue.image}
         >
-          <InputFileBox.UserImageUploader imageUrl={imageUrl} />
+          <InputFileBox.UserImageUploader imageUrl={session!.imageUrl} />
         </InputFileBox>
         <div className="profile-info">
           <span className="user-name">{session!.name}</span>

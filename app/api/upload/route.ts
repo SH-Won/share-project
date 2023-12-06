@@ -1,4 +1,3 @@
-import { IProject } from '@/app/page'
 import { TEditBlock } from '@/context/UploadContext'
 import dbConnect from '@/lib/dbConnect'
 import Project from '@/models/Project'
@@ -81,6 +80,7 @@ export async function POST(req: NextRequest) {
     //   imageUrl,
     //   imagePublicId,
     // })
+    const inventoryQuery = { $inc: { totalProjectCount: 1 } }
     const newProject = new Project({
       author: userId,
       title: body.title,
@@ -92,19 +92,19 @@ export async function POST(req: NextRequest) {
       .select('-blocks')
       .populate({
         path: 'author',
-        model: UserInventory,
+        model: User,
         select: 'name imageUrl',
       })
       .exec()
-    await UserInventory.findOneAndUpdate(
-      { _id: userId },
-      {
-        $push: {
-          projects: uploadProject._id,
-        },
-      },
-      { new: true }
-    )
+    // await UserInventory.findOneAndUpdate(
+    //   { _id: userId },
+    //   {
+    //     $push: {
+    //       projects: uploadProject._id,
+    //     },
+    //   },
+    //   { new: true }
+    // )
     await db.disconnect()
     return NextResponse.json({ success: true, uploadProject }, { status: 200 })
   } catch (e) {

@@ -40,7 +40,7 @@
   box-sizing: border-box;
   align-items: center;
   // overflow: scroll;
-  & > .sign {
+  .sign {
     &__title {
       @include typeface("Heading_1");
       font-weight: 800;

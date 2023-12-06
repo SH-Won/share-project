@@ -21,7 +21,7 @@ export async function POST(req: Request) {
       //   model: Project,
       // })
       .exec()
-    if (!user) return NextResponse.json({ message: 'invalid' }, { status: 401 })
+    if (!user) return NextResponse.json({ message: '가입된 이메일이 없습니다' }, { status: 401 })
     const isMatchPassword = await bcrypt.compare(password, user.password)
     if (isMatchPassword) {
       const role = user.role
@@ -61,14 +61,13 @@ export async function POST(req: Request) {
       const response = NextResponse.json(
         {
           accessToken,
-          accessTokenExpiry: Date.now() + 60 * 60 * 1000,
+          accessTokenExpiry: Date.now() + 50 * 60 * 1000,
           refreshToken: newRefreshToken,
           id: user._id,
           name: user.name,
           email: user.email,
           role: user.role,
-          favoriteId: user.favoriteId,
-          // favorites: user.favorites,
+          imageUrl: user.imageUrl,
         },
         { status: 200 }
       )
@@ -82,7 +81,7 @@ export async function POST(req: Request) {
       // })
       return response
     } else {
-      return NextResponse.json({ message: 'invalid' }, { status: 401 })
+      return NextResponse.json({ message: '비밀번호가 맞지 않습니다' }, { status: 401 })
     }
   } catch (e) {
     return NextResponse.json({ message: e, success: false }, { status: 500 })

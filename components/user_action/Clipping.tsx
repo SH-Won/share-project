@@ -1,6 +1,5 @@
 'use client'
-import { IProject } from '@/app/page'
-import { useUserActions } from '@/hooks'
+import { useClipping } from '@/hooks'
 import { Colors } from 'my-react-component'
 import React from 'react'
 
@@ -25,11 +24,15 @@ export const ClippingSVG = ({ selected }: { selected: boolean }) => {
     </svg>
   )
 }
-const Clipping = ({ project }: { project: IProject }) => {
-  const { clippingSelected, clippingDisable, updateClipping } = useUserActions(project)
+interface ClippingButtonProps {
+  isUserClipping: boolean
+  projectId: string
+}
+const Clipping = ({ isUserClipping, projectId }: ClippingButtonProps) => {
+  const { selected, disabled, updateClipping } = useClipping(projectId, isUserClipping)
   return (
-    <button className="user-action-button" disabled={clippingDisable} onClick={updateClipping}>
-      <ClippingSVG selected={clippingSelected} />
+    <button className="user-action-button" disabled={disabled} onClick={updateClipping}>
+      <ClippingSVG selected={selected} />
     </button>
   )
 }
