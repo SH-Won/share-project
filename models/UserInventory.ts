@@ -35,7 +35,7 @@ const userInventorySchema = new mongoose.Schema(
     // imagePublicId: {
     //   type: String,
     // },
-    projects: {
+    works: {
       type: [mongoose.Schema.Types.ObjectId],
       default: [],
       ref: 'Project',
@@ -49,6 +49,18 @@ const userInventorySchema = new mongoose.Schema(
       type: [mongoose.Schema.Types.ObjectId],
       default: [],
       ref: 'Project',
+    },
+    totalProjectCount: {
+      type: Number,
+      default: 0,
+    },
+    totalFavoriteCount: {
+      type: Number,
+      default: 0,
+    },
+    totalClippingCount: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

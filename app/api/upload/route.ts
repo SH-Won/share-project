@@ -80,7 +80,6 @@ export async function POST(req: NextRequest) {
     //   imageUrl,
     //   imagePublicId,
     // })
-    const inventoryQuery = { $inc: { totalProjectCount: 1 } }
     const newProject = new Project({
       author: userId,
       title: body.title,
@@ -96,15 +95,8 @@ export async function POST(req: NextRequest) {
         select: 'name imageUrl',
       })
       .exec()
-    // await UserInventory.findOneAndUpdate(
-    //   { _id: userId },
-    //   {
-    //     $push: {
-    //       projects: uploadProject._id,
-    //     },
-    //   },
-    //   { new: true }
-    // )
+    const inventoryQuery = { $addToSet: { works: result._id }, $inc: { totalProjectCount: 1 } }
+    await UserInventory.findOneAndUpdate({ _id: userId }, inventoryQuery, { new: true })
     await db.disconnect()
     return NextResponse.json({ success: true, uploadProject }, { status: 200 })
   } catch (e) {

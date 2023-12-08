@@ -3,20 +3,21 @@ import { IProject } from '@/lib/network/types/project'
 import { IUserItemResponse } from '@/lib/network/types/user'
 import { IUserProjectQuery } from '@/lib/network/user'
 import { useSession } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useInfinityScroll } from './useInfinityScroll'
 
 interface Props<T extends IProject> {
-  fetchFunc: (
-    query: IUserProjectQuery
-  ) => Promise<{ projects: T[]; projectLength: number; lastCreatedAt: string }>
+  fetchFunc: (query: IUserProjectQuery) => Promise<{ projects: T[]; projectLength: number }>
 }
 const useInfinityFetch = <T extends IProject, U extends HTMLElement>({ fetchFunc }: Props<T>) => {
   // const { data: session } = useSession()
+  const pathname = usePathname()
+  const userId = pathname.split('/')[1]
   const [data, setData] = useState<T[]>([])
+  const [totalLength, setTotalLength] = useState(0)
   const [loading, setLoading] = useState(true)
   const [hasMore, setHasMore] = useState(true)
-  const [lastCreatedAt, setCreatedAt] = useState('')
   const [error, setError] = useState(false)
   // const [query, setQuery] = useState({
   //   skip: 0,
@@ -24,7 +25,8 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({ fetchFunc
   //   // userId: session?.id,
   // })
   const [query, setQuery] = useState({
-    lastCreatedAt: lastCreatedAt,
+    page: 1,
+    userId,
   })
 
   const updateData = (index: number) => {
@@ -37,9 +39,10 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({ fetchFunc
     //   ...prev,
     //   skip: prev.skip + prev.limit,
     // }))
-    setQuery({
-      lastCreatedAt: lastCreatedAt,
-    })
+    setQuery((prev) => ({
+      ...prev,
+      page: prev.page + 1,
+    }))
   }
   const refresh = () => {
     // setQuery((prev) => ({
@@ -48,7 +51,7 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({ fetchFunc
     //   // userId: prev.userId,
     // }))
     setQuery({
-      lastCreatedAt: lastCreatedAt,
+      ...query,
     })
     setError(false)
   }
@@ -57,10 +60,10 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({ fetchFunc
     setLoading(true)
     fetchFunc(query)
       .then((response) => {
+        const hasMore = response.projects.length + data.length < response.projectLength
         setData((prev) => [...prev, ...response.projects])
-        setCreatedAt(response.lastCreatedAt)
-        console.log(response.lastCreatedAt)
-        setHasMore(response.lastCreatedAt !== null)
+        setTotalLength(response.projectLength)
+        setHasMore(hasMore)
       })
       .catch((e) => {
         setError(true)
@@ -78,6 +81,7 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({ fetchFunc
 
   return {
     targetRef,
+    totalLength,
     loading,
     error,
     data,

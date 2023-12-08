@@ -10,7 +10,7 @@ import Image from 'next/image'
 import React from 'react'
 
 const UserClippingPage = () => {
-  const { targetRef, loading, error, data, refresh, updateData } = useInfinityFetch<
+  const { targetRef, loading, error, data, refresh, updateData, totalLength } = useInfinityFetch<
     IProject,
     HTMLDivElement
   >({
@@ -21,7 +21,7 @@ const UserClippingPage = () => {
       <UserItemList
         icon={<Image src="/clipping.svg" width={24} height={24} alt="clipping-icon" />}
         title="스크랩한 프로젝트"
-        totalCount={5}
+        totalCount={totalLength}
       >
         {data.map((el, index) => (
           <ProjectCard project={el} key={el._id}>

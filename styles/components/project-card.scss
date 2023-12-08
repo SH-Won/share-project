@@ -18,6 +18,7 @@
   .project-card__explain {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     .writer {
       display: flex;
       gap: 4px;
@@ -30,6 +31,17 @@
         @include typeface("Paragraph_2_b");
       }
     }
+    .user-controller {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      & > .user-action-button {
+        width: 16px;
+        height: 16px;
+        border: none;
+      }
+    }
+
     .user-actions {
       @include flexCenter();
       gap: 4px;

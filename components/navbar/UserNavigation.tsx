@@ -23,11 +23,31 @@ const items = [
     href: '/user/clipping',
   },
 ]
+const getItems = (userId: string) => {
+  return [
+    {
+      key: 'upload',
+      name: '프로젝트 업로드',
+      href: '/upload',
+    },
+    {
+      key: 'favorite',
+      name: '좋아요',
+      href: `/${userId}/favorite`,
+    },
+    {
+      key: 'clipping',
+      name: '스크랩',
+      href: `/${userId}/clipping`,
+    },
+  ]
+}
 interface Props {
+  userId?: string
   userName: string
   userImageUrl: string
 }
-const UserNavigation = ({ userName, userImageUrl }: Props) => {
+const UserNavigation = ({ userId, userName, userImageUrl }: Props) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const handleNavigation = () => setOpen((prev) => !prev)
@@ -60,13 +80,13 @@ const UserNavigation = ({ userName, userImageUrl }: Props) => {
       <div className={`navbar__navigation-wrapper ${open ? 'open' : ''}`} ref={container}>
         <div className="user-navigation">
           <div className="user">
-            <Link href="/user/work" onClick={handleNavigation}>
+            <Link href={`/${userId}/work`} onClick={handleNavigation}>
               <UserImage size={80} imageUrl={userImageUrl} />
             </Link>
             <span className="user__name">{userName}</span>
           </div>
           <ul className="list">
-            {items.map((item) => (
+            {getItems(userId!).map((item) => (
               <li key={item.key} className="item">
                 <Link href={item.href} onClick={handleNavigation}>
                   {item.name}

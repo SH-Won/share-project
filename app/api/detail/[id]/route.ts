@@ -5,18 +5,14 @@ import Favorite from '@/models/Favorite'
 import Project from '@/models/Project'
 import User from '@/models/User'
 import UserInventory from '@/models/UserInventory'
+import mongoose from 'mongoose'
 import { getToken } from 'next-auth/jwt'
 import { NextRequest, NextResponse } from 'next/server'
-import { authOptions } from '../../auth/[...nextauth]/route'
 // export const dynamic = 'force-dynamic'
 interface Params {
   params: {
     id: string
   }
-}
-interface IDetailProject extends IProject {
-  isUserFavorite: boolean
-  isUserClipping: boolean
 }
 export async function GET(request: NextRequest, { params }: Params) {
   const id = params.id
@@ -31,48 +27,109 @@ export async function GET(request: NextRequest, { params }: Params) {
     // return NextResponse.json({ message: 'failed fetch', status: 400 }, { status: 400 })
 
     const db = await dbConnect()
-    const [project, isUserFavorite, isUserClipping] = (await Promise.all(
-      [
-        async () => {
-          const project = await Project.findOne({ _id: id })
-            .populate({
-              path: 'author',
-              model: User,
-              select: 'name imageUrl',
-            })
-            .exec()
-          return project
+    const project = await Project.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(id), // 조회할 게시글의 ObjectId
         },
-        async () => {
-          if (!userId) return false
-          else {
-            const userFavorite = await Favorite.findOne({ projectId: id, userId })
-            return userFavorite ? true : false
-          }
+      },
+      {
+        $lookup: {
+          from: 'userinventories', // UserInventory 콜렉션
+          let: { post_id: '$_id', user_id: new mongoose.Types.ObjectId(userId) }, // 변수 선언
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ['$_id', '$$user_id'] }, // 클라이언트에서 전송된 유저의 ObjectId와 일치하는지 확인
+                    { $in: ['$$post_id', '$favorites'] }, // 현재 게시글이 favorites 배열에 있는지 확인
+                  ],
+                },
+              },
+            },
+          ],
+          as: 'likedByUser',
         },
-        async () => {
-          if (!userId) return false
-          else {
-            const userClipping = await Clipping.findOne({ projectId: id, userId })
-            return userClipping ? true : false
-          }
+      },
+      {
+        $lookup: {
+          from: 'userinventories', // UserInventory 콜렉션
+          let: { post_id: '$_id', user_id: userId }, // 변수 선언
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ['$_id', '$$user_id'] }, // 클라이언트에서 전송된 유저의 ObjectId와 일치하는지 확인
+                    { $in: ['$$post_id', '$clippings'] }, // 현재 게시글이 favorites 배열에 있는지 확인
+                  ],
+                },
+              },
+            },
+          ],
+          as: 'clipByUser',
         },
-      ].map((func) => func())
-    )) as [IProject, boolean, boolean]
-    // const project = await Project.find({ _id: id })
-    //   .populate({
-    //     path: 'author',
-    //     model: User,
-    //     select: 'name imageUrl',
-    //   })
-    //   .exec()
-    // const isUserFavorite = await Favorite.findOne({_id : id})
-    const result = await Project.find({ author: project.author }).select('-blocks').exec()
+      },
+      {
+        $lookup: {
+          from: 'users', // User 콜렉션
+          localField: 'author', // 게시글의 author 필드
+          foreignField: '_id', // User의 _id 필드
+          as: 'authorDetails',
+        },
+      },
+      {
+        $unwind: '$authorDetails', // 배열 필드 풀기
+      },
+      {
+        $addFields: {
+          isUserFavorite: {
+            $cond: {
+              if: {
+                $gt: [{ $size: '$likedByUser' }, 0], // likedByUser 배열이 비어있지 않으면 true, 아니면 false
+              },
+              then: true,
+              else: false,
+            },
+          },
+          isUserClipping: {
+            $cond: {
+              if: {
+                $gt: [{ $size: '$clipByUser' }, 0], // likedByUser 배열이 비어있지 않으면 true, 아니면 false
+              },
+              then: true,
+              else: false,
+            },
+          },
+          author: {
+            _id: '$authorDetails._id',
+            name: '$authorDetails.name',
+            imageUrl: '$authorDetails.imageUrl',
+          },
+        },
+      },
+      {
+        $project: {
+          // 모든 게시글 필드를 포함하거나, 필요한 필드만 선택
+          thumbnail: 1,
+          title: 1,
+          blocks: 1,
+          isUserFavorite: 1,
+          isUserClipping: 1,
+          author: 1,
+        },
+      },
+    ])
+
+    const result = await Project.find({ author: project[0].author._id })
+      .select('-blocks')
+      .sort({ createdAt: -1 })
+      .skip(0)
+      .limit(7)
+      .exec()
     const writerProjects = result.filter((project) => project._id.toString() !== id)
-    return NextResponse.json(
-      { project, writerProjects, isUserFavorite, isUserClipping },
-      { status: 200 }
-    )
+    return NextResponse.json({ project: project[0], writerProjects }, { status: 200 })
   } catch (e) {
     return NextResponse.json({ error: e }, { status: 501 })
   }

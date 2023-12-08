@@ -41,5 +41,7 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/user/:path*', '/api/upload', '/api/user/:path*'],
+  matcher: ['/api/upload'],
 }
+// '/user/:path*'
+// '/api/user/:path*'

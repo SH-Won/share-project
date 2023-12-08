@@ -8,11 +8,8 @@ interface Props {
   blocks: IProjectDetail['blocks']
 }
 const DetailBlocks = ({ blocks }: Props) => {
-  // const RenderBlocks = useBlock(blocks)
-  console.log(blocks)
   return (
     <div className="detail-content">
-      {/* <RenderBlocks /> */}
       {blocks.map((block, index) => {
         if (!block.value) return null
         switch (block.type) {

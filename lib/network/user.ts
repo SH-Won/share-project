@@ -40,6 +40,14 @@ export default class UserAPI extends FetchAPI {
     })
     return this.responseHandler<ISignUpSuccess>(response)
   }
+  getUserInfo = async (query: { _id: string }) => {
+    const queryString = this.getQueryString(query)
+    const response = await this.fetch({
+      url: this.baseUrl + '/user/info?' + queryString,
+      method: 'GET',
+    })
+    return this.responseHandler<IUserItemResponse>(response)
+  }
   getUserInventory = async () => {
     const response = await this.fetch({
       url: this.baseUrl + '/user',

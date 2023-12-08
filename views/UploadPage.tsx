@@ -157,56 +157,58 @@ const UploadPage = () => {
     })
   }, [])
   return (
-    <div className="upload-page">
-      <div className="upload__header">
-        <div className="button-group">
-          <Button type="basic" text="취소" size="medium" onClick={handleCancel} />
-        </div>
-        <div className="button-group">
-          <Button type="grey" text="임시 저장" size="medium" onClick={handleSave} />
-          <Button type="black" text="업로드" size="medium" onClick={handleUpload} />
-        </div>
-      </div>
-      <SideBar />
-      <div className="upload__content">
-        {inputValue.thumbnail && (
-          <div ref={titleRef} tabIndex={1} className="upload__content__title">
-            <BlockHeading
-              onHandleChange={onHandleChange}
-              placeholder="제목을 입력해 주세요"
-              value={inputValue.title}
-              name="title"
-            />
+    <>
+      <div className="upload-page">
+        <div className="upload__header">
+          <div className="button-group">
+            <Button type="basic" text="취소" size="medium" onClick={handleCancel} />
           </div>
-        )}
-        <div className="file-upload-wrapper">
-          <InputFileBox
-            id="thumbnail"
-            name="thumbnail"
-            value={inputValue.thumbnail}
-            onHandleChange={onHandleChangeImage}
-          >
-            <InputFileBox.ProjectUploader />
-          </InputFileBox>
+          <div className="button-group">
+            <Button type="grey" text="임시 저장" size="medium" onClick={handleSave} />
+            <Button type="black" text="업로드" size="medium" onClick={handleUpload} />
+          </div>
         </div>
-        {/* {inputValue.thumbnail ? ( */}
-        <>
-          <AddBlockLine
-            onClick={() => {
-              openSideBar()
-              blockIndex.current = 0
-            }}
-          />
-          <BlockList
-            inputValue={inputValue}
-            onHandleChange={onHandleChange}
-            onHandleChangeImage={onHandleChangeImage}
-          />
-        </>
-        {/* ) : null} */}
+        <SideBar />
+        <div className="upload__content">
+          {inputValue.thumbnail && (
+            <div ref={titleRef} tabIndex={1} className="upload__content__title">
+              <BlockHeading
+                onHandleChange={onHandleChange}
+                placeholder="제목을 입력해 주세요"
+                value={inputValue.title}
+                name="title"
+              />
+            </div>
+          )}
+          <div className="file-upload-wrapper">
+            <InputFileBox
+              id="thumbnail"
+              name="thumbnail"
+              value={inputValue.thumbnail}
+              onHandleChange={onHandleChangeImage}
+            >
+              <InputFileBox.ProjectUploader />
+            </InputFileBox>
+          </div>
+          {/* {inputValue.thumbnail ? ( */}
+          <>
+            <AddBlockLine
+              onClick={() => {
+                openSideBar()
+                blockIndex.current = 0
+              }}
+            />
+            <BlockList
+              inputValue={inputValue}
+              onHandleChange={onHandleChange}
+              onHandleChangeImage={onHandleChangeImage}
+            />
+          </>
+          {/* ) : null} */}
+        </div>
+        {loading ? <LoadingArc text="업로드 중입니다" /> : null}
       </div>
-      {loading ? <LoadingArc text="업로드 중입니다" /> : null}
-    </div>
+    </>
   )
 }
 
