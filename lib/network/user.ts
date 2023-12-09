@@ -1,7 +1,5 @@
 import { User } from 'next-auth'
 import FetchAPI, { ISuccess } from './fetchAPI'
-import { IProjectQuery } from './project'
-import { IProject } from './types/project'
 import {
   ISignUpSuccess,
   IUserImageBody,
@@ -17,8 +15,9 @@ import {
 //   userId?: string
 // }
 export interface IUserProjectQuery {
-  lastCreatedAt?: string
+  page?: number
   userId?: string
+  sessionId?: string
 }
 export default class UserAPI extends FetchAPI {
   constructor(public baseUrl: string) {
@@ -55,19 +54,22 @@ export default class UserAPI extends FetchAPI {
     })
     return this.responseHandler<IUserInventoryResponse>(response)
   }
-  getUserProjects = async (query: IUserProjectQuery) => {
+  getUserProjects = async (query: IUserProjectQuery, headers?: any) => {
     const queryString = this.getQueryString(query)
     const response = await this.fetch({
       url: this.baseUrl + '/user/project?' + queryString,
       method: 'GET',
+      noCache: true,
     })
     return this.responseHandler<IUserItemResponse>(response)
   }
-  getUserFavorites = async (query: IUserProjectQuery) => {
+  getUserFavorites = async (query: IUserProjectQuery, headers?: any) => {
     const queryString = this.getQueryString(query)
+    console.log(queryString)
     const response = await this.fetch({
       url: this.baseUrl + '/user/favorite?' + queryString,
       method: 'GET',
+      noCache: true,
     })
     return this.responseHandler<IUserItemResponse>(response)
   }
@@ -76,6 +78,7 @@ export default class UserAPI extends FetchAPI {
     const response = await this.fetch({
       url: this.baseUrl + '/user/clipping?' + queryString,
       method: 'GET',
+      noCache: true,
     })
     return this.responseHandler<IUserItemResponse>(response)
   }

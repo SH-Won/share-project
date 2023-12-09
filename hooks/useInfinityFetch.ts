@@ -8,16 +8,22 @@ import { useEffect, useState } from 'react'
 import { useInfinityScroll } from './useInfinityScroll'
 
 interface Props<T extends IProject> {
+  initialState?: T[]
+  hasMore?: boolean
   fetchFunc: (query: IUserProjectQuery) => Promise<{ projects: T[]; projectLength: number }>
 }
-const useInfinityFetch = <T extends IProject, U extends HTMLElement>({ fetchFunc }: Props<T>) => {
+const useInfinityFetch = <T extends IProject, U extends HTMLElement>({
+  initialState,
+  hasMore: isHasMore,
+  fetchFunc,
+}: Props<T>) => {
   // const { data: session } = useSession()
   const pathname = usePathname()
   const userId = pathname.split('/')[1]
-  const [data, setData] = useState<T[]>([])
+  const [data, setData] = useState<T[]>(initialState || [])
   const [totalLength, setTotalLength] = useState(0)
-  const [loading, setLoading] = useState(true)
-  const [hasMore, setHasMore] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [hasMore, setHasMore] = useState(isHasMore!)
   const [error, setError] = useState(false)
   // const [query, setQuery] = useState({
   //   skip: 0,
@@ -25,7 +31,7 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({ fetchFunc
   //   // userId: session?.id,
   // })
   const [query, setQuery] = useState({
-    page: 1,
+    page: 2,
     userId,
   })
 
@@ -34,32 +40,20 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({ fetchFunc
     copyData.splice(index, 1)
     setData(copyData)
   }
-  const loadMore = () => {
-    // setQuery((prev) => ({
-    //   ...prev,
-    //   skip: prev.skip + prev.limit,
-    // }))
-    setQuery((prev) => ({
-      ...prev,
-      page: prev.page + 1,
-    }))
-  }
-  const refresh = () => {
-    // setQuery((prev) => ({
-    //   skip: prev.skip,
-    //   limit: prev.limit,
-    //   // userId: prev.userId,
-    // }))
-    setQuery({
-      ...query,
-    })
-    setError(false)
-  }
-  useEffect(() => {
-    if (!hasMore) return
+  const loadMore = async () => {
+    // setLoading(true)
+    console.log('load More')
+    // const response = await fetchFunc(query)
+    // const { projects, projectLength } = JSON.parse(JSON.stringify(response))
+
+    // const hasMore = projects.length + data.length < projectLength
+    // setData((prev) => [...prev, ...projects])
+    // setTotalLength(projectLength)
+    // setHasMore(hasMore)
     setLoading(true)
     fetchFunc(query)
       .then((response) => {
+        console.log(response)
         const hasMore = response.projects.length + data.length < response.projectLength
         setData((prev) => [...prev, ...response.projects])
         setTotalLength(response.projectLength)
@@ -71,7 +65,36 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({ fetchFunc
       .finally(() => {
         setLoading(false)
       })
-  }, [query])
+    setQuery((prev) => ({
+      ...prev,
+      page: prev.page + 1,
+    }))
+  }
+  const refresh = () => {
+    setQuery({
+      ...query,
+    })
+    setError(false)
+  }
+  // useEffect(() => {
+  //   if (!hasMore) return
+  //   console.log('fetch', query)
+  //   setLoading(true)
+  //   fetchFunc(query)
+  //     .then((response) => {
+  //       console.log(response)
+  //       const hasMore = response.projects.length + data.length < response.projectLength
+  //       setData((prev) => [...prev, ...response.projects])
+  //       setTotalLength(response.projectLength)
+  //       setHasMore(hasMore)
+  //     })
+  //     .catch((e) => {
+  //       setError(true)
+  //     })
+  //     .finally(() => {
+  //       setLoading(false)
+  //     })
+  // }, [query])
   const { targetRef } = useInfinityScroll<U>({
     loading,
     hasMore,

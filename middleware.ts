@@ -20,6 +20,15 @@ export async function middleware(request: NextRequest) {
   // return NextResponse.next()
   // return NextResponse.rewrite(url)
   // return NextResponse.rewrite(request.url)
+  const splitUrl = request.url.split(process.env.NEXT_PUBLIC_BASE_URL)[1]
+  const doubleSplitUrl = splitUrl.split('/')
+  if (
+    !doubleSplitUrl.includes('api') &&
+    doubleSplitUrl.at(-1) === 'clipping' &&
+    doubleSplitUrl.at(-2) !== token?.id
+  ) {
+    return NextResponse.redirect(new URL('/', request.url))
+  }
   if (!token?.accessToken) {
     const splitUrl = request.url.split(process.env.NEXT_PUBLIC_BASE_URL)[1]
     if (splitUrl.startsWith('/user')) {
@@ -32,8 +41,13 @@ export async function middleware(request: NextRequest) {
       Authorization: `Bearer ${token.accessToken}`,
     },
   })
-  if (!response.ok)
+  if (!response.ok) {
     return NextResponse.json({ message: '권한이 없습니다 로그인 해주세요' }, { status: 401 })
+  } else {
+    const json = await response.json()
+    if (json.email !== token.email)
+      return NextResponse.json({ message: '권한이 없습니다' }, { status: 401 })
+  }
   const nextResponse = NextResponse.next()
   nextResponse.headers.set('Authorization', token.id)
   return nextResponse
@@ -41,7 +55,8 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/api/upload'],
+  matcher: ['/api/upload', '/profile'],
 }
 // '/user/:path*'
 // '/api/user/:path*'
+//'/:path*/clipping'

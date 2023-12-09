@@ -2,7 +2,8 @@ interface IFetchConfig {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE'
   url: string
   body?: string
-  header?: any
+  headers?: any
+  noCache?: boolean
 }
 interface InterfaceAPI {
   baseUrl?: string
@@ -44,10 +45,22 @@ class FetchAPI implements InterfaceAPI {
       .join('&')
   }
   fetch = async (config: IFetchConfig) => {
-    return fetch(config.url, {
-      method: config.method,
-      body: config.body,
-    })
+    return fetch(
+      config.url,
+      !config.noCache
+        ? {
+            method: config.method,
+            body: config.body,
+            headers: config.headers,
+          }
+        : {
+            method: config.method,
+            body: config.body,
+            headers: config.headers,
+            // next: { revalidate: 0 },
+            cache: 'no-store',
+          }
+    )
   }
 }
 export default FetchAPI

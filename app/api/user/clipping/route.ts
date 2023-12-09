@@ -6,17 +6,165 @@ import UserInventory from '@/models/UserInventory'
 import mongoose from 'mongoose'
 import { getToken } from 'next-auth/jwt'
 import { NextRequest, NextResponse } from 'next/server'
-// export async function GET(req: NextRequest) {
-//   const searchParams = req.nextUrl.searchParams
-//   const skip = searchParams.get('skip') || '5'
-//   const limit = searchParams.get('limit') || '5'
-//   const userId = req.headers.get('Authorization')
-//   // const userInventory = await UserInventory.findOne({_id : userId})
-// }
 interface Params {
   params: {
     userId: string
   }
+}
+export const revalidate = 0
+export const dynamic = 'force-dynamic'
+const getProcess = (sessionId: string, userId: string, page: string) => {
+  return sessionId
+    ? [
+        {
+          $match: {
+            _id: new mongoose.Types.ObjectId(userId!),
+          },
+        },
+        {
+          $project: {
+            clippings: { $reverseArray: '$clippings' }, // favorites 배열을 역순으로 정렬
+            totalClippingCount: 1,
+          },
+        },
+        {
+          $unwind: '$clippings', // 배열 풀기
+        },
+        {
+          $skip: (parseInt(page) - 1) * 20,
+        },
+        {
+          $limit: 20,
+        },
+        {
+          $lookup: {
+            from: 'projects',
+            localField: 'clippings',
+            foreignField: '_id',
+            as: 'projects',
+          },
+        },
+        {
+          $unwind: '$projects', // 배열 풀기
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'projects.author',
+            foreignField: '_id',
+            as: 'authorDetails',
+          },
+        },
+        {
+          $unwind: '$authorDetails', // 배열 풀기
+        },
+        {
+          $addFields: {
+            'projects.isUserClipping': true,
+            'projects.author': {
+              imageUrl: '$authorDetails.imageUrl',
+              name: '$authorDetails.name',
+            },
+          },
+        },
+        {
+          $group: {
+            _id: '$_id',
+            projects: { $push: '$projects' },
+            totalClippingCount: { $first: '$totalClippingCount' },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            projects: {
+              $map: {
+                input: '$projects',
+                as: 'project',
+                in: {
+                  $mergeObjects: ['$$project'],
+                },
+              },
+            },
+            totalClippingCount: 1,
+          },
+        },
+      ]
+    : [
+        {
+          $match: {
+            _id: new mongoose.Types.ObjectId(userId!),
+          },
+        },
+        {
+          $project: {
+            clippings: { $reverseArray: '$clippings' }, // favorites 배열을 역순으로 정렬
+            totalClippingCount: 1,
+          },
+        },
+        {
+          $skip: (parseInt(page) - 1) * 20,
+        },
+        {
+          $limit: parseInt(page) * 20,
+        },
+        {
+          $unwind: '$clippings', // 배열 풀기
+        },
+        {
+          $lookup: {
+            from: 'projects',
+            localField: 'clippings',
+            foreignField: '_id',
+            as: 'projects',
+          },
+        },
+        {
+          $unwind: '$projects', // 배열 풀기
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'projects.author',
+            foreignField: '_id',
+            as: 'authorDetails',
+          },
+        },
+        {
+          $unwind: '$authorDetails', // 배열 풀기
+        },
+        {
+          $addFields: {
+            'projects.isUserClipping': true,
+            'projects.author': {
+              imageUrl: '$authorDetails.imageUrl',
+              name: '$authorDetails.name',
+            },
+          },
+        },
+        {
+          $group: {
+            _id: '$_id',
+            projects: { $push: '$projects' },
+            totalClippingCount: { $first: '$totalClippingCount' },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            projects: {
+              $map: {
+                input: '$projects',
+                as: 'project',
+                in: {
+                  $mergeObjects: ['$$project'],
+                },
+              },
+            },
+            totalClippingCount: 1,
+          },
+        },
+      ]
 }
 export async function GET(request: NextRequest, { params }: Params) {
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
@@ -25,6 +173,7 @@ export async function GET(request: NextRequest, { params }: Params) {
   const limit = searchParams.get('limit') || '10'
   const page = searchParams.get('page') || '1'
   const userId = searchParams.get('userId') || ''
+  const sessionId = searchParams.get('sessionId') || null
   // const userId = params.userId
   const createdAt = searchParams.get('lastCreatedAt')
   // const userId = request.headers.get('Authorization')
@@ -41,7 +190,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     const clippings = await UserInventory.aggregate([
       {
         $match: {
-          _id: new mongoose.Types.ObjectId(userId!),
+          _id: new mongoose.Types.ObjectId(sessionId!),
         },
       },
       {
@@ -54,7 +203,7 @@ export async function GET(request: NextRequest, { params }: Params) {
         $skip: (parseInt(page) - 1) * 20,
       },
       {
-        $limit: parseInt(page) * 20,
+        $limit: 20,
       },
       {
         $unwind: '$clippings', // 배열 풀기
@@ -162,6 +311,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
   const body = await req.json()
   // const userId = params.userId
   const { projectId, isAdd, userId } = body
+  console.log(projectId, isAdd, userId)
   try {
     const db = await dbConnect()
     const userInventoryField = { clippings: projectId }

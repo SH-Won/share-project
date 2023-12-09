@@ -5,6 +5,9 @@ const nextConfig = {
   //   appDir: true,
   // },
   reactStrictMode: false,
+  experimental: {
+    serverActions: true,
+  },
 
   images: {
     domains: ['res.cloudinary.com'],
