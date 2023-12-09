@@ -56,6 +56,13 @@ export const authOptions: AuthOptions = {
       })
       if (!response.ok) {
         token.error = 'invalid'
+        token.id = ''
+        token.email = ''
+        token.imageUrl = '/noImage.svg'
+        token.name = '비회원 유저'
+        token.accessToken = ''
+        token.refreshToken = ''
+        token.role = 999
         return token
       }
       const json = await response.json()

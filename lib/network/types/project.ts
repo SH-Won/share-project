@@ -12,8 +12,12 @@ export interface IProject {
     name: string
   }
   favoriteCount: number
+  isUserFavorite?: boolean
+  isUserClipping?: boolean
 }
 export interface IProjectDetail extends IProject {
+  isUserFavorite: boolean
+  isUserClipping: boolean
   blocks: Omit<TEditBlock, 'name'>[]
 }
 export interface IProjectResponse {
@@ -23,8 +27,8 @@ export interface IProjectResponse {
 export interface IProjectDetailResponse {
   project: IProjectDetail
   writerProjects: Omit<IProject, 'writer'>[]
-  isUserFavorite: boolean
-  isUserClipping: boolean
+  // isUserFavorite: boolean
+  // isUserClipping: boolean
 }
 export interface IUploadProjectBody {
   userId: string | undefined

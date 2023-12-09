@@ -25,7 +25,7 @@ const UserItemList = <T,>({
           <span className="title">{title}</span>
           <span className="total-count">{totalCount}</span>
         </div>
-        <div className="activity-header__more-button">모두 보기</div>
+        {/* <div className="activity-header__more-button">모두 보기</div> */}
       </div>
       <div className="item-list">{children}</div>
     </div>

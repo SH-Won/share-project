@@ -4,24 +4,36 @@ import ErrorNotification from '@/components/common/ErrorNotification'
 import Loading from '@/components/loading'
 import UserItemList from '@/components/user/UserItemList'
 import { useInfinityFetch } from '@/hooks'
+import { getUserClippingProjects } from '@/lib/actions'
 import BackEnd from '@/lib/network'
 import { IProject } from '@/lib/network/types/project'
 import Image from 'next/image'
 import React from 'react'
 
-const UserClippingPage = () => {
+const UserClippingPage = ({
+  isSessionUser,
+  projects,
+  projectLength,
+}: {
+  isSessionUser: boolean
+  projects: IProject[]
+  projectLength: number
+}) => {
+  const hasMore = projects.length < projectLength
   const { targetRef, loading, error, data, refresh, updateData } = useInfinityFetch<
     IProject,
     HTMLDivElement
   >({
-    fetchFunc: BackEnd.getInstance().user.getUserClipping,
+    initialState: projects,
+    hasMore,
+    fetchFunc: getUserClippingProjects,
   })
   return (
     <div>
       <UserItemList
         icon={<Image src="/clipping.svg" width={24} height={24} alt="clipping-icon" />}
         title="스크랩한 프로젝트"
-        totalCount={5}
+        totalCount={projectLength}
       >
         {data.map((el, index) => (
           <ProjectCard project={el} key={el._id}>

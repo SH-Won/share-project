@@ -10,7 +10,7 @@ const DetailLayout = ({ children }: { children: React.ReactNode }) => {
     <div className={`detail-layout ${isMatch ? 'modal detail' : ''}`}>
       <div className={`${isMatch ? 'modal__container--bottom open' : ''}`}>
         {isMatch && <Close />}
-        {children}
+        {isMatch && children}
       </div>
     </div>
   )

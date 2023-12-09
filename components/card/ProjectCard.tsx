@@ -3,11 +3,11 @@ import React, { createContext, useContext, useState } from 'react'
 import '@/styles/components/project-card.scss'
 import Link from 'next/link'
 import ImageWithSkeleton from '../image/ImageWithSkeleton'
-import { FavoriteSVG } from '../user_action/Favorite'
+import FavoriteButton, { FavoriteSVG } from '../user_action/Favorite'
 import { Card } from '../ui'
 import { IProject } from '@/lib/network/types/project'
 import { useClipping, useCloseEvent, useFavorite } from '@/hooks'
-import { ClippingSVG } from '../user_action/Clipping'
+import Clipping, { ClippingSVG } from '../user_action/Clipping'
 interface ProjectCardProps {
   project: IProject | Omit<IProject, 'writer'>
   children: React.ReactNode
@@ -64,7 +64,7 @@ const CardAuthor = ({ imageUrl, name }: { [key: string]: string }) => {
 const ClearFavorite = ({ update }: { update: () => void }) => {
   const project = useContext(ProjectCardContext)
   const [open, setOpen] = useState(false)
-  const { updateFavorite } = useFavorite(project._id, true)
+  const { updateFavorite } = useFavorite(project._id, project.isUserFavorite!)
 
   const onClick = (e: React.MouseEvent) => {
     updateFavorite(e).then((response) => {
@@ -88,6 +88,14 @@ const ClearFavorite = ({ update }: { update: () => void }) => {
       )}
     </div>
   )
+}
+const ControllFavorite = () => {
+  const project = useContext(ProjectCardContext)
+  return <FavoriteButton isUserFavorite={project.isUserFavorite!} projectId={project._id} />
+}
+const ControllClipping = () => {
+  const project = useContext(ProjectCardContext)
+  return <Clipping isUserClipping={project.isUserClipping!} projectId={project._id} />
 }
 const ClearClipping = ({ update }: { update: () => void }) => {
   const project = useContext(ProjectCardContext)
@@ -140,7 +148,7 @@ const CardUserController = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="project-card__explain">
       <CardAuthor imageUrl={project.author.imageUrl} name={project.author.name} />
-      {children}
+      <div className="user-controller">{children}</div>
     </div>
   )
 }
@@ -156,5 +164,7 @@ ProjectCard.Content = CardContent
 ProjectCard.UserController = CardUserController
 ProjectCard.ClearFavorite = ClearFavorite
 ProjectCard.ClearClipping = ClearClipping
+ProjectCard.ControllFavorite = ControllFavorite
+ProjectCard.ControllClipping = ControllClipping
 
 export default ProjectCard

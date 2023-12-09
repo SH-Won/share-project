@@ -1,5 +1,4 @@
 import dbConnect from '@/lib/dbConnect'
-import Favorite from '@/models/Favorite'
 import Project from '@/models/Project'
 import User from '@/models/User'
 import mongoose from 'mongoose'
@@ -45,7 +44,7 @@ export async function GET(request: NextRequest) {
       .populate({
         path: 'author',
         model: User,
-        select: 'name imageUrl',
+        select: '_id name imageUrl',
       })
       .sort({ $natural: -1 })
       .exec()

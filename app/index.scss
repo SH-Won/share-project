@@ -107,8 +107,10 @@ body {
   height: unset !important;
 }
 main {
-  // height: 100%;
-  height: auto;
+  height: 100%;
+  min-height: 100svh;
+  // height: 100svh;
+  // overflow-y: auto;
 }
 :root {
   --navbar-height: 70px;

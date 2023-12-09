@@ -105,10 +105,12 @@ const UploadContext = ({ children }: UploadContextProps) => {
   const closeSideBar = () => {
     sideBar.current?.classList.remove('open')
     sideBar.current?.classList.remove('transition')
+    // document.body.style.removeProperty('overflow')
     setPage('selectBlock')
   }
   const openSideBar = () => {
     sideBar.current?.classList.add('open')
+    // document.body.style.setProperty('overflow', 'hidden')
   }
   const goSideBarPage = (page: StateContext['page']) => {
     sideBar.current?.classList.add('transition')
