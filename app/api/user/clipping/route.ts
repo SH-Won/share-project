@@ -174,17 +174,15 @@ export async function GET(request: NextRequest, { params }: Params) {
   const page = searchParams.get('page') || '1'
   const userId = searchParams.get('userId') || ''
   const sessionId = searchParams.get('sessionId') || null
-  // const userId = params.userId
-  const createdAt = searchParams.get('lastCreatedAt')
-  // const userId = request.headers.get('Authorization')
-  const query = !createdAt
-    ? {
-        userId,
-      }
-    : {
-        userId,
-        createdAt: { $lt: createdAt },
-      }
+  // const createdAt = searchParams.get('lastCreatedAt')
+  // const query = !createdAt
+  //   ? {
+  //       userId,
+  //     }
+  //   : {
+  //       userId,
+  //       createdAt: { $lt: createdAt },
+  //     }
   try {
     const db = await dbConnect()
     const clippings = await UserInventory.aggregate([
@@ -311,7 +309,6 @@ export async function PUT(req: NextRequest, { params }: Params) {
   const body = await req.json()
   // const userId = params.userId
   const { projectId, isAdd, userId } = body
-  console.log(projectId, isAdd, userId)
   try {
     const db = await dbConnect()
     const userInventoryField = { clippings: projectId }

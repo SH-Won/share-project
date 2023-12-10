@@ -55,7 +55,7 @@ const ContentNavigation = () => {
             className={`content-list__item ${currentPath === item.id ? 'selected' : ''}`}
             key={item.id}
           >
-            <Link href={item.href}>
+            <Link href={item.href} prefetch={false}>
               <span className="label">{item.name}</span>
             </Link>
           </li>

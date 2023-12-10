@@ -44,7 +44,7 @@ const getProcess = (id: string, userId: string) => {
         {
           $lookup: {
             from: 'userinventories', // UserInventory 콜렉션
-            let: { post_id: '$_id', user_id: userId }, // 변수 선언
+            let: { post_id: '$_id', user_id: new mongoose.Types.ObjectId(userId) }, // 변수 선언
             pipeline: [
               {
                 $match: {

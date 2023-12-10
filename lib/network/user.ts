@@ -65,7 +65,6 @@ export default class UserAPI extends FetchAPI {
   }
   getUserFavorites = async (query: IUserProjectQuery, headers?: any) => {
     const queryString = this.getQueryString(query)
-    console.log(queryString)
     const response = await this.fetch({
       url: this.baseUrl + '/user/favorite?' + queryString,
       method: 'GET',
