@@ -97,6 +97,9 @@ const ControllClipping = () => {
   const project = useContext(ProjectCardContext)
   return <Clipping isUserClipping={project.isUserClipping!} projectId={project._id} />
 }
+const ControllHideProject = () => {
+  const project = useContext(ProjectCardContext)
+}
 const ClearClipping = ({ update }: { update: () => void }) => {
   const project = useContext(ProjectCardContext)
   const [open, setOpen] = useState(false)

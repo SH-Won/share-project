@@ -42,7 +42,6 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({
   }
   const loadMore = async () => {
     // setLoading(true)
-    console.log('load More')
     // const response = await fetchFunc(query)
     // const { projects, projectLength } = JSON.parse(JSON.stringify(response))
 
@@ -53,7 +52,6 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({
     setLoading(true)
     fetchFunc(query)
       .then((response) => {
-        console.log(response)
         const hasMore = response.projects.length + data.length < response.projectLength
         setData((prev) => [...prev, ...response.projects])
         setTotalLength(response.projectLength)
