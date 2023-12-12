@@ -12,5 +12,6 @@ const Navbar = () => {
     </nav>
   )
 }
+// /* @ts-expect-error Async Server Component */
 
 export default Navbar

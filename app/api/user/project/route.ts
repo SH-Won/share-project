@@ -15,15 +15,16 @@ interface Params {
     userId: string
   }
 }
-export const revalidate = 0
-export const dynamic = 'force-dynamic'
+// export const revalidate = 0
+// export const dynamic = 'force-dynamic'
 export async function GET(request: NextRequest, response: NextApiResponse) {
-  // const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
-  const token = await getServerSession(authOptions)
+  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
+  // const token = await getServerSession(authOptions)
   const searchParams = request.nextUrl.searchParams
   const page = searchParams.get('page') || '1'
   const userId = searchParams.get('userId') || null
-  const sessionId = searchParams.get('sessionId') || null
+  // const sessionId = searchParams.get('sessionId') || null
+  const sessionId = token?.id || null
   try {
     const db = await dbConnect()
     const projects = await UserInventory.aggregate(

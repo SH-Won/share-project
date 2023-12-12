@@ -18,14 +18,21 @@ const UserWorkPage = ({
   projectLength,
 }: {
   isSessionUser: boolean
-  projects: IProject[]
-  projectLength: number
+  projects?: IProject[]
+  projectLength?: number
 }) => {
-  const hasMore = projects.length < projectLength
-  const { targetRef, loading, error, data, refresh } = useInfinityFetch<IProject, HTMLDivElement>({
-    initialState: projects,
-    hasMore,
-    fetchFunc: getUserProjects,
+  // const hasMore = projects.length < projectLength
+  // const { targetRef, loading, error, data, refresh } = useInfinityFetch<IProject, HTMLDivElement>({
+  //   initialState: projects,
+  //   hasMore,
+  //   fetchFunc: getUserProjects,
+  // })
+  const { targetRef, loading, error, data, refresh, totalLength } = useInfinityFetch<
+    IProject,
+    HTMLDivElement
+  >({
+    // initialState: projects,
+    fetchFunc: BackEnd.getInstance().user.getUserProjects,
   })
 
   return (
@@ -33,7 +40,7 @@ const UserWorkPage = ({
       <UserItemList
         icon={<Image src="/success.svg" width={24} height={24} alt="clipping-icon" />}
         title="작성한 프로젝트"
-        totalCount={projectLength}
+        totalCount={totalLength}
       >
         {data.map((el) => (
           <ProjectCard project={el} key={el._id}>

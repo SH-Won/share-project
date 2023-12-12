@@ -188,7 +188,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     const clippings = await UserInventory.aggregate([
       {
         $match: {
-          _id: new mongoose.Types.ObjectId(sessionId!),
+          _id: new mongoose.Types.ObjectId(token!.id),
         },
       },
       {

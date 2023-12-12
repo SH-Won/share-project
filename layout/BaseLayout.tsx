@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import React from 'react'
 
 interface BaseLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode[]
 }
 
 const BaseLayout = ({ children }: BaseLayoutProps) => {
@@ -15,9 +15,9 @@ const BaseLayout = ({ children }: BaseLayoutProps) => {
   // const isHeader = true
   return (
     <>
-      {isHeader && <Navbar />}
+      {isHeader && children![0]}
       <main>
-        {children}
+        {children[1]}
         <Toast />
       </main>
     </>

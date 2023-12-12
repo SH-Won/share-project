@@ -5,6 +5,7 @@ import {
   IUserImageBody,
   IUserInventoryResponse,
   IUserItemResponse,
+  IUserProfileResponse,
   IUserSignInBody,
   IUserSignUpBody,
   TUserClipingBody,
@@ -47,12 +48,13 @@ export default class UserAPI extends FetchAPI {
     })
     return this.responseHandler<IUserItemResponse>(response)
   }
-  getUserInventory = async () => {
+  getUserProfile = async (query: { userId: string }) => {
+    const queryString = this.getQueryString(query)
     const response = await this.fetch({
-      url: this.baseUrl + '/user',
+      url: this.baseUrl + '/user?' + queryString,
       method: 'GET',
     })
-    return this.responseHandler<IUserInventoryResponse>(response)
+    return this.responseHandler<IUserProfileResponse>(response)
   }
   getUserProjects = async (query: IUserProjectQuery, headers?: any) => {
     const queryString = this.getQueryString(query)

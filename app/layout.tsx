@@ -10,6 +10,7 @@ import BaseLayout from '@/layout/BaseLayout'
 import ModalContext from '@/context/ModalContext'
 import Modal from '@/components/modal'
 import Toast from '@/components/toast/Toast'
+import Navbar from '@/components/navbar/Navbar'
 export const metadata = {
   title: 'Share Project',
   description: 'Share your project in this web',
@@ -29,9 +30,10 @@ export default async function RootLayout({ children, detail, modal, project }: P
             <UserProvider>
               <ModalContext>
                 <BaseLayout>
+                  <Navbar />
                   {children}
-                  {detail}
                 </BaseLayout>
+                {detail}
                 <Modal />
               </ModalContext>
             </UserProvider>

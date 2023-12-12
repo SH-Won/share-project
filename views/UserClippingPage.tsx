@@ -16,24 +16,30 @@ const UserClippingPage = ({
   projectLength,
 }: {
   isSessionUser: boolean
-  projects: IProject[]
-  projectLength: number
+  projects?: IProject[]
+  projectLength?: number
 }) => {
-  const hasMore = projects.length < projectLength
-  const { targetRef, loading, error, data, refresh, updateData } = useInfinityFetch<
+  // const hasMore = projects.length < projectLength
+  // const { targetRef, loading, error, data, refresh, updateData } = useInfinityFetch<
+  //   IProject,
+  //   HTMLDivElement
+  // >({
+  //   initialState: projects,
+  //   hasMore,
+  //   fetchFunc: getUserClippingProjects,
+  // })
+  const { targetRef, loading, error, data, refresh, updateData, totalLength } = useInfinityFetch<
     IProject,
     HTMLDivElement
   >({
-    initialState: projects,
-    hasMore,
-    fetchFunc: getUserClippingProjects,
+    fetchFunc: BackEnd.getInstance().user.getUserClipping,
   })
   return (
     <div>
       <UserItemList
         icon={<Image src="/clipping.svg" width={24} height={24} alt="clipping-icon" />}
         title="스크랩한 프로젝트"
-        totalCount={projectLength}
+        totalCount={totalLength}
       >
         {data.map((el, index) => (
           <ProjectCard project={el} key={el._id}>

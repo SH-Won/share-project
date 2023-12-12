@@ -46,7 +46,8 @@ const Close = ({ closeFunc }: CloseProps) => {
   }
   useEffect(() => {
     const isInterCeptingRoute = () => {
-      return document.querySelector('main')?.querySelector('.detail-layout') ? true : false
+      //.querySelector('main')?.
+      return document.querySelector('.detail-layout') ? true : false
     }
     if (isInterCeptingRoute()) setIsShow(true)
   }, [])
