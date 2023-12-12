@@ -44,7 +44,7 @@
     // max-height: calc(100vh - 64px);
     height: 100%;
     &.open {
-      animation: animate-bottom-sheet-up 0.3s cubic-bezier(0.46, 1.12, 1, 1);
+      animation: animate-bottom-sheet-up 3s cubic-bezier(0.46, 1.12, 1, 1);
       -webkit-animation: animate-bottom-sheet-up 0.3s cubic-bezier(0.46, 1.12, 1, 1);
     }
     &.close {

@@ -1,27 +1,26 @@
 import ContentNavigation from '@/components/user/ContentNavigation'
 // import UserNavigation from '@/components/user/UserNavigation'
-import UserProfile from '@/components/user/UserProfile'
+import UserProfile, { AnotherUserProfile } from '@/components/user/UserProfile'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../api/auth/[...nextauth]/route'
 // import { useSelectedLayoutSegment } from 'next/navigation'
 type Props = {
   children: React.ReactNode
+  params: {
+    user: string
+  }
 }
-export default async function UserLayout({ children, ...arg }: Props) {
-  // const segment = useSelectedLayoutSegment()
+export default async function UserLayout({ children, params }: Props) {
   // const session = await getServerSession()
-  // console.log(session)
+  const session = await getServerSession(authOptions)
+  const isSessionUser = session?.id === params.user
   return (
-    // <section className="user-layout">
-    //   <div className="user-navigation-wrapper">
-    //     <UserNavigation />
-    //   </div>
-    //   <div className="user-page-wrapper">
-    //     <div className="page-space border"></div>
-    //     {children}
-    //   </div>
-    //   <div className="page-space"></div>
-    // </section>
     <section className="user-layout">
-      <UserProfile />
+      {isSessionUser ? (
+        <UserProfile session={session} />
+      ) : (
+        <AnotherUserProfile userId={params.user} />
+      )}
       <ContentNavigation />
       {children}
     </section>

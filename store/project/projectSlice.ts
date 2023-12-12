@@ -37,7 +37,6 @@ const projectSlice = createSlice({
       // state.projects = [...action.payload.projects, ...state.projects]
       state.projects.push(...action.payload.projects)
       if (typeof action.payload.totalLength !== 'undefined') {
-        console.log('total length', action.payload.totalLength)
         state.totalLength = action.payload.totalLength
       }
       state.hasMore = state.totalLength > state.projects.length

@@ -6,6 +6,11 @@ export interface IUserSignInBody {
   password: string
   // redirect?: boolean
 }
+export interface IUserProfile {
+  _id: string
+  name: string
+  imageUrl: string
+}
 export interface IUserSignUpBody extends IUserSignInBody {
   name: string
   userName: string
@@ -23,6 +28,9 @@ export interface IUserInventory {
 }
 export interface IUserInventoryResponse {
   userInventory: IUserInventory
+}
+export interface IUserProfileResponse {
+  user: IUserProfile
 }
 export type TUserFavoriteBody = {
   projectId: string
