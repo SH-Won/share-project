@@ -2,7 +2,7 @@
   position: fixed;
   // top: 80px;
   // bottom: 100px;
-  top: 100vh;
+  top: 100dvh;
   // max-width: 280px;
   display: flex;
   justify-content: center;
@@ -81,11 +81,11 @@
 @keyframes move-left-right {
   15% {
     // transform: translateY(-100%);
-    transform: translateY(-280%);
+    transform: translateY(-180%);
   }
   85% {
     // transform: translateY(-100%);
-    transform: translateY(-280%);
+    transform: translateY(-180%);
   }
   100% {
     transform: translateY(0%);
