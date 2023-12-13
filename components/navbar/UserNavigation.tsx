@@ -48,7 +48,6 @@ interface Props {
   userImageUrl: string
 }
 const UserNavigation = ({ userId, userName, userImageUrl }: Props) => {
-  console.log(userId)
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const handleNavigation = () => setOpen((prev) => !prev)

@@ -1,5 +1,4 @@
 'use client'
-import '@/styles/layout/detail-page.scss'
 import Intro from '@/components/detail/Intro'
 import SkeletonDetail, { SkeletonDetailHeader } from '@/components/detail/SkeletonDetail'
 import MoreByWriterProjects from '@/components/detail/MoreByWriterProjects'

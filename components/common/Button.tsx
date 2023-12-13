@@ -1,5 +1,4 @@
 'use client'
-import '@/styles/components/button.scss'
 
 interface ButtonProps {
   size: 'small' | 'medium' | 'large'
