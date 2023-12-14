@@ -84,6 +84,7 @@ const ClearFavorite = ({ update }: { update: () => void }) => {
             <FavoriteSVG selected={false} />
             <span>좋아요 해제</span>
           </div>
+          <div className="overlay" onClick={() => setOpen(false)}></div>
         </div>
       )}
     </div>

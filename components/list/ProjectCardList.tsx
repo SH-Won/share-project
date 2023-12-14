@@ -25,7 +25,7 @@ const ProjectCardList = () => {
             </ProjectCard>
           </div>
         ))}
-      {loading && <Loading count={limit} />}
+      {loading && <Loading count={8} />}
       <div ref={targetRef}></div>
       {error && <ErrorNotification onClick={refresh} />}
     </>
