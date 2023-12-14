@@ -66,6 +66,7 @@
         right: 0;
         background-color: color("white");
         & > .item {
+          z-index: 1;
           width: 95px;
           padding: 8px 10px;
           box-sizing: border-box;
@@ -79,6 +80,9 @@
             display: inline-block;
             @include typeface("Paragraph_3");
           }
+        }
+        & > .overlay {
+          z-index: 1;
         }
       }
     }
