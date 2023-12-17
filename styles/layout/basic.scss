@@ -9,3 +9,13 @@
   @include flexCenter();
   cursor: pointer;
 }
+.wrap-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  z-index: var(--overlay-base-z-index);
+}

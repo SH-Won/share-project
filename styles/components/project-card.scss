@@ -65,8 +65,9 @@
         top: -40px;
         right: 0;
         background-color: color("white");
+
         & > .item {
-          z-index: 1;
+          z-index: calc(var(--overlay-base-z-index) + 1);
           width: 95px;
           padding: 8px 10px;
           box-sizing: border-box;
@@ -81,9 +82,9 @@
             @include typeface("Paragraph_3");
           }
         }
-        & > .overlay {
-          z-index: 1;
-        }
+        // & > .overlay {
+        //   z-index: 1;
+        // }
       }
     }
 
