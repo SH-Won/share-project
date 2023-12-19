@@ -30,6 +30,10 @@ const ProjectSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    isHidden: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 )

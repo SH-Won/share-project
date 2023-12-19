@@ -9,12 +9,17 @@ interface Props {
   type: 'main' | 'detail'
   width?: number
   height?: number
+  isHidden?: boolean
 }
 
-const ImageWithSkeleton = ({ imageUrl, alt, type, width, height }: Props) => {
+const ImageWithSkeleton = ({ imageUrl, alt, type, width, height, isHidden }: Props) => {
   const [load, setLoad] = useState(false)
   return (
-    <div className={`image-container ${type} ${!load ? 'loading-template loading-animation' : ''}`}>
+    <div
+      className={`image-container ${type} ${!load ? 'loading-template loading-animation' : ''} ${
+        isHidden ? 'hidden' : ''
+      }`}
+    >
       <Image
         src={imageUrl}
         width={width || 300}

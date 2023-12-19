@@ -33,11 +33,15 @@ export async function GET(request: NextRequest) {
     //     })
     //     .map((func) => func())
     // )
-    let totalLength
-    if (skip === '0') {
-      totalLength = await Project.collection.countDocuments()
-    }
-    const projects = await Project.find()
+    // let totalLength
+    // if (skip === '0') {
+    //   totalLength = await Project.collection.countDocuments()
+    // }
+    const projects = await Project.find({
+      isHidden: {
+        $ne: true,
+      },
+    })
       .skip(parseInt(skip))
       .limit(parseInt(limit))
       .select('-blocks')
@@ -48,7 +52,7 @@ export async function GET(request: NextRequest) {
       })
       .sort({ $natural: -1 })
       .exec()
-    return NextResponse.json({ projects: projects, totalLength })
+    return NextResponse.json({ projects: projects, totalLength: projects.length })
   } catch (e) {
     return NextResponse.json({ message: e, success: false })
   }

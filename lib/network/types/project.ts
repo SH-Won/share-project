@@ -14,6 +14,7 @@ export interface IProject {
   favoriteCount: number
   isUserFavorite?: boolean
   isUserClipping?: boolean
+  isHidden?: boolean
 }
 export interface IProjectDetail extends IProject {
   isUserFavorite: boolean
@@ -41,4 +42,8 @@ export interface IUploadProjectBody {
 export interface IUploadProjectResponse extends ISuccess {
   uploadProject: IProject
   projectLength: number
+}
+export interface IHiddenProjectBody {
+  projectId: string
+  isHidden: boolean
 }

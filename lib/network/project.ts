@@ -1,5 +1,6 @@
 import FetchAPI from './fetchAPI'
 import {
+  IHiddenProjectBody,
   IProjectDetailResponse,
   IProjectResponse,
   IUploadProjectBody,

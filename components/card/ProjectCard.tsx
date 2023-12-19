@@ -6,7 +6,7 @@ import ImageWithSkeleton from '../image/ImageWithSkeleton'
 import FavoriteButton, { FavoriteSVG } from '../user_action/Favorite'
 import { Card } from '../ui'
 import { IProject } from '@/lib/network/types/project'
-import { useClipping, useCloseEvent, useFavorite } from '@/hooks'
+import { useClipping, useCloseEvent, useFavorite, useHidden } from '@/hooks'
 import Clipping, { ClippingSVG } from '../user_action/Clipping'
 interface ProjectCardProps {
   project: IProject | Omit<IProject, 'writer'>
@@ -47,6 +47,7 @@ const CardImage = () => {
         type="main"
         width={400}
         height={400}
+        isHidden={project.isHidden}
         imageUrl={project.thumbnail.imageUrl ?? ''}
         alt={project.title ?? 'loading'}
       />
@@ -98,8 +99,31 @@ const ControllClipping = () => {
   const project = useContext(ProjectCardContext)
   return <Clipping isUserClipping={project.isUserClipping!} projectId={project._id} />
 }
-const ControllHideProject = () => {
+const ControllHideProject = ({ update }: { update: (isHidden: boolean) => void }) => {
   const project = useContext(ProjectCardContext)
+  const [open, setOpen] = useState(false)
+  const { selected: isHidden, hiddenProject } = useHidden(project._id, project.isHidden!)
+  const onClick = (e: React.MouseEvent) => {
+    hiddenProject(e).then((response) => {
+      update(response!)
+    })
+    setOpen(false)
+  }
+  return (
+    <div className="clear-actions">
+      <div className="icon-wrapper" onClick={() => setOpen((prev) => !prev)}>
+        <ClipSVG />
+      </div>
+      {open && (
+        <div className="clear-actions__content">
+          <div className="item" onClick={onClick}>
+            {isHidden ? <span>숨기기 해제</span> : <span>숨기기</span>}
+          </div>
+          <div className="wrap-overlay" onClick={() => setOpen(false)}></div>
+        </div>
+      )}
+    </div>
+  )
 }
 const ClearClipping = ({ update }: { update: () => void }) => {
   const project = useContext(ProjectCardContext)
@@ -144,6 +168,17 @@ const CardContent = () => {
     </div>
   )
 }
+const CardControllerWrapper = ({ children }: { children: React.ReactNode }) => {
+  const project = useContext(ProjectCardContext)
+  if (!('author' in project)) {
+    throw new Error('Card content always need writer property')
+  }
+  return (
+    <div className="project-card__controller">
+      <div className="user-controller">{children}</div>
+    </div>
+  )
+}
 const CardUserController = ({ children }: { children: React.ReactNode }) => {
   const project = useContext(ProjectCardContext)
   if (!('author' in project)) {
@@ -170,5 +205,6 @@ ProjectCard.ClearFavorite = ClearFavorite
 ProjectCard.ClearClipping = ClearClipping
 ProjectCard.ControllFavorite = ControllFavorite
 ProjectCard.ControllClipping = ControllClipping
+ProjectCard.ControllHideProject = ControllHideProject
 
 export default ProjectCard

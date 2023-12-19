@@ -28,6 +28,11 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({
     page: 1,
     userId,
   })
+  const hideData = (index: number, isHidden: boolean) => {
+    const copyData = [...data]
+    copyData[index].isHidden = isHidden
+    setData(copyData)
+  }
 
   const updateData = (index: number) => {
     const copyData = [...data]
@@ -77,6 +82,7 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({
     error,
     data,
     updateData,
+    hideData,
     refresh,
   }
 }

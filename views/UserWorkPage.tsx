@@ -27,7 +27,7 @@ const UserWorkPage = ({
   //   hasMore,
   //   fetchFunc: getUserProjects,
   // })
-  const { targetRef, loading, error, data, refresh, totalLength } = useInfinityFetch<
+  const { targetRef, loading, error, data, refresh, hideData, totalLength } = useInfinityFetch<
     IProject,
     HTMLDivElement
   >({
@@ -42,13 +42,19 @@ const UserWorkPage = ({
         title="작성한 프로젝트"
         totalCount={totalLength}
       >
-        {data.map((el) => (
+        {data.map((el, index) => (
           <ProjectCard project={el} key={el._id}>
             <ProjectCard.Image />
-            {!isSessionUser && (
+            {!isSessionUser ? (
               <ProjectCard.UserController>
                 <ProjectCard.ControllFavorite />
                 <ProjectCard.ControllClipping />
+              </ProjectCard.UserController>
+            ) : (
+              <ProjectCard.UserController>
+                <ProjectCard.ControllHideProject
+                  update={(isHidden: boolean) => hideData(index, isHidden)}
+                />
               </ProjectCard.UserController>
             )}
           </ProjectCard>

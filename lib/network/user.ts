@@ -1,5 +1,6 @@
 import { User } from 'next-auth'
 import FetchAPI, { ISuccess } from './fetchAPI'
+import { IHiddenProjectBody, IProject } from './types/project'
 import {
   ISignUpSuccess,
   IUserImageBody,
@@ -106,5 +107,13 @@ export default class UserAPI extends FetchAPI {
       body: JSON.stringify(body),
     })
     return this.responseHandler<{ imageUrl: string }>(response)
+  }
+  hiddenProject = async (body: IHiddenProjectBody) => {
+    const response = await this.fetch({
+      url: this.baseUrl + '/user/project',
+      method: 'PUT',
+      body: JSON.stringify(body),
+    })
+    return this.responseHandler<{ project: IProject }>(response)
   }
 }
