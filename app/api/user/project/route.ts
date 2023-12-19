@@ -63,3 +63,24 @@ export async function GET(request: NextRequest, response: NextApiResponse) {
     return NextResponse.json({ error: 'failed' }, { status: 400 })
   }
 }
+export async function PUT(request: NextRequest) {
+  try {
+    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
+    const body = await request.json()
+    const { projectId, isHidden } = body
+    const hiddenField = isHidden ? { isHidden: true } : { isHidden: false }
+    const projectQuery = { $set: hiddenField }
+
+    const project = await Project.findOneAndUpdate({ _id: projectId }, projectQuery, { new: true })
+    return NextResponse.json(
+      {
+        project,
+      },
+      {
+        status: 200,
+      }
+    )
+  } catch (e) {
+    return NextResponse.json({ error: 'failed' }, { status: 400 })
+  }
+}

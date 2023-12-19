@@ -4,6 +4,9 @@
   &.skeleton {
     border-radius: 8px;
   }
+  &.hidden {
+    opacity: 0.4;
+  }
   & > img {
     position: absolute;
     width: 100%;

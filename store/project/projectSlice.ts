@@ -36,10 +36,11 @@ const projectSlice = createSlice({
     setProjects: (state, action: PayloadAction<Pick<InitialState, 'projects' | 'totalLength'>>) => {
       // state.projects = [...action.payload.projects, ...state.projects]
       state.projects.push(...action.payload.projects)
-      if (typeof action.payload.totalLength !== 'undefined') {
-        state.totalLength = action.payload.totalLength
-      }
-      state.hasMore = state.totalLength > state.projects.length
+      // if (typeof action.payload.totalLength !== 'undefined') {
+      //   state.totalLength = action.payload.totalLength
+      // }
+      // state.hasMore = state.totalLength >= state.projects.length
+      state.hasMore = action.payload.totalLength >= 20
     },
     addProject: (state, action: PayloadAction<IProject>) => {
       state.projects = [action.payload, ...state.projects]
