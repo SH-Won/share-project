@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Button from '../common/Button'
-import ErrorNotification from '../common/ErrorNotification'
+import ErrorNotification from '../error/ErrorNotification'
 import UserImage from './UserImage'
 
 const ProfileSkeleton = () => {

@@ -5,7 +5,7 @@ import MoreByWriterProjects from '@/components/detail/MoreByWriterProjects'
 import DetailHeader from '@/components/detail/DetailHeader'
 import { useDetailFetch } from '@/hooks'
 import DetailBlocks from '@/components/detail/DetailBlocks'
-import ErrorNotification from '@/components/common/ErrorNotification'
+import ErrorNotification from '@/components/error/ErrorNotification'
 
 interface Props {
   params: {
@@ -15,12 +15,12 @@ interface Props {
 
 const DetailPage = ({ params }: Props) => {
   const id = params!.id
-  const { data, loading, error, refresh } = useDetailFetch(id)
+  const { data, loading, error, ErrorComponent } = useDetailFetch(id)
   if (loading) return <SkeletonDetail />
-  if (error)
+  if (error.status)
     return (
       <SkeletonDetailHeader>
-        <ErrorNotification onClick={refresh} />
+        <ErrorComponent />
       </SkeletonDetailHeader>
     )
   return (

@@ -107,6 +107,7 @@ const getProcess = (id: string, userId: string) => {
             isUserFavorite: 1,
             isUserClipping: 1,
             author: 1,
+            isHidden: 1,
           },
         },
       ]
@@ -162,11 +163,15 @@ export async function GET(request: NextRequest, { params }: Params) {
     //   }, 1000)
     // })
     // return NextResponse.json({ message: 'failed fetch', status: 400 }, { status: 400 })
-
     const db = await dbConnect()
     const project = await Project.aggregate(getProcess(id, userId!))
-
-    const result = await Project.find({ author: project[0].author._id })
+    if (project[0].isHidden && project[0].author !== userId) {
+      return NextResponse.json(
+        { message: '해당 프로젝트는 현재 작성자만 볼 수 있습니다', status: 401 },
+        { status: 401 }
+      )
+    }
+    const result = await Project.find({ author: project[0].author._id, isHidden: { $ne: true } })
       .select('-blocks')
       .sort({ createdAt: -1 })
       .skip(0)
@@ -175,6 +180,6 @@ export async function GET(request: NextRequest, { params }: Params) {
     const writerProjects = result.filter((project) => project._id.toString() !== id)
     return NextResponse.json({ project: project[0], writerProjects }, { status: 200 })
   } catch (e) {
-    return NextResponse.json({ error: e }, { status: 501 })
+    return NextResponse.json({ error: e, status: 500 }, { status: 500 })
   }
 }

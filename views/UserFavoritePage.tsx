@@ -1,6 +1,6 @@
 'use client'
 import ProjectCard from '@/components/card/ProjectCard'
-import ErrorNotification from '@/components/common/ErrorNotification'
+import ErrorNotification from '@/components/error/ErrorNotification'
 import Loading from '@/components/loading'
 import UserItemList from '@/components/user/UserItemList'
 import { useInfinityFetch } from '@/hooks'

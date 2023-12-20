@@ -35,7 +35,7 @@ class FetchAPI implements InterfaceAPI {
     const res = response as CustomResponse<T>
     if (res.status !== 200) {
       const error = await res.json()
-      throw error as BadRequest
+      throw error as BadResponse
     }
     return await res.json()
   }
