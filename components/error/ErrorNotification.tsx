@@ -1,8 +1,9 @@
 import Image from 'next/image'
 import React from 'react'
-import Button from './Button'
+import Button from '../common/Button'
 interface Props {
   onClick: () => void
+  message?: string
 }
 const ErrorNotification = ({ onClick }: Props) => {
   return (

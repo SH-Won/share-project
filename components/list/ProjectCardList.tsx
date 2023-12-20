@@ -2,7 +2,7 @@
 import { useFetch, useInfinityScroll } from '@/hooks'
 import React from 'react'
 import ProjectCard from '../card/ProjectCard'
-import ErrorNotification from '../common/ErrorNotification'
+import ErrorNotification from '../error/ErrorNotification'
 import Loading from '../loading'
 
 const ProjectCardList = () => {
@@ -26,8 +26,8 @@ const ProjectCardList = () => {
           </div>
         ))}
       {loading && <Loading count={8} />}
-      <div ref={targetRef}></div>
-      {error && <ErrorNotification onClick={refresh} />}
+
+      {!error ? <div ref={targetRef}></div> : <ErrorNotification onClick={refresh} />}
     </>
   )
 }

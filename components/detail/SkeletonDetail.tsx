@@ -3,7 +3,7 @@ import Close from '../modal/Close'
 
 export const SkeletonDetailHeader = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <div className="skeleton-loading-container">
+    <div className="skeleton-loading-container" style={{ height: '80vh' }}>
       <div className="loading-template loading-animation description"></div>
       <div className="loading-user-container">
         <div className="loading-template loading-animation user-image"></div>
