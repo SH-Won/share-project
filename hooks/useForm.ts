@@ -15,7 +15,12 @@ const useForm = <T>(initialState: T) => {
     e.stopPropagation()
     const { name, files } = e.target
     const file = files?.[0]
+    const maxSize = 10 * 1024 * 1024
     if (!file) return
+    if (file.size > maxSize) {
+      alert('이미지는 최대 10MB 만 가능합니다')
+      return
+    }
     if (!file.type.includes('image')) {
       alert('이미지 파일만 가능해요!')
       return

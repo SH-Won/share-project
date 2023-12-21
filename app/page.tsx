@@ -1,6 +1,8 @@
 // import Loading from '@/components/loading'
+import LoadingPage from '@/components/common/LoadingPage'
 import BackEnd from '@/lib/network'
 import MainPage from '@/views/MainPage'
+import { Suspense } from 'react'
 // import { Suspense } from 'react'
 
 export default async function Home() {
@@ -15,9 +17,9 @@ export default async function Home() {
   //   limit: 5,
   // })
   return (
-    // <Suspense fallback={<Loading count={5} />}>
-    <MainPage />
-    // </Suspense>
+    <Suspense fallback={<LoadingPage />}>
+      <MainPage />
+    </Suspense>
   )
 }
 {

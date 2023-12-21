@@ -294,12 +294,20 @@ export async function GET(request: NextRequest, { params }: Params) {
         { status: 200 }
       )
     }
-    const appearProjects = clippings[0].projects.filter((project: IProject) => !project.isHidden)
-    const hiddenProjectCount = clippings[0].projects.length - appearProjects.length
+    // const appearProjects = clippings[0].projects.filter((project: IProject) => !project.isHidden)
+    // const hiddenProjectCount = clippings[0].projects.length - appearProjects.length
+    const appearProjects = clippings[0].projects.map((project: IProject) => {
+      if (!project.isHidden) return project
+      project.thumbnail.imageUrl = '/noImage.svg'
+      project.author.imageUrl = '/noImage.svg'
+      return project
+    })
+    // const hiddenProjectCount = clippings[0].projects.length - appearProjects.length
     return NextResponse.json(
       {
         projects: appearProjects || [],
-        projectLength: clippings[0].totalClippingCount - hiddenProjectCount || 0,
+        // projectLength: favorites[0].totalFavoriteCount - hiddenProjectCount || 0,
+        projectLength: clippings[0].totalFavoriteCount,
       },
       { status: 200 }
     )
