@@ -1,5 +1,6 @@
 import Query from '@/lib/action-query'
 import dbConnect from '@/lib/dbConnect'
+import { IProject } from '@/lib/network/types/project'
 import Project from '@/models/Project'
 import User from '@/models/User'
 import UserInventory from '@/models/UserInventory'
@@ -43,7 +44,6 @@ export async function GET(request: NextRequest, response: NextApiResponse) {
     //   // })
     //   .sort({ $natural: -1 })
     //   .exec()
-
     if (!projects.length) {
       return NextResponse.json(
         {
@@ -53,10 +53,21 @@ export async function GET(request: NextRequest, response: NextApiResponse) {
         { status: 200 }
       )
     }
-    const response = JSON.parse(JSON.stringify(projects[0]))
+    // const response = JSON.parse(JSON.stringify(projects[0]))
+    if (userId !== sessionId) {
+      const appearProjects = projects[0].projects.filter((project: IProject) => !project.isHidden)
+      const hiddenProjectCount = projects[0].projects.length - appearProjects.length
+      return NextResponse.json(
+        {
+          projects: appearProjects || [],
+          projectLength: projects[0].totalProjectCount - hiddenProjectCount || 0,
+        },
+        { status: 200 }
+      )
+    }
 
     return NextResponse.json(
-      { projects: response.projects || [], projectLength: response.totalProjectCount || 0 },
+      { projects: projects[0].projects || [], projectLength: projects[0].totalProjectCount || 0 },
       { status: 200 }
     )
   } catch (e) {

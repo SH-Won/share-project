@@ -56,7 +56,11 @@ const useInfinityFetch = <T extends IProject, U extends HTMLElement>({
     setLoading(true)
     fetchFunc(query)
       .then((response) => {
-        const hasMore = response.projects.length + data.length < response.projectLength
+        // const hasMore = response.projects.length + data.length < response.projectLength
+        if (!response.projects.length || !response.projectLength) {
+          return setHasMore(false)
+        }
+        const hasMore = response.projects.length <= 20
         setData((prev) => [...prev, ...response.projects])
         setTotalLength(response.projectLength)
         setHasMore(hasMore)

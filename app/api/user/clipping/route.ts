@@ -1,4 +1,5 @@
 import dbConnect from '@/lib/dbConnect'
+import { IProject } from '@/lib/network/types/project'
 import Clipping from '@/models/Clipping'
 import Project from '@/models/Project'
 import User from '@/models/User'
@@ -293,13 +294,22 @@ export async function GET(request: NextRequest, { params }: Params) {
         { status: 200 }
       )
     }
+    const appearProjects = clippings[0].projects.filter((project: IProject) => !project.isHidden)
+    const hiddenProjectCount = clippings[0].projects.length - appearProjects.length
     return NextResponse.json(
       {
-        projects: clippings[0]!.projects || [],
-        projectLength: clippings[0]!.totalClippingCount || 0,
+        projects: appearProjects || [],
+        projectLength: clippings[0].totalClippingCount - hiddenProjectCount || 0,
       },
       { status: 200 }
     )
+    // return NextResponse.json(
+    //   {
+    //     projects: clippings[0]!.projects || [],
+    //     projectLength: clippings[0]!.totalClippingCount || 0,
+    //   },
+    //   { status: 200 }
+    // )
   } catch (e) {
     return NextResponse.json({ error: 'failed' }, { status: 400 })
   }
