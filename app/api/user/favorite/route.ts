@@ -1,5 +1,6 @@
 import Query from '@/lib/action-query'
 import dbConnect from '@/lib/dbConnect'
+import { IProject } from '@/lib/network/types/project'
 import Favorite from '@/models/Favorite'
 import Project from '@/models/Project'
 import User from '@/models/User'
@@ -37,10 +38,30 @@ export async function GET(request: NextRequest, { params }: Params) {
         { status: 200 }
       )
     }
+    // if (userId !== sessionId) {
+    //   const appearProjects = favorites[0].projects.filter((project: IProject) => !project.isHidden)
+    //   const hiddenProjectCount = favorites[0].projects.length - appearProjects.length
+    //   return NextResponse.json(
+    //     {
+    //       projects: appearProjects || [],
+    //       projectLength: favorites[0].totalFavoriteCount - hiddenProjectCount || 0,
+    //     },
+    //     { status: 200 }
+    //   )
+    // }
+    // return NextResponse.json(
+    //   {
+    //     projects: favorites[0].projects,
+    //     projectLength: favorites[0].totalFavoriteCount,
+    //   },
+    //   { status: 200 }
+    // )
+    const appearProjects = favorites[0].projects.filter((project: IProject) => !project.isHidden)
+    const hiddenProjectCount = favorites[0].projects.length - appearProjects.length
     return NextResponse.json(
       {
-        projects: favorites[0].projects,
-        projectLength: favorites[0].totalFavoriteCount,
+        projects: appearProjects || [],
+        projectLength: favorites[0].totalFavoriteCount - hiddenProjectCount || 0,
       },
       { status: 200 }
     )

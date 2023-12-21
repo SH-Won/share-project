@@ -148,6 +148,7 @@ const getProcess = (id: string, userId: string) => {
             isUserFavorite: 1,
             isUserClipping: 1,
             author: 1,
+            isHidden: 1,
           },
         },
       ]
@@ -165,7 +166,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     // return NextResponse.json({ message: 'failed fetch', status: 400 }, { status: 400 })
     const db = await dbConnect()
     const project = await Project.aggregate(getProcess(id, userId!))
-    if (project[0].isHidden && project[0].author !== userId) {
+    if (project[0].isHidden && project[0].author._id.toString() !== userId) {
       return NextResponse.json(
         { message: '해당 프로젝트는 현재 작성자만 볼 수 있습니다', status: 401 },
         { status: 401 }
