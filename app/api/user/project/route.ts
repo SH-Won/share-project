@@ -55,12 +55,20 @@ export async function GET(request: NextRequest, response: NextApiResponse) {
     }
     // const response = JSON.parse(JSON.stringify(projects[0]))
     if (userId !== sessionId) {
-      const appearProjects = projects[0].projects.filter((project: IProject) => !project.isHidden)
+      // const appearProjects = projects[0].projects.filter((project: IProject) => !project.isHidden)
+      const appearProjects = projects[0].projects.map((project: IProject) => {
+        if (!project.isHidden) return project
+        project.thumbnail.imageUrl = '/noImage.svg'
+        project.author.imageUrl = '/noImage.svg'
+        return project
+      })
+      console.log(appearProjects)
       const hiddenProjectCount = projects[0].projects.length - appearProjects.length
       return NextResponse.json(
         {
           projects: appearProjects || [],
-          projectLength: projects[0].totalProjectCount - hiddenProjectCount || 0,
+          // projectLength: projects[0].totalProjectCount - hiddenProjectCount || 0,
+          projectLength: projects[0].totalProjectCount,
         },
         { status: 200 }
       )
