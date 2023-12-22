@@ -31,10 +31,29 @@ const ClipSVG = () => {
   )
 }
 const ProjectCardContext = createContext<IProject | Omit<IProject, 'writer'>>({} as IProject)
-const CardImage = () => {
+const CardImage = ({ isServer }: { isServer?: boolean }) => {
   const project = useContext(ProjectCardContext)
   return (
     <Link href={`/detail/${project._id}`} prefetch={false}>
+      {isServer ? (
+        <div className="image-container main">
+          <Image
+            src={project.thumbnail.imageUrl || '/noImage.svg'}
+            width={400}
+            height={400}
+            alt={project.title}
+          />
+        </div>
+      ) : (
+        <ImageWithSkeleton
+          type="main"
+          width={400}
+          height={400}
+          isHidden={project.isHidden}
+          imageUrl={project.thumbnail.imageUrl ?? ''}
+          alt={project.title ?? 'loading'}
+        />
+      )}
       {/* <div className="image-container main">
         <Image
           src={project.thumbnail.imageUrl || '/noImage.svg'}
@@ -42,7 +61,7 @@ const CardImage = () => {
           height={400}
           alt={project.title}
         />
-      </div> */}
+      </div>
       <ImageWithSkeleton
         type="main"
         width={400}
@@ -50,7 +69,7 @@ const CardImage = () => {
         isHidden={project.isHidden}
         imageUrl={project.thumbnail.imageUrl ?? ''}
         alt={project.title ?? 'loading'}
-      />
+      /> */}
     </Link>
   )
 }
