@@ -1,5 +1,4 @@
 'use client'
-import Navbar from '@/components/navbar/Navbar'
 import Toast from '@/components/toast/Toast'
 import { usePathname } from 'next/navigation'
 import React from 'react'
@@ -11,8 +10,6 @@ interface BaseLayoutProps {
 const BaseLayout = ({ children }: BaseLayoutProps) => {
   const pathname = usePathname()
   const isHeader = !['signup', 'signin', 'upload'].includes(pathname.split('/')[1])
-  console.log('base layout render')
-  // const isHeader = true
   return (
     <>
       {isHeader && children![0]}

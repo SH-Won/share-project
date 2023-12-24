@@ -47,7 +47,6 @@ const UploadPage = () => {
   const { inputValue, onHandleChangeImage, onHandleChange, setFormInitialState } =
     useForm<TInputValue>(initialInputValue)
 
-  console.log('upload page render')
   const handleSave = () => {
     if (!inputValue.thumbnail && !editBlocks.length) {
       return showToast({
