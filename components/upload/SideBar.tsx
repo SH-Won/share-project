@@ -32,7 +32,6 @@ const SideBar = () => {
       },
     },
   ]
-  console.log('Side bar render')
   return (
     <>
       <div className="side-bar" ref={sideBar}>
@@ -63,6 +62,5 @@ const SideBar = () => {
     </>
   )
 }
-// className={`side-bar ${openSideBar ? 'open' : ''} ${transition ? 'transition' : ''}`}
 
 export default SideBar
