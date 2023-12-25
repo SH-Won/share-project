@@ -1,5 +1,6 @@
 'use client'
 import ProjectCard from '@/components/card/ProjectCard'
+import LoadingLings from '@/components/common/LoadingLings'
 import ErrorNotification from '@/components/error/ErrorNotification'
 import Loading from '@/components/loading'
 import UserItemList from '@/components/user/UserItemList'
@@ -54,10 +55,10 @@ const UserFavoritePage = ({
             </ProjectCard.UserController>
           </ProjectCard>
         ))}
-        {loading && <Loading count={6} />}
         <div ref={targetRef}></div>
         {error && <ErrorNotification onClick={refresh} />}
       </UserItemList>
+      {loading && <LoadingLings />}
     </div>
   )
 }
