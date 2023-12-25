@@ -10,7 +10,6 @@ import { StoreProviders, NextAuthProvider, UserProvider } from '@/providers'
 import BaseLayout from '@/layout/BaseLayout'
 import ModalContext from '@/context/ModalContext'
 import Modal from '@/components/modal'
-import Toast from '@/components/toast/Toast'
 import Navbar from '@/components/navbar/Navbar'
 export const metadata = {
   title: 'Share Project',
