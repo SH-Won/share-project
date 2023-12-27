@@ -65,37 +65,6 @@ const FileUserImageBox = ({ imageUrl }: TUserImageBox) => {
   )
 }
 
-const items = [
-  {
-    name: 'up',
-    iconUrl: '/arrowUp.svg',
-    onClick: () => {
-      //
-    },
-  },
-  {
-    name: 'down',
-    iconUrl: '/arrowDown.svg',
-    onClick: () => {
-      //
-    },
-  },
-  {
-    name: 'paste',
-    iconUrl: '/paste.svg',
-    onClick: () => {
-      //
-    },
-  },
-  {
-    name: 'delete',
-    iconUrl: '/delete.svg',
-    onClick: () => {
-      //
-    },
-  },
-]
-
 const UploadBox = ({ focus }: { focus?: boolean }) => {
   const { id } = useContext(FileBoxContext)
   const { moveUpBlock, moveDownBlock, deleteBlock } = useUploadDispatch()
@@ -118,7 +87,6 @@ const UploadBox = ({ focus }: { focus?: boolean }) => {
     })
   }
   return (
-    // <div className="file-wrapper">
     <div className={computedClass}>
       {focus && (
         <div className="block-controller">
@@ -142,7 +110,6 @@ const UploadBox = ({ focus }: { focus?: boolean }) => {
       )}
       <FileChangeView />
     </div>
-    // </div>
   )
 }
 

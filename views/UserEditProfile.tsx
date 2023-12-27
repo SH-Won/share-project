@@ -3,11 +3,11 @@ import '@/styles/layout/user-profile.scss'
 import Button from '@/components/common/Button'
 import InputFileBox from '@/components/common/InputFileBox'
 import UserProfileSkeleton from '@/components/user/UserProfileSkeleton'
-import { useForm } from '@/hooks'
+import { useForm, useToast } from '@/hooks'
 import { AppDispatch, RootState } from '@/store'
 import { setLoading, updateUserImage } from '@/store/user/userSlice'
 import { useSession } from 'next-auth/react'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import LoadingArc from '@/components/common/LoadingArc'
 import BackEnd from '@/lib/network'
@@ -23,6 +23,7 @@ const UserEditProfile = () => {
     useForm<typeof initialState>(initialState)
   const dispatch = useDispatch<AppDispatch>()
   const [showButton, setShowButton] = useState(false)
+  const { showToast } = useToast()
   if (status === 'loading' || loading) return <UserProfileSkeleton />
 
   const editUserImage = async (e: React.MouseEvent) => {
@@ -33,29 +34,19 @@ const UserEditProfile = () => {
       userId: session?.id,
     }
     setUpdateLoading(true)
-    // fetch(process.env.NEXT_PUBLIC_BASE_URL + '/api/user/profile', {
-    //   method: 'PUT',
-    //   body: JSON.stringify(body),
-    // })
-    //   .then(async (response) => {
-    //     const json = await response.json()
-    //     if (!response.ok) throw Error('failed')
-    //     // dispatch(updateUserImage(json.imageUrl))
-    //     // sessionUpdate()
-    //   })
-    //   .catch((e) => {
-    //     console.log(e)
-    //   })
-    //   .finally(() => setUpdateLoading(false))
     BackEnd.getInstance()
       .user.updateUserImage(body)
       .then((response) => {
         sessionUpdate({
           imageUrl: response.imageUrl,
         })
+        resetForm()
       })
       .catch((e) => {
-        console.log(e)
+        showToast({
+          type: 'error',
+          text: '프로필 수정에 실패했습니다',
+        })
       })
       .finally(() => setUpdateLoading(false))
   }
