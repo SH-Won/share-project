@@ -8,7 +8,6 @@ import { MODAL_CONFIG, MODAL_KEY, TModalProps } from './config'
 
 const Modal = () => {
   const {
-    // isModalOpen,
     modalState: ModalState,
     closeModal,
     customModalState: CustomModalState,
@@ -43,7 +42,7 @@ const Modal = () => {
           switch (modal.type) {
             case 'USER_CONFIRM': {
               const Component = MODAL_CONFIG[modal.type]
-              const props = modal.props as TModalProps<typeof modal.type>
+              const props = modal.props
               return (
                 <BasicModal key={index} closeModal={closeModal}>
                   <ModalHeader closeModal={closeModal} />

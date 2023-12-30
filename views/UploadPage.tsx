@@ -124,7 +124,8 @@ const UploadPage = () => {
       .catch((e) => {
         showModal({
           type: 'USER_SIGNUP',
-          props: undefined,
+          // props: undefined,
+          props: null,
         })
       })
       .finally(() => setLoading(false))
