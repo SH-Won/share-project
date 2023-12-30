@@ -11,7 +11,7 @@ export interface ICustomModalState {
 
 interface IModalStateContext {
   customModalState: ICustomModalState
-  modalState: IModalState<TModalKey>[]
+  modalState: IModalState[]
 }
 interface IModalDispatchContext {
   setCustomModalState: Dispatch<SetStateAction<IModalStateContext['customModalState']>>
