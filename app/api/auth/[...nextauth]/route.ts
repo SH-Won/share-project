@@ -42,7 +42,6 @@ export const authOptions: AuthOptions = {
       if (trigger === 'update') {
         token.imageUrl = session.imageUrl
       }
-      console.log('jwt func called')
       const refreshTime = Math.round((token.accessTokenExpiry as number) - Date.now())
       if (refreshTime > 0) {
         return token
@@ -66,7 +65,6 @@ export const authOptions: AuthOptions = {
         return token
       }
       const json = await response.json()
-      console.log('new refresh token exec')
       token.accessToken = json.accessToken
       token.refreshToken = json.refreshToken
       token.accessTokenExpiry = json.accessTokenExpiry
@@ -83,7 +81,6 @@ export const authOptions: AuthOptions = {
       session.name = token.name
       session.role = token.role
       session.favoriteId = token.favoriteId
-      // session.accessToken = token.accessToken
       session.error = token.error
       session.imageUrl = token.imageUrl
       return session

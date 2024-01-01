@@ -60,6 +60,7 @@
       align-items: center;
       box-sizing: border-box;
       gap: 20px;
+      z-index: var(--navbar-user-navigation-z-index);
 
       .user {
         display: flex;

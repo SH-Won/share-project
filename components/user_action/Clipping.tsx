@@ -10,7 +10,7 @@ export const ClippingSVG = ({ selected }: { selected: boolean }) => {
       width="13"
       height="13"
       viewBox="0 0 16 16"
-      fill={selected ? Colors.green : Colors.white}
+      fill={selected ? Colors.green : 'none'}
       role="img"
       className="icon "
     >
