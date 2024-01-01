@@ -167,6 +167,7 @@ const ClearClipping = ({ update }: { update: () => void }) => {
             <ClippingSVG selected={false} />
             <span>스크랩 해제</span>
           </div>
+          <div className="wrap-overlay" onClick={() => setOpen(false)}></div>
         </div>
       )}
     </div>

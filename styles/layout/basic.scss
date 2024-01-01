@@ -18,4 +18,7 @@
   display: grid;
   place-items: center;
   z-index: var(--overlay-base-z-index);
+  &.blur {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 }

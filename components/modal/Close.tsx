@@ -31,10 +31,6 @@ export const CloseSVG = ({ color, size }: { color?: string; size?: number }) => 
 // next build 할때 document 같은 브라우저 API는 무조건 client 환경이 확보 됐을때 참조 해야
 // 에러가 나지 않음
 const Close = ({ closeFunc }: CloseProps) => {
-  const [isShow, setIsShow] = useState(false)
-  // const isInterCeptingRoute = () => {
-  //   return document.querySelector('main')?.querySelector('.detail-layout') ? true : false
-  // }
   const router = useRouter()
   const onClose = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -44,22 +40,11 @@ const Close = ({ closeFunc }: CloseProps) => {
     }
     router.back()
   }
-  useEffect(() => {
-    const isInterCeptingRoute = () => {
-      //.querySelector('main')?.
-      return document.querySelector('.detail-layout') ? true : false
-    }
-    if (isInterCeptingRoute()) setIsShow(true)
-  }, [])
   return (
-    <>
-      {isShow ? (
-        <Link href="#" className="close-button">
-          <Image onClick={onClose} src="/close.svg" alt="close" width={24} height={24} />
-          {/* <CloseSVG /> */}
-        </Link>
-      ) : null}
-    </>
+    <div className="close-button" onClick={onClose}>
+      {/* <Image onClick={onClose} src="/close.svg" alt="close" width={24} height={24} /> */}
+      <CloseSVG />
+    </div>
   )
 }
 

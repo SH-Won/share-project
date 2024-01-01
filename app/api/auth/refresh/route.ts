@@ -19,7 +19,6 @@ export async function POST(req: Request) {
   const foundedUser = await User.findOne({ refreshToken }).exec()
   let isError, nextRefreshToken, hackedUser, nextAccessToken
   if (!foundedUser) {
-    console.log('not founded User')
     jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,

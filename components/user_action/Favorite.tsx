@@ -12,7 +12,7 @@ export const FavoriteSVG = ({ selected }: FavoriteSVG) => {
       width="13"
       height="13"
       viewBox="0 0 16 16"
-      fill={selected ? Colors.red : Colors.white}
+      fill={selected ? Colors.red : 'none'}
       role="img"
       className="icon"
     >
