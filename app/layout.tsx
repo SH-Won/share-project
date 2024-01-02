@@ -27,16 +27,16 @@ export default async function RootLayout({ children, detail, modal, project }: P
       <body>
         <NextAuthProvider>
           <StoreProviders>
-            <UserProvider>
-              <ModalContext>
-                <BaseLayout>
-                  <Navbar />
-                  {children}
-                </BaseLayout>
-                {detail}
-                <Modal />
-              </ModalContext>
-            </UserProvider>
+            {/* <UserProvider> */}
+            <ModalContext>
+              <BaseLayout>
+                <Navbar />
+                {children}
+              </BaseLayout>
+              {detail}
+              <Modal />
+            </ModalContext>
+            {/* </UserProvider> */}
           </StoreProviders>
         </NextAuthProvider>
       </body>

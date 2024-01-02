@@ -6,6 +6,5 @@ export class ErrorBase extends Error {
     super()
     this.status = res.status
     this.message = res.statusText
-    // this.cause = res.
   }
 }
