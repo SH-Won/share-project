@@ -8,8 +8,16 @@ const DetailLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className={`detail-layout ${isMatch ? 'modal detail' : ''}`}>
-      <Close />
-      <div className={`${isMatch ? 'modal__container--bottom open' : ''}`}>{children}</div>
+      {/* {isMatch ? <Close /> : null}
+      <div className={`${isMatch ? 'modal__container--bottom open' : ''}`}>
+        {isMatch ? children : null}
+      </div> */}
+      {isMatch ? (
+        <>
+          <Close />
+          <div className="modal__container--bottom open">{children}</div>
+        </>
+      ) : null}
     </div>
   )
 }
