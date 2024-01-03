@@ -96,10 +96,13 @@ const UploadPage = () => {
         text: '메인 이미지, 제목을 입력해주세요',
       })
     }
-    const blocks = editBlocks.map((block, index) => ({
-      type: block.type,
-      value: inputValue[block.name],
-    }))
+
+    const blocks = editBlocks
+      .map((block, index) => ({
+        type: block.type,
+        value: inputValue[block.name],
+      }))
+      .filter((block) => !!block.value)
     const body = {
       userId: session?.id,
       title: inputValue.title,
@@ -124,8 +127,6 @@ const UploadPage = () => {
       .catch((e) => {
         showModal({
           type: 'USER_SIGNUP',
-          // props: undefined,
-          props: null,
         })
       })
       .finally(() => setLoading(false))
