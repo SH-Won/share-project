@@ -20,7 +20,7 @@ export type TUserConfirmModal = {
 }
 export type TUserSignup = {
   type: 'USER_SIGNUP'
-  props: ComponentProps<typeof SignupPage>
+  props?: ComponentProps<typeof SignupPage>
 }
 export type TModalKey = keyof typeof MODAL_CONFIG
 export type TModalComponent<T extends TModalKey> = (typeof MODAL_CONFIG)[T]
