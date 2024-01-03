@@ -18,13 +18,13 @@ const initialState = {
 const UserEditProfile = () => {
   const { data: session, status, update: sessionUpdate } = useSession()
   const [updateLoading, setUpdateLoading] = useState(false)
-  const { imageUrl, loading } = useSelector((state: RootState) => state.user)
+  // const { imageUrl, loading } = useSelector((state: RootState) => state.user)
   const { inputValue, onHandleChangeImage, resetForm, recoveryForm } =
     useForm<typeof initialState>(initialState)
   const dispatch = useDispatch<AppDispatch>()
   const [showButton, setShowButton] = useState(false)
   const { showToast } = useToast()
-  if (status === 'loading' || loading) return <UserProfileSkeleton />
+  if (status === 'loading') return <UserProfileSkeleton />
 
   const editUserImage = async (e: React.MouseEvent) => {
     e.preventDefault()
