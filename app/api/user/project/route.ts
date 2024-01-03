@@ -62,7 +62,6 @@ export async function GET(request: NextRequest, response: NextApiResponse) {
         project.author.imageUrl = '/noImage.svg'
         return project
       })
-      console.log(appearProjects)
       const hiddenProjectCount = projects[0].projects.length - appearProjects.length
       return NextResponse.json(
         {
